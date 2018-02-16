@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public abstract class Actor extends DomainEntity {
 
 	// Constructors -----------------------------------------------------------
-
+	// Hola Antonio
 		public Actor() {
 			super();
 		}
