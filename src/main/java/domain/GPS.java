@@ -1,0 +1,38 @@
+package domain;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
+
+@Embeddable
+@Access(AccessType.PROPERTY)
+public class GPS {
+
+	// Constructors -----------------------------------------------------------
+
+	public GPS() {
+		super();
+	}
+
+	// Attributes -------------------------------------------------------------
+
+	private double latitude;
+	private double longitude;
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+}
