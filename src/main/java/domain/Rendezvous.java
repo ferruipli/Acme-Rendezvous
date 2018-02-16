@@ -5,6 +5,10 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -47,6 +51,8 @@ public class Rendezvous extends DomainEntity {
 		this.description = description;
 	}
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	public Date getMoment(){
 		return this.moment;
 	}
@@ -55,6 +61,7 @@ public class Rendezvous extends DomainEntity {
 		this.moment = moment;
 	}
 	
+	@Valid
 	public GPS getGpsCoordinates(){
 		return this.gpsCoordinates;
 	}
