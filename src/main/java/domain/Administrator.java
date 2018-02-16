@@ -1,4 +1,3 @@
-
 package domain;
 
 import javax.persistence.Access;
@@ -12,6 +11,6 @@ public class Administrator extends Actor {
 	// Constructors -----------------------------------------------------------
 
 	public Administrator() {
-		super();sdfasdfasf
+		super();
 	}
 }
