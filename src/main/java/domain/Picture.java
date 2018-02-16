@@ -30,4 +30,7 @@ public class Picture extends DomainEntity {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	
+	// Relationships ----------------------------------------------------------
+	
 }

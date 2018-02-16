@@ -3,6 +3,9 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -17,7 +20,6 @@ public class Answer extends DomainEntity {
 	}
 
 	// Attributes -------------------------------------------------------------
-
 	private String text;
 
 	@NotBlank
@@ -28,4 +30,19 @@ public class Answer extends DomainEntity {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	// Relationships --------------------------------------------------------
+	private Question question;
+
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+	
 }
