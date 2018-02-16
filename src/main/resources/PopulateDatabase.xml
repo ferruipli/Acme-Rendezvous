@@ -24,39 +24,394 @@
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
+					<property name="authority" value="ADMINISTRATOR" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 
 	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="username" value="administrator1" />
+		<property name="password" value="d5cee333abe432891a0de57d0ee38713" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="super" />
-		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
-				</bean>
-				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="ADMINISTRATOR" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	
-	<!-- Other domain beans come here -->	
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="administrator2" />
+		<property name="password" value="82954495ff7e2a735ed2192c35b2cd00" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMINISTRATOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="user1" />
+		<property name="password" value="24c9e15e52afc47c225b757e7bee1f9d" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="user2" />
+		<property name="password" value="7e58d63b60197ceb55a1c487989a3720" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="user3" />
+		<property name="password" value="92877af70a45fd6a2ed7fe81e1236b78" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount7" class="security.UserAccount">
+		<property name="username" value="user4" />
+		<property name="password" value="3f02ebe3d7929b091e3d8ccfde2f3bc6" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount8" class="security.UserAccount">
+		<property name="username" value="user5" />
+		<property name="password" value="0a791842f52a0acfbb3a783378c066b8" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount9" class="security.UserAccount">
+		<property name="username" value="user6" />
+		<property name="password" value="affec3b64cf90492377a8114c86fc093" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	
+	
+		<!-- Administrator -->
+		
+	<bean class="domain.Administrator" id="admin">
+		<property value="Antonio" name="name"/>
+		<property value="Garcia Lopez" name="surname"/>
+		<property value="admin@gmail.com" name="email"/>
+		<property value="Calle San Juan de Dios" name="postalAddress"/>
+		<property value="+34 980990111" name="phoneNumber"/>
+		<property name="userAccount" ref="userAccount1"/>	
+	</bean>
+	
+	<bean class="domain.Administrator" id="administrator1">
+		<property value="administrator1" name="name"/>
+		<property value="Garcia Lopez" name="surname"/>
+		<property value="administrator1@gmail.com" name="email"/>
+		<property value="Calle Santa María Magdalena" name="postalAddress"/>
+		<property value="+34 980990222" name="phoneNumber"/>
+		<property name="userAccount" ref="userAccount2"/>	
+	</bean>
+	
+	<bean class="domain.Administrator" id="administrator2">
+		<property value="administrator2" name="name"/>
+		<property value="Garcia Lopez" name="surname"/>
+		<property value="administrator2@gmail.com" name="email"/>
+		<property value="Calle Pozo Dulce" name="postalAddress"/>
+		<property value="+34 980990333" name="phoneNumber"/>
+		<property name="userAccount" ref="userAccount3"/>	
+	</bean>
+	
+	
+	<!-- Announcement -->
+	<bean class="domain.Announcement" id="announcement1">
+		<property value="02/05/2017 12:12" name="moment"/>
+		<property value="announcement1" name="title"/>
+		<property value="description_announcement1" name="description"/>	
+	</bean>
+	
+	<bean class="domain.Announcement" id="announcement2">
+		<property value="10/10/2016 21:12" name="moment"/>
+		<property value="announcement2" name="title"/>
+		<property value="description_announcement2" name="description"/>	
+	</bean>
+	
+	<bean class="domain.Announcement" id="announcement3">
+		<property value="18/12/2017 08:20" name="moment"/>
+		<property value="announcement3" name="title"/>
+		<property value="description_announcement3" name="description"/>	
+	</bean>
+	
+	<bean class="domain.Announcement" id="announcement4">
+		<property value="19/05/2016 14:12" name="moment"/>
+		<property value="announcement4" name="title"/>
+		<property value="description_announcement4" name="description"/>	
+	</bean>
+	
+	<bean class="domain.Announcement" id="announcement5">
+		<property value="23/09/2015 19:25" name="moment"/>
+		<property value="announcement5" name="title"/>
+		<property value="description_announcement5" name="description"/>	
+	</bean>
+
+
+	<!-- Answer -->
+	<bean class="domain.Answer" id="answer1">
+		<property value="text_answer1" name="text"/>
+		<property ref="question1" name="question"/>	
+	</bean>
+	
+	<bean class="domain.Answer" id="answer2">
+		<property value="text_answer2" name="text"/>
+		<property ref="question2" name="question"/>
+	</bean>
+	
+	<bean class="domain.Answer" id="answer3">
+		<property value="text_answer3" name="text"/>
+		<property ref="question3" name="question"/>	
+	</bean>
+	
+	<bean class="domain.Answer" id="answer4">
+		<property value="text_answer4" name="text"/>
+		<property ref="question4" name="question"/>
+	</bean>
+	
+	<bean class="domain.Answer" id="answer5">
+		<property value="text_answer5" name="text"/>
+		<property ref="question1" name="question"/>
+	</bean>
+	<bean class="domain.Answer" id="answer6">
+		<property value="text_answer6" name="text"/>
+		<property ref="question2" name="question"/>
+	</bean>
+	
+	<bean class="domain.Answer" id="answer7">
+		<property value="text_answer7" name="text"/>
+		<property ref="question1" name="question"/>	
+	</bean>
+	
+	<bean class="domain.Answer" id="answer8">
+		<property value="text_answer8" name="text"/>
+		<property ref="question1" name="question"/>
+	</bean>
+	
+	<!-- Comment -->
+	
+	<bean class="domain.Comment" id="comment1">
+		<property value="19/05/2016 14:12" name="moment"/>
+		<property value="text_comment1" name="text"/>
+		<property ref="user1" name="user"/>	
+		<property ref="picture1" name="picture"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment2">
+		<property value="14/10/2017 10:25" name="moment"/>
+		<property value="text_comment2" name="text"/>
+		<property ref="user1" name="user"/>	
+		<property ref="picture2" name="picture"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment3">
+		<property value="14/10/2016 09:44" name="moment"/>
+		<property value="text_comment3" name="text"/>
+		<property ref="user1" name="user"/>	
+		<property ref="picture3" name="picture"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment4">
+		<property value="28/01/2017 09:12" name="moment"/>
+		<property value="text_comment4" name="text"/>
+		<property ref="user1" name="user"/>	
+		<property ref="picture4" name="picture"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment5">
+		<property value="19/05/2016 14:12" name="moment"/>
+		<property value="text_comment5" name="text"/>
+		<property ref="user2" name="user"/>	
+		<property ref="picture5" name="picture"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment6">
+		<property value="19/05/2016 14:12" name="moment"/>
+		<property value="text_comment6" name="text"/>
+		<property ref="user2" name="user"/>	
+		<property ref="picture6" name="picture"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment7">
+		<property value="19/05/2016 14:12" name="moment"/>
+		<property value="text_comment7" name="text"/>
+		<property ref="user2" name="user"/>	
+		<property ref="picture7" name="picture"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment8">
+		<property value="14/10/2017 10:25" name="moment"/>
+		<property value="text_comment8" name="text"/>
+		<property ref="user3" name="user"/>	
+		<property ref="picture8" name="picture"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment9">
+		<property value="14/10/2016 09:44" name="moment"/>
+		<property value="text_comment9" name="text"/>
+		<property ref="user4" name="user"/>	
+		<property ref="picture9" name="picture"/>
+	</bean>
+	
+	<!-- Picture -->
+	
+	<bean class="domain.Picture" id="picture1">
+		<property value="http://googleDrive.com/picture1" name="url"/>
+	</bean>
+	
+	<bean class="domain.Picture" id="picture2">
+		<property value="http://googleDrive.com/picture2" name="url"/>
+	</bean>
+	
+	<bean class="domain.Picture" id="picture3">
+		<property value="http://googleDrive.com/picture3" name="url"/>
+	</bean>
+	
+	<bean class="domain.Picture" id="picture4">
+		<property value="http://googleDrive.com/picture4" name="url"/>
+	</bean>
+	
+	<bean class="domain.Picture" id="picture5">
+		<property value="http://googleDrive.com/picture5" name="url"/>
+	</bean>
+	
+	<bean class="domain.Picture" id="picture6">
+		<property value="http://googleDrive.com/picture6" name="url"/>
+	</bean>
+	
+	<bean class="domain.Picture" id="picture7">
+		<property value="http://googleDrive.com/picture7" name="url"/>
+	</bean>
+	
+	<bean class="domain.Picture" id="picture8">
+		<property value="http://googleDrive.com/picture8" name="url"/>
+	</bean>
+	
+	<bean class="domain.Picture" id="picture9">
+		<property value="http://googleDrive.com/picture9" name="url"/>
+	</bean>
+	
+	<!-- Question -->
+	
+	<bean class="domain.Question" id="question1">
+		<property value="statement_question1" name="statement"/>		
+		<property ref="rendezvous1" name="rendezvous"/>
+	</bean>
+	
+	
+	<bean class="domain.Question" id="question4">
+		<property value="statement_question4" name="statement"/>		
+		<property ref="rendezvous2" name="rendezvous"/>
+	</bean>
+	
+	<bean class="domain.Question" id="question3">
+		<property value="statement_question3" name="statement"/>		
+		<property ref="rendezvous3" name="rendezvous"/>
+	</bean>
+	
+	<bean class="domain.Question" id="question4">
+		<property value="statement_question4" name="statement"/>		
+		<property ref="rendezvous5" name="rendezvous"/>
+	</bean>
+	
+	<!-- Rendezvous -->
+	
+	<!-- User -->
+	
+	<bean class="domain.User" id="user1">
+		<property value="user1" name="name"/>
+		<property value="Garcia Lopez" name="surname"/>
+		<property value="user1@gmail.com" name="email"/>
+		<property value="Calle Puerta Osuna" name="postalAddress"/>
+		<property value="+34 687458745" name="phoneNumber"/>
+		<property name="userAccount" ref="userAccount4"/>	
+	</bean>
+	
+	<bean class="domain.User" id="user2">
+		<property value="user2" name="name"/>
+		<property value="Garcia Lopez" name="surname"/>
+		<property value="user2@gmail.com" name="email"/>
+		<property value="Calle Puerta Utrera" name="postalAddress"/>
+		<property value="+34 686988745" name="phoneNumber"/>
+		<property name="userAccount" ref="userAccount5"/>	
+	</bean>
+	
+	<bean class="domain.User" id="user3">
+		<property value="user3" name="name"/>
+		<property value="Garcia Lopez" name="surname"/>
+		<property value="user3@gmail.com" name="email"/>
+		<property value="Calle Malaga" name="postalAddress"/>
+		<property value="+34 687458745" name="phoneNumber"/>
+		<property name="userAccount" ref="userAccount6"/>	
+	</bean>
+	
+	<bean class="domain.User" id="user4">
+		<property value="user4" name="name"/>
+		<property value="Garcia Lopez" name="surname"/>
+		<property value="user4@gmail.com" name="email"/>
+		<property value="Calle Puerta Osuna" name="postalAddress"/>
+		<property value="+34 687458745" name="phoneNumber"/>
+		<property name="userAccount" ref="userAccount7"/>	
+	</bean>
+	
+	<bean class="domain.User" id="user5">
+		<property value="user5" name="name"/>
+		<property value="Garcia Lopez" name="surname"/>
+		<property value="user5@gmail.com" name="email"/>
+		<property value="Calle Puerta Osuna" name="postalAddress"/>
+		<property value="+34 687896745" name="phoneNumber"/>
+		<property name="userAccount" ref="userAccount8"/>	
+	</bean>
+	
+	<bean class="domain.User" id="user6">
+		<property value="user6" name="name"/>
+		<property value="Garcia Lopez" name="surname"/>
+		<property value="user6@gmail.com" name="email"/>
+		<property value="Calle Puerta Osuna" name="postalAddress"/>
+		<property value="+34 687458745" name="phoneNumber"/>
+		<property name="userAccount" ref="userAccount9"/>	
+	</bean>
 	
 </beans>
