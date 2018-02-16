@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -41,64 +42,65 @@ public class Rendezvous extends DomainEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@NotBlank
-	public String getDescription(){
+	public String getDescription() {
 		return this.description;
 	}
-	
-	public void setDescription(String description){
+
+	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-	public Date getMoment(){
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	public Date getMoment() {
 		return this.moment;
 	}
-	
-	public void setMoment(Date moment){
+
+	public void setMoment(Date moment) {
 		this.moment = moment;
 	}
-	
+
 	@Valid
-	public GPS getGpsCoordinates(){
+	public GPS getGpsCoordinates() {
 		return this.gpsCoordinates;
 	}
-	
-	public void setGpsCoordinates(GPS gpsCoordinates){
+
+	public void setGpsCoordinates(GPS gpsCoordinates) {
 		this.gpsCoordinates = gpsCoordinates;
 	}
-	
-	public boolean getFinalMode(){
+
+	public boolean getFinalMode() {
 		return this.finalMode;
 	}
-	
-	public void setFinalMode(boolean finalMode){
+
+	public void setFinalMode(boolean finalMode) {
 		this.finalMode = finalMode;
 	}
-	
-	public boolean getIsFlagged(){
+
+	public boolean getIsFlagged() {
 		return this.isFlagged;
 	}
-	
-	public void setIsFlagged(boolean isFlagged){
+
+	public void setIsFlagged(boolean isFlagged) {
 		this.isFlagged = isFlagged;
 	}
-	
-	public boolean getIsCancelled(){
+
+	public boolean getIsCancelled() {
 		return this.isCancelled;
 	}
-	
-	public void setIsCancelled(boolean isCancelled){
+
+	public void setIsCancelled(boolean isCancelled) {
 		this.isCancelled = isCancelled;
 	}
-	
-	public boolean getAdultOnly(){
+
+	public boolean getAdultOnly() {
 		return this.adultOnly;
 	}
-	
-	public void setAdultOnly(boolean adultOnly){
+
+	public void setAdultOnly(boolean adultOnly) {
 		this.adultOnly = adultOnly;
 	}
 }
