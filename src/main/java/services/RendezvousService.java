@@ -144,4 +144,60 @@ public class RendezvousService {
 		Assert.isTrue(rendezvous.getFinalMode() == false);
 	}
 	
+	protected void addAttendant(Rendezvous rendezvous, User attendant) {
+		Collection<User> aux;
+		
+		aux = new HashSet<>(rendezvous.getAttendants());
+		aux.add(attendant);
+		rendezvous.setAttendants(aux);
+	}
+	
+	protected void addComment(Rendezvous rendezvous, Comment comment) {
+		Collection<Comment> aux;
+		
+		aux = new HashSet<>(rendezvous.getComments());
+		aux.add(comment);
+		rendezvous.setComments(aux);
+	}
+	
+	protected void removeComment(Rendezvous rendezvous, Comment comment) {
+		Collection<Comment> aux;
+		
+		aux = new HashSet<>(rendezvous.getComments());
+		aux.remove(comment);
+		rendezvous.setComments(aux);
+	}
+	
+	protected void addSimilarOnes(Rendezvous rendezvous, Rendezvous similarOne) {
+		Collection<Rendezvous> aux;
+		
+		aux = new HashSet<>(rendezvous.getSimilarOnes());
+		aux.add(similarOne);
+		rendezvous.setSimilarOnes(aux);
+	}
+	
+	protected void removeSimilarOnes(Rendezvous rendezvous, Rendezvous similarOne) {
+		Collection<Rendezvous> aux;
+		
+		aux = new HashSet<>(rendezvous.getSimilarOnes());
+		aux.remove(rendezvous);
+		rendezvous.setSimilarOnes(aux);
+	}
+	
+	protected void addAnnouncement(Rendezvous rendezvous, Announcement announcement) {
+		Collection<Announcement> aux;
+		
+		aux = new HashSet<>(rendezvous.getAnnouncements());
+		aux.add(announcement);
+		rendezvous.setAnnouncements(aux);
+	}
+	
+	protected void removeAnnouncement(Rendezvous rendezvous, Announcement announcement) {
+		Collection<Announcement> aux;
+		
+		aux = new HashSet<>(rendezvous.getAnnouncements());
+		aux.remove(announcement);
+		rendezvous.setAnnouncements(aux);
+	}
+	
 }
