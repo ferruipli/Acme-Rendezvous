@@ -341,8 +341,8 @@
 	</bean>
 	
 	
-	<bean class="domain.Question" id="question4">
-		<property value="statement_question4" name="statement"/>		
+	<bean class="domain.Question" id="question2">
+		<property value="statement_question2" name="statement"/>		
 		<property ref="rendezvous2" name="rendezvous"/>
 	</bean>
 	
