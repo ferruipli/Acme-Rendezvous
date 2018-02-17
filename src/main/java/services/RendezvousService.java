@@ -30,6 +30,9 @@ public class RendezvousService {
 	@Autowired
 	private ActorService actorService;
 	
+	@Autowired
+	private UserService userService;
+	
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
 		super();
@@ -106,6 +109,12 @@ public class RendezvousService {
 	// Other business methods -----------------------------------------------
 	
 	public void reserve(Rendezvous rendezvous) {
+		Assert.notNull(rendezvous);
+		User user;
+		
+		user = this.userService.findByPrincipal();
+		
+		this.addAttendant(rendezvous, user);
 		
 	}
 	
@@ -117,7 +126,12 @@ public class RendezvousService {
 	}
 	
 	public void cancel(Rendezvous rendezvous) {
+		Assert.notNull(rendezvous);
+		User user;
 		
+		user = this.userService.findByPrincipal();
+		
+		this.removeAttendant(rendezvous, user);
 	}
 	
 	public void checkByPrincipal(Rendezvous rendezvous) {
@@ -149,6 +163,14 @@ public class RendezvousService {
 		
 		aux = new HashSet<>(rendezvous.getAttendants());
 		aux.add(attendant);
+		rendezvous.setAttendants(aux);
+	}
+	
+	protected void removeAttendant(Rendezvous rendezvous, User attendant) {
+		Collection<User> aux;
+		
+		aux = new HashSet<>(rendezvous.getAttendants());
+		aux.remove(attendant);
 		rendezvous.setAttendants(aux);
 	}
 	
