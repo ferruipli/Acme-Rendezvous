@@ -15,6 +15,7 @@ import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import security.UserAccount;
 
@@ -34,7 +35,7 @@ public abstract class Actor extends DomainEntity {
 		private String postalAddress;
 		private String phoneNumber;
 		private String email;
-		private Date birthDate;
+		private Date birthdate;
 		
 		@NotBlank
 		public String getName(){
@@ -80,14 +81,16 @@ public abstract class Actor extends DomainEntity {
 			this.email = email;
 		}
 		
-		@Temporal(TemporalType.TIMESTAMP)
+		@NotNull
 		@Past
-		public Date getBirthDate(){
-			return this.birthDate;
+		@Temporal(TemporalType.DATE)
+		@DateTimeFormat(pattern = "dd/MM/yyyy")
+		public Date getBirthdate() {
+			return birthdate;
 		}
-		
-		public void setBirthDate(Date birthDate){
-			this.birthDate = birthDate;
+
+		public void setBirthdate(Date birthdate) {
+			this.birthdate = birthdate;
 		}
 		
 		// Relationships --------------------------------------
