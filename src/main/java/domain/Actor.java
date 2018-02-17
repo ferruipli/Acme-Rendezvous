@@ -80,7 +80,7 @@ public abstract class Actor extends DomainEntity {
 			this.email = email;
 		}
 		
-		@Temporal(TemporalType.TIMESTAMP)
+		@Temporal(TemporalType.DATE)
 		@Past
 		public Date getBirthDate(){
 			return this.birthDate;
