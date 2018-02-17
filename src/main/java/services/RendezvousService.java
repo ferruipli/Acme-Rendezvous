@@ -174,12 +174,16 @@ public class RendezvousService {
 	}
 
 	protected void addComment(Rendezvous rendezvous, Comment comment) {
+		User user;
+		user = this.userService.findByPrincipal();
+		Assert.isTrue(rendezvous.getAttendants().contains(user));
 		Collection<Comment> aux;
 
 		aux = new HashSet<>(rendezvous.getComments());
 		aux.add(comment);
 		rendezvous.setComments(aux);
 	}
+	
 
 	protected void removeComment(Rendezvous rendezvous, Comment comment) {
 		Collection<Comment> aux;
