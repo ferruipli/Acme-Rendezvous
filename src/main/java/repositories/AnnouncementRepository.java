@@ -13,7 +13,7 @@ public interface AnnouncementRepository extends
 
 	/** Level B **/
 	@Query("")
-	Double[] avgSqrtAnnouncementPerRendezvous();
+	Double[] avgSqrtAnnouncementsPerRendezvous();
 	
 	// The rendezvouses that whose number of announcements is above 75% the average number of announcements per rendezvous. 
 	@Query("")
