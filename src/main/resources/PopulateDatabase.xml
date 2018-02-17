@@ -333,6 +333,9 @@
 		<property value="http://googleDrive.com/picture9" name="url"/>
 	</bean>
 	
+		<bean class="domain.Picture" id="picture10">
+		<property value="http://googleDrive.com/picture10" name="url"/>
+	</bean>
 	<!-- Question -->
 	
 	<bean class="domain.Question" id="question1">
@@ -357,7 +360,190 @@
 	</bean>
 	
 	<!-- Rendezvous -->
+	<bean class="domain.Rendezvous" id="rendezvous1">
+		<property value="rendezvous1" name="name"/>
+		<property value="description_rendezvous1" name="description"/>
+		<property value="01/01/2017 09:00" name="moment"/>
+		<property name="coordinates" >
+			<bean class="domain.GPS">
+			<property name="latitude" value = "45.52530825394937" />
+			<property name="longitude" value = "-293.70071785000005" />
+			</bean>
+		</property>
+		<property value="true" name="finalMode"/>
+		<property value="true" name="isFlagged"/>	
+		<property value="false" name="isCancelled"/>
+		<property value="false" name="adultOnly"/>		
+		<property ref="user1" name="creator"/>	
+		<property ref="picture1" name="picture"/>	
+	</bean>
 	
+	<bean class="domain.Rendezvous" id="rendezvous2">
+		<property value="rendezvous2" name="name"/>
+		<property value="description_rendezvous2" name="description"/>
+		<property value="02/02/2017 10:00" name="moment"/>
+		<property name="coordinates" >
+			<bean class="domain.GPS">
+				<property name="latitude" value = "16.893527767168244" />
+				<property name="longitude" value = "-311.98196785000005" />
+			</bean>
+		</property>
+		<property value="false" name="finalMode"/>
+		<property value="true" name="isFlagged"/>	
+		<property value="true" name="isCancelled"/>
+		<property value="false" name="adultOnly"/>		
+		<property ref="user1" name="creator"/>	
+		<property ref="picture2" name="picture"/>	
+	</bean>
+	
+	<bean class="domain.Rendezvous" id="rendezvous3">
+		<property value="rendezvous3" name="name"/>
+		<property value="description_rendezvous3" name="description"/>
+		<property value="03/03/2017 11:00" name="moment"/>
+		<property name="coordinates" >
+			<bean class="domain.GPS">
+				<property name="latitude" value = "29.156604213328453" />
+				<property name="longitude" value = "-282.27493660000005" />
+			</bean>
+		</property>
+		<property value="true" name="finalMode"/>
+		<property value="false" name="isFlagged"/>	
+		<property value="true" name="isCancelled"/>
+		<property value="false" name="adultOnly"/>		
+		<property ref="user1" name="creator"/>	
+		<property ref="picture3" name="picture"/>	
+	</bean>
+	
+	<bean class="domain.Rendezvous" id="rendezvous4">
+		<property value="rendezvous4" name="name"/>
+		<property value="description_rendezvous4" name="description"/>
+		<property value="04/04/2017 12:00" name="moment"/>
+		<property name="coordinates" >
+			<bean class="domain.GPS">
+				<property name="latitude" value = "29.156604213328453" />
+			<property name="longitude" value = "-282.27493660000005" />
+			</bean>
+		</property>
+		<property value="true" name="finalMode"/>
+		<property value="false" name="isFlagged"/>	
+		<property value="true" name="isCancelled"/>
+		<property value="true" name="adultOnly"/>		
+		<property ref="user1" name="creator"/>	
+		<property ref="picture4" name="picture"/>	
+	</bean>
+		
+		
+		<bean class="domain.Rendezvous" id="rendezvous5">
+		<property value="rendezvous5" name="name"/>
+		<property value="description_rendezvous5" name="description"/>
+		<property value="05/05/2017 13:00" name="moment"/>
+		<property name="coordinates" >
+			<bean class="domain.GPS">
+				<property name="latitude" value = "29.156604213328453" />
+			<property name="longitude" value = "-282.27493660000005" />
+			</bean>
+		</property>
+		<property value="true" name="finalMode"/>
+		<property value="true" name="isFlagged"/>	
+		<property value="false" name="isCancelled"/>
+		<property value="true" name="adultOnly"/>		
+		<property ref="user2" name="creator"/>	
+		<property ref="picture5" name="picture"/>	
+	</bean>
+	
+	<bean class="domain.Rendezvous" id="rendezvous6">
+		<property value="rendezvous6" name="name"/>
+		<property value="description_rendezvous4" name="description"/>
+		<property value="06/06/2017 14:00" name="moment"/>
+		<property name="coordinates" >
+			<bean class="domain.GPS">
+				<property name="latitude" value = "29.156604213328453" />
+			<property name="longitude" value = "-282.27493660000005" />
+			</bean>
+		</property>
+		<property value="true" name="finalMode"/>
+		<property value="true" name="isFlagged"/>	
+		<property value="false" name="isCancelled"/>
+		<property value="false" name="adultOnly"/>		
+		<property ref="user2" name="creator"/>	
+		<property ref="picture6" name="picture"/>	
+	</bean>
+	
+	<bean class="domain.Rendezvous" id="rendezvous7">
+		<property value="rendezvous7" name="name"/>
+		<property value="description_rendezvous7" name="description"/>
+		<property value="07/07/2017 15:00" name="moment"/>
+		<property name="coordinates" >
+			<bean class="domain.GPS">
+				<property name="latitude" value = "27.610179024856524" />
+			<property name="longitude" value = "-313.21243660000005" />
+			</bean>
+		</property>
+		<property value="false" name="finalMode"/>
+		<property value="true" name="isFlagged"/>	
+		<property value="true" name="isCancelled"/>
+		<property value="true" name="adultOnly"/>		
+		<property ref="user3" name="creator"/>	
+		<property ref="picture7" name="picture"/>	
+	</bean>
+		
+	<bean class="domain.Rendezvous" id="rendezvous8">
+		<property value="rendezvous8" name="name"/>
+		<property value="description_rendezvous8" name="description"/>
+		<property value="04/04/2017 20:00" name="moment"/>
+		<property name="coordinates" >
+			<bean class="domain.GPS">
+				<property name="latitude" value = "29.156604213328453" />
+			<property name="longitude" value = "-282.27493660000005" />
+			</bean>
+		</property>
+		<property value="true" name="finalMode"/>
+		<property value="false" name="isFlagged"/>	
+		<property value="true" name="isCancelled"/>
+		<property value="false" name="adultOnly"/>		
+		<property ref="user3" name="creator"/>	
+		<property ref="picture8" name="picture"/>	
+	</bean>
+	
+	<bean class="domain.Rendezvous" id="rendezvous9">
+		<property value="rendezvous9" name="name"/>
+		<property value="description_rendezvous9" name="description"/>
+		<property value="10/10/2017 12:00" name="moment"/>
+		<property name="coordinates" >
+			<bean class="domain.GPS">
+				<property name="latitude" value = "27.610179024856524" />
+			<property name="longitude" value = "-313.21243660000005" />
+			</bean>
+		</property>
+		<property value="false" name="finalMode"/>
+		<property value="false" name="isFlagged"/>	
+		<property value="true" name="isCancelled"/>
+		<property value="false" name="adultOnly"/>		
+		<property ref="user3" name="creator"/>	
+		<property ref="picture9" name="picture"/>	
+	</bean>
+		
+		<bean class="domain.Rendezvous" id="rendezvous10">
+		<property value="rendezvous10" name="name"/>
+		<property value="description_rendezvous4" name="description"/>
+		<property value="12/12/2017 10:00" name="moment"/>
+		<property name="coordinates" >
+			<bean class="domain.GPS">
+				<property name="latitude" value = "50.34870689601561" />
+			<property name="longitude" value = "-295.10696785000005" />
+			</bean>
+		</property>
+		<property value="false" name="finalMode"/>
+		<property value="false" name="isFlagged"/>	
+		<property value="fasle" name="isCancelled"/>
+		<property value="true" name="adultOnly"/>		
+		<property ref="user4" name="creator"/>	
+		<property ref="picture10" name="picture"/>	
+	</bean>
+		
+		
+		
+		
 	<!-- User -->
 	
 	<bean class="domain.User" id="user1">
@@ -367,6 +553,57 @@
 		<property value="Calle Puerta Osuna" name="postalAddress"/>
 		<property value="+34 687458745" name="phoneNumber"/>
 		<property name="userAccount" ref="userAccount4"/>	
+		<property name="createdRendezvouses">
+			<list>
+				<ref bean = "rendezvous1"/>
+				<ref bean = "rendezvous2"/>
+				<ref bean = "rendezvous3"/>
+				<ref bean = "rendezvous4"/>
+			</list>
+		</property>
+		<property name="attendedRendezvouses">
+			<list>
+				<ref bean = "rendezvous1"/>
+				<ref bean = "rendezvous2"/>
+				<ref bean = "rendezvous3"/>
+				<ref bean = "rendezvous4"/>				
+				<ref bean = "rendezvous7"/>
+				<ref bean = "rendezvous9"/>
+				
+			</list>
+		</property>
+		<property name="reservedRendezvouses">
+			<list>
+				<ref bean = "rendezvous8"/>
+				<ref bean = "rendezvous6"/>
+				<ref bean = "rendezvous10"/>
+			</list>
+		</property>
+		<property name="writtenComments">
+			<list>
+				<ref bean = "comment1"/>
+				<ref bean = "comment2"/>
+				<ref bean = "comment3"/>
+			</list>
+		</property>
+		<property name="repliedComments">
+			<list>
+				<ref bean = "comment4"/>
+				<ref bean = "comment5"/>
+			</list>
+		</property>
+		<property name="questions">
+			<list>
+				<ref bean = "question1"/>
+				<ref bean = "question2"/>
+			</list>
+		</property>
+		<property name="answers">
+			<list>
+			<ref bean = "answer1"/>
+				<ref bean = "answer2"/>
+			</list>
+		</property>
 	</bean>
 	
 	<bean class="domain.User" id="user2">
@@ -375,8 +612,55 @@
 		<property value="user2@gmail.com" name="email"/>
 		<property value="Calle Puerta Utrera" name="postalAddress"/>
 		<property value="+34 686988745" name="phoneNumber"/>
-		<property name="userAccount" ref="userAccount5"/>	
+		<property name="userAccount" ref="userAccount5"/>
+		<property name="createdRendezvouses">
+			<list>
+				<ref bean = "rendezvous5"/>
+				<ref bean = "rendezvous6"/>
+			</list>
+		</property>	
+		<property name="attendedRendezvouses">
+			<list>
+				<ref bean = "rendezvous5"/>
+				<ref bean = "rendezvous6"/>
+				<ref bean = "rendezvous1"/>
+				<ref bean = "rendezvous2"/>				
+				<ref bean = "rendezvous3"/>
+				<ref bean = "rendezvous9"/>
+				
+			</list>
+		</property>
+		<property name="reservedRendezvouses">
+			<list>
+				<ref bean = "rendezvous4"/>
+				<ref bean = "rendezvous7"/>
+				<ref bean = "rendezvous10"/>
+			</list>
+		</property>
+		<property name="writtenComments">
+			<list>
+				<ref bean = "comment4"/>
+				<ref bean = "comment5"/>
+			</list>
+		</property>
+		<property name="repliedComments">
+			<list>
+				<ref bean = "comment1"/>
+				<ref bean = "comment2"/>
+			</list>
+		</property>
+		<property name="questions">
+			<list>
+				<ref bean = "question3"/>
+			</list>
+		</property>
+		<property name="answers">
+			<list>
+				<ref bean = "answer3"/>
+			</list>
+		</property>
 	</bean>
+	
 	
 	<bean class="domain.User" id="user3">
 		<property value="user3" name="name"/>
@@ -384,7 +668,51 @@
 		<property value="user3@gmail.com" name="email"/>
 		<property value="Calle Malaga" name="postalAddress"/>
 		<property value="+34 687458745" name="phoneNumber"/>
-		<property name="userAccount" ref="userAccount6"/>	
+		<property name="userAccount" ref="userAccount6"/>
+		<property name="createdRendezvouses">
+			<list>
+				<ref bean = "rendezvous7"/>
+				<ref bean = "rendezvous8"/>
+				<ref bean = "rendezvous9"/>
+			</list>
+		</property>	
+		<property name="attendedRendezvouses">
+			<list>
+				<ref bean = "rendezvous7"/>
+				<ref bean = "rendezvous8"/>
+				<ref bean = "rendezvous9"/>
+				<ref bean = "rendezvous4"/>				
+				<ref bean = "rendezvous7"/>
+				<ref bean = "rendezvous2"/>
+				
+			</list>
+		</property>
+		<property name="reservedRendezvouses">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="writtenComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="repliedComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="questions">
+			<list>
+				<ref bean = "question4"/>
+				<ref bean = "question5"/>
+			</list>
+		</property>
+		<property name="answers">
+			<list>
+				<null></null>
+			</list>
+		</property>
 	</bean>
 	
 	<bean class="domain.User" id="user4">
@@ -393,7 +721,49 @@
 		<property value="user4@gmail.com" name="email"/>
 		<property value="Calle Puerta Osuna" name="postalAddress"/>
 		<property value="+34 687458745" name="phoneNumber"/>
-		<property name="userAccount" ref="userAccount7"/>	
+		<property name="userAccount" ref="userAccount7"/>
+		<property name="createdRendezvouses">
+			<list>
+				<ref bean = "rendezvous10"/>
+			</list>
+		</property>	
+		<property name="attendedRendezvouses">
+			<list>
+				<ref bean = "rendezvous10"/>
+				<ref bean = "rendezvous2"/>
+				<ref bean = "rendezvous6"/>
+				<ref bean = "rendezvous8"/>				
+				<ref bean = "rendezvous7"/>
+				<ref bean = "rendezvous9"/>
+				
+			</list>
+		</property>
+		<property name="reservedRendezvouses">
+			<list>
+				<ref bean = "rendezvous3"/>
+			</list>
+		</property>
+		<property name="writtenComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="repliedComments">
+			<list>
+				<ref bean = "comment1"/>
+				<ref bean = "comment2"/>
+			</list>
+		</property>
+		<property name="questions">
+			<list>
+				<ref bean = "question6"/>
+			</list>
+		</property>
+		<property name="answers">
+			<list>
+				<null></null>
+			</list>
+		</property>
 	</bean>
 	
 	<bean class="domain.User" id="user5">
@@ -402,7 +772,48 @@
 		<property value="user5@gmail.com" name="email"/>
 		<property value="Calle Puerta Osuna" name="postalAddress"/>
 		<property value="+34 687896745" name="phoneNumber"/>
-		<property name="userAccount" ref="userAccount8"/>	
+		<property name="userAccount" ref="userAccount8"/>
+		<property name="createdRendezvouses">
+			<list>
+				<null></null>
+			</list>
+		</property>	
+		<property name="attendedRendezvouses">
+			<list>
+				<ref bean = "rendezvous6"/>
+				<ref bean = "rendezvous2"/>
+				<ref bean = "rendezvous3"/>
+				<ref bean = "rendezvous4"/>				
+				<ref bean = "rendezvous7"/>
+				<ref bean = "rendezvous9"/>
+				
+			</list>
+		</property>
+		<property name="reservedRendezvouses">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="writtenComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="repliedComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="questions">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="answers">
+			<list>
+				<null></null>
+			</list>
+		</property>
 	</bean>
 	
 	<bean class="domain.User" id="user6">
@@ -411,7 +822,48 @@
 		<property value="user6@gmail.com" name="email"/>
 		<property value="Calle Puerta Osuna" name="postalAddress"/>
 		<property value="+34 687458745" name="phoneNumber"/>
-		<property name="userAccount" ref="userAccount9"/>	
+		<property name="userAccount" ref="userAccount9"/>
+		<property name="createdRendezvouses">
+			<list>
+				<null></null>
+			</list>
+		</property>	
+		<property name="attendedRendezvouses">
+			<list>
+				<ref bean = "rendezvous10"/>
+				<ref bean = "rendezvous5"/>
+				<ref bean = "rendezvous8"/>
+				<ref bean = "rendezvous6"/>				
+				<ref bean = "rendezvous7"/>
+				<ref bean = "rendezvous9"/>
+				
+			</list>
+		</property>
+		<property name="reservedRendezvouses">
+			<list>
+				<ref bean = "rendezvous1"/>
+			</list>
+		</property>
+		<property name="writtenComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="repliedComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="questions">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="answers">
+			<list>
+				<null></null>
+			</list>
+		</property>
 	</bean>
-	
+
 </beans>
