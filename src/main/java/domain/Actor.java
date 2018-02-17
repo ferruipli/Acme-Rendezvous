@@ -1,12 +1,17 @@
 package domain;
 
+import java.util.Date;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -29,6 +34,7 @@ public abstract class Actor extends DomainEntity {
 		private String postalAddress;
 		private String phoneNumber;
 		private String email;
+		private Date birthDate;
 		
 		@NotBlank
 		public String getName(){
@@ -72,6 +78,16 @@ public abstract class Actor extends DomainEntity {
 		
 		public void setEmail(String email){
 			this.email = email;
+		}
+		
+		@Temporal(TemporalType.TIMESTAMP)
+		@Past
+		public Date getBirthDate(){
+			return this.birthDate;
+		}
+		
+		public void setBirthDate(Date birthDate){
+			this.birthDate = birthDate;
 		}
 		
 		// Relationships --------------------------------------
