@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Rendezvous;
+import domain.User;
 
 @Repository
 public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> {
@@ -27,6 +28,10 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	//The top-10 rendezvouses in terms of users who have RSVPd them. 
 	@Query("")
 	Collection<Rendezvous> top10RendezvousesRSVPd();
+	
+	// Colección de Rendezvous reservadas de un user
+	@Query("")
+	Collection<Rendezvous> findRendezvousReserveByUser(User user);
 	
 	/** Level B	**/
 	// The rendezvouses that are linked to a number of rendezvouses that is greater than the average plus 10%. 

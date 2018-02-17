@@ -5,30 +5,31 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.ActorRepository;
-import domain.Actor;
+import repositories.UserRepository;
+import domain.User;
 
 @Component
 @Transactional
-public class StringToActorConverter implements Converter<String, Actor> {
+public class StringToUserConverter implements Converter<String, User> {
 	
 	@Autowired
-	ActorRepository	actorRepository;
+	UserRepository	userRepository;
 
 
 	@Override
-	public Actor convert(final String text) {
-		Actor result;
+	public User convert(final String text) {
+		User result;
 		int id;
 
 		try {
 			id = Integer.valueOf(text);
-			result = this.actorRepository.findOne(id);
+			result = this.userRepository.findOne(id);
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
 
 		return result;
 	}
+
 
 }
