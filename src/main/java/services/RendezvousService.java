@@ -79,10 +79,26 @@ public class RendezvousService {
 	}
 	
 	public Rendezvous save(Rendezvous rendezvous) {
-		return null;
+		this.checkByPrincipal(rendezvous);
+		
+		Rendezvous result;
+		
+		if (rendezvous.getId() != 0) {
+			this.checkFinalMode(rendezvous);
+		}
+		
+		result = this.rendezvousRepository.save(rendezvous);
+		
+		return result;
 	}
 	
 	public void delete(Rendezvous rendezvous) {
+		this.checkByPrincipal(rendezvous);
+		Assert.isTrue(rendezvous.getId() != 0);
+		this.checkFinalMode(rendezvous);
+		
+		rendezvous.setFinalMode(true);
+		rendezvous.setIsFlagged(true);
 		
 	}
 	
@@ -94,11 +110,24 @@ public class RendezvousService {
 	}
 	
 	public void remove(Rendezvous rendezvous) {
+		Assert.notNull(rendezvous);
+		Assert.isTrue(rendezvous.getId() != 0);
+		
+		this.rendezvousRepository.delete(rendezvous);
+	}
+	
+	public void cancel(Rendezvous rendezvous) {
 		
 	}
 	
 	public void checkByPrincipal(Rendezvous rendezvous) {
+		Assert.notNull(rendezvous);
 		
+		User user;
+		
+		user = (User)this.actorService.findByPrincipal();
+		
+		Assert.isTrue(rendezvous.getCreator().equals(user));
 	}
 	
 	private void checkAdult() {
@@ -109,6 +138,10 @@ public class RendezvousService {
 		edad = this.actorService.getEdad(actor);
 		
 		Assert.isTrue(edad>=18);
+	}
+	
+	private void checkFinalMode(Rendezvous rendezvous) {
+		Assert.isTrue(rendezvous.getFinalMode() == false);
 	}
 	
 }
