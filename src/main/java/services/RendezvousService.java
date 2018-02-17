@@ -30,9 +30,6 @@ public class RendezvousService {
 	@Autowired
 	private ActorService actorService;
 
-	@Autowired
-	private UserService userService;
-
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
 		super();
@@ -111,7 +108,7 @@ public class RendezvousService {
 		Assert.notNull(rendezvous);
 		User user;
 
-		user = this.userService.findByPrincipal();
+		user = (User) this.actorService.findByPrincipal();
 
 		this.addAttendant(rendezvous, user);
 
@@ -128,7 +125,7 @@ public class RendezvousService {
 		Assert.notNull(rendezvous);
 		User user;
 
-		user = this.userService.findByPrincipal();
+		user = (User) this.actorService.findByPrincipal();
 
 		this.removeAttendant(rendezvous, user);
 	}
@@ -175,7 +172,7 @@ public class RendezvousService {
 
 	protected void addComment(Rendezvous rendezvous, Comment comment) {
 		User user;
-		user = this.userService.findByPrincipal();
+		user = (User) this.actorService.findByPrincipal();
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
 		Collection<Comment> aux;
 
