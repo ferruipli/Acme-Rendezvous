@@ -31,11 +31,11 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	
 	// Colección de Rendezvous reservadas de un user
 	@Query("")
-	Collection<Rendezvous> findRendezvousReserveByUser(User user);
+	Collection<Rendezvous> findRendezvousReservedByUser(User user);
 	
 	/** Level B	**/
 	// The rendezvouses that are linked to a number of rendezvouses that is greater than the average plus 10%. 
-	Collection<Rendezvous> redezvousesLinkedPlus10();
+	Collection<Rendezvous> rendezvousesLinkedPlus10();
 	
 
 }
