@@ -35,7 +35,7 @@ public abstract class Actor extends DomainEntity {
 		private String postalAddress;
 		private String phoneNumber;
 		private String email;
-		private Date birthdate;
+		private Date birthDate;
 		
 		@NotBlank
 		public String getName(){
@@ -86,11 +86,11 @@ public abstract class Actor extends DomainEntity {
 		@Temporal(TemporalType.DATE)
 		@DateTimeFormat(pattern = "dd/MM/yyyy")
 		public Date getBirthdate() {
-			return birthdate;
+			return birthDate;
 		}
 
-		public void setBirthdate(Date birthdate) {
-			this.birthdate = birthdate;
+		public void setBirthdate(Date birthDate) {
+			this.birthDate = birthDate;
 		}
 		
 		// Relationships --------------------------------------
