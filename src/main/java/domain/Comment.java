@@ -55,6 +55,18 @@ public class Comment extends DomainEntity {
 	// Relationships ------------------------------------------------
 	private User user;
 	private Picture picture;
+	private Comment comment;
+
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public Comment getComment() {
+		return comment;
+	}
+
+	public void setComment(Comment comment) {
+		this.comment = comment;
+	}
 
 	@NotNull
 	@Valid

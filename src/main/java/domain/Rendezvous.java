@@ -37,7 +37,6 @@ public class Rendezvous extends DomainEntity {
 	private GPS gpsCoordinates;
 	private boolean finalMode;
 	private boolean isFlagged;
-	private boolean isCancelled;
 	private boolean adultOnly;
 
 	@NotBlank
@@ -87,19 +86,11 @@ public class Rendezvous extends DomainEntity {
 	}
 
 	public boolean getIsFlagged() {
-		return this.isFlagged;
+		return isFlagged;
 	}
 
 	public void setIsFlagged(boolean isFlagged) {
 		this.isFlagged = isFlagged;
-	}
-
-	public boolean getIsCancelled() {
-		return this.isCancelled;
-	}
-
-	public void setIsCancelled(boolean isCancelled) {
-		this.isCancelled = isCancelled;
 	}
 
 	public boolean getAdultOnly() {
@@ -110,14 +101,6 @@ public class Rendezvous extends DomainEntity {
 		this.adultOnly = adultOnly;
 	}
 	
-	public void setFlagged(boolean isFlagged) {
-		this.isFlagged = isFlagged;
-	}
-
-	public void setCancelled(boolean isCancelled) {
-		this.isCancelled = isCancelled;
-	}
-	
 	// Relationships ----------------------------------------------
 	private User 						creator;
 	private Collection<User>			attendants;
@@ -125,6 +108,7 @@ public class Rendezvous extends DomainEntity {
 	private Collection<Comment>			comments;
 	private Collection<Rendezvous> 		similarOnes;
 	private Collection<Announcement>	announcements;
+	private Collection<Question>		questions;
 
 	@NotNull
 	@Valid
@@ -185,6 +169,16 @@ public class Rendezvous extends DomainEntity {
 
 	public void setAnnouncements(Collection<Announcement> announcements) {
 		this.announcements = announcements;
+	}
+	
+	@NotNull
+	@OneToMany
+	public Collection<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(Collection<Question> questions) {
+		this.questions = questions;
 	}
 	
 }

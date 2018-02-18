@@ -22,9 +22,7 @@ public class User extends Actor {
 	// Relationships ----------------------------------------------------------
 	private Collection<Rendezvous> 	createdRendezvouses;
 	private Collection<Rendezvous> 	attendedRendezvouses;
-	private Collection<Rendezvous> 	reservedRendezvouses;
-	private Collection<Comment> 	writtenComments;
-	private Collection<Comment>		repliedComments;
+	private Collection<Comment> 	comments;
 	private Collection<Question>	questions;
 	private Collection<Answer>		answers;
 	
@@ -49,35 +47,15 @@ public class User extends Actor {
 	}
 	
 	@NotNull
-	@ManyToMany
-	public Collection<Rendezvous> getReservedRendezvouses() {
-		return reservedRendezvouses;
-	}
-	
-	public void setReservedRendezvouses(Collection<Rendezvous> reservedRendezvouses) {
-		this.reservedRendezvouses = reservedRendezvouses;
-	}
-	
-	@NotNull
 	@OneToMany(mappedBy="user")
-	public Collection<Comment> getWrittenComments() {
-		return writtenComments;
+	public Collection<Comment> getComments() {
+		return comments;
 	}
-	
-	public void setWrittenComments(Collection<Comment> writtenComments) {
-		this.writtenComments = writtenComments;
+
+	public void setComments(Collection<Comment> comments) {
+		this.comments = comments;
 	}
-	
-	@NotNull
-	@ManyToMany
-	public Collection<Comment> getRepliedComments() {
-		return repliedComments;
-	}
-	
-	public void setRepliedComments(Collection<Comment> repliedComments) {
-		this.repliedComments = repliedComments;
-	}
-	
+
 	@NotNull
 	@OneToMany
 	public Collection<Question> getQuestions() {

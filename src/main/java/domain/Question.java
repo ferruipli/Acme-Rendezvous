@@ -1,10 +1,11 @@
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.Valid;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -33,17 +34,16 @@ public class Question extends DomainEntity {
 	}
 	
 	// Relationships ----------------------------------------------------
-	private Rendezvous rendezvous;
+	private Collection<Answer> answers;
 
 	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public Rendezvous getRendezvous() {
-		return rendezvous;
+	@OneToMany
+	public Collection<Answer> getAnswers() {
+		return answers;
 	}
 
-	public void setRendezvous(Rendezvous rendezvous) {
-		this.rendezvous = rendezvous;
+	public void setAnswers(Collection<Answer> answers) {
+		this.answers = answers;
 	}
 	
 }
