@@ -212,7 +212,9 @@
 		<property value="text_comment1" name="text"/>
 		<property ref="user1" name="user"/>	
 		<property ref="picture1" name="picture"/>
-		<property ref="comment1" name="comment"/>
+		<property name="comment">
+			<null></null>
+		</property>
 	</bean>
 	
 	<bean class="domain.Comment" id="comment2">
