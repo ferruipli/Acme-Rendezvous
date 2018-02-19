@@ -36,7 +36,6 @@ public class DashboardAdministratorController extends AbstractController {
 	public DashboardAdministratorController() {
 		super();
 	}
-	// lalalala
 
 	// Display ----------------------------------------------------------------
 	@RequestMapping("/display")
