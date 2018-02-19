@@ -18,6 +18,36 @@
 	">
 
 	<util:list id="converters">
+	
+		<bean class="converters.ActorToStringConverter" />
+		<bean class="converters.StringToActorConverter" />
+		
+		<bean class="converters.AdministratorToStringConverter" />
+		<bean class="converters.StringToAdministratorConverter" />
+		
+		<bean class="converters.AnnouncementToStringConverter" />
+		<bean class="converters.StringToAnnouncementConverter" />
+		
+		<bean class="converters.AnswerToStringConverter" />
+		<bean class="converters.StringToAnswerConverter" />
+		
+		<bean class="converters.CommentToStringConverter" />
+		<bean class="converters.StringToCommentConverter" />
+		
+		<bean class="converters.GPSToStringConverter" />
+		<bean class="converters.StringToGPSConverter" />
+		
+		<bean class="converters.PictureToStringConverter" />
+		<bean class="converters.StringToPictureConverter" />
+		
+		<bean class="converters.QuestionToStringConverter" />
+		<bean class="converters.StringToQuestionConverter" />
+		
+		<bean class="converters.RendezvousToStringConverter" />
+		<bean class="converters.StringToRendezvousConverter" />
+		
+		<bean class="converters.UserToStringConverter" />
+		<bean class="converters.StringToUserConverter" />
 		
 	</util:list>
 	
