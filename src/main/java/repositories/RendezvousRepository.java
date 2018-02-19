@@ -37,5 +37,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	// The rendezvouses that are linked to a number of rendezvouses that is greater than the average plus 10%. 
 	Collection<Rendezvous> rendezvousesLinkedPlus10();
 	
+	@Query("select r from Rendezvous r where r.finalModel=true")
+	Collection<Rendezvous> findAllAvailable();
 
 }

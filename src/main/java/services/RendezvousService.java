@@ -103,22 +103,31 @@ public class RendezvousService {
 	}
 
 	// Other business methods -----------------------------------------------
-
-	public void reserve(Rendezvous rendezvous) {
-		Assert.notNull(rendezvous);
-		User user;
-
-		user = (User) this.actorService.findByPrincipal();
-
-		this.addAttendant(rendezvous, user);
-
+	
+	public Collection<Rendezvous> findAllAvailable() {
+		Collection<Rendezvous> results;
+		
+		results = this.rendezvousRepository.findAllAvailable();
+		
+		return results;
 	}
 
-	public void remove(Rendezvous rendezvous) {
-		Assert.notNull(rendezvous);
-		Assert.isTrue(rendezvous.getId() != 0);
+	public void reserve(int rendezvousId) {
+		Assert.isTrue(rendezvousId != 0);
+		
+		User user;
+		Rendezvous rendezvous;
+		
+		user = (User) this.actorService.findByPrincipal();
+		rendezvous = this.rendezvousRepository.findOne(rendezvousId);
+		
+		this.addAttendant(rendezvous, user);
+	}
 
-		this.rendezvousRepository.delete(rendezvous);
+	public void remove(int rendezvousId) {
+		Assert.isTrue(rendezvousId != 0);
+
+		this.rendezvousRepository.delete(rendezvousId);
 	}
 
 	public void cancel(Rendezvous rendezvous) {
