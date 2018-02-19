@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -26,10 +27,12 @@ public class Comment extends DomainEntity {
 		super();
 	}
 
+
 	// Attributes -------------------------------------------------------------
 
-	private Date moment;
-	private String text;
+	private Date	moment;
+	private String	text;
+
 
 	@NotNull
 	@Past
@@ -39,7 +42,7 @@ public class Comment extends DomainEntity {
 		return this.moment;
 	}
 
-	public void setMoment(Date moment) {
+	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
 
@@ -48,23 +51,24 @@ public class Comment extends DomainEntity {
 		return this.text;
 	}
 
-	public void setText(String text) {
+	public void setText(final String text) {
 		this.text = text;
 	}
-	
-	// Relationships ------------------------------------------------
-	private User user;
-	private Picture picture;
-	private Comment comment;
 
-	@NotNull
+
+	// Relationships ------------------------------------------------
+	private User	user;
+	private Picture	picture;
+	private Comment	comment;
+
+
 	@Valid
 	@ManyToOne(optional = false)
 	public Comment getComment() {
-		return comment;
+		return this.comment;
 	}
 
-	public void setComment(Comment comment) {
+	public void setComment(final Comment comment) {
 		this.comment = comment;
 	}
 
@@ -72,21 +76,21 @@ public class Comment extends DomainEntity {
 	@Valid
 	@ManyToOne(optional = false)
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
-	
+
 	@Valid
 	@OneToOne(optional = true)
 	public Picture getPicture() {
-		return picture;
+		return this.picture;
 	}
 
-	public void setPicture(Picture picture) {
+	public void setPicture(final Picture picture) {
 		this.picture = picture;
 	}
-	
+
 }
