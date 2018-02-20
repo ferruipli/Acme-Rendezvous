@@ -184,6 +184,7 @@ public class Rendezvous extends DomainEntity {
 		this.questions = questions;
 	}
 
+	// Derived attribute
 	@NotNull
 	public Collection<User> getAttendants() {
 		return this.attendants;

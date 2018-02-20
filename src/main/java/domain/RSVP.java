@@ -26,6 +26,7 @@ public class RSVP extends DomainEntity {
 	// Relationships ----------------------------------
 	private Rendezvous			rendezvous;
 	private Collection<Answer>	answers;
+	private User				user;
 
 
 	@NotNull
@@ -47,6 +48,16 @@ public class RSVP extends DomainEntity {
 
 	public void setAnswers(final Collection<Answer> answers) {
 		this.answers = answers;
+	}
+
+	@NotNull
+	@ManyToOne(optional = false)
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(final User user) {
+		this.user = user;
 	}
 
 }

@@ -37,7 +37,7 @@ public class User extends Actor {
 	}
 
 	@NotNull
-	@OneToMany
+	@OneToMany(mappedBy = "user")
 	public Collection<RSVP> getReserves() {
 		return this.reserves;
 	}
