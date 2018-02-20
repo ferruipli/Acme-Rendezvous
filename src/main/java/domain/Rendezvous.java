@@ -6,17 +6,15 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -38,6 +36,7 @@ public class Rendezvous extends DomainEntity {
 	private boolean finalMode;
 	private boolean isFlagged;
 	private boolean adultOnly;
+	private String urlPicture;
 
 	@NotBlank
 	public String getName() {
@@ -101,10 +100,18 @@ public class Rendezvous extends DomainEntity {
 		this.adultOnly = adultOnly;
 	}
 	
+	@URL
+	public String getUrlPicture() {
+		return urlPicture;
+	}
+
+	public void setUrlPicture(String urlPicture) {
+		this.urlPicture = urlPicture;
+	}
+	
 	// Relationships ----------------------------------------------
 	private User 						creator;
-	private Collection<User>			attendants;
-	private Picture						picture;
+	private Collection<RSVP>			reserves;
 	private Collection<Comment>			comments;
 	private Collection<Rendezvous> 		similarOnes;
 	private Collection<Announcement>	announcements;
@@ -120,25 +127,15 @@ public class Rendezvous extends DomainEntity {
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
-
-	@NotEmpty
-	@ManyToMany
-	public Collection<User> getAttendants() {
-		return attendants;
+	
+	@NotNull
+	@OneToMany(mappedBy="rendezvous")
+	public Collection<RSVP> getReserves() {
+		return reserves;
 	}
 
-	public void setAttendants(Collection<User> attendants) {
-		this.attendants = attendants;
-	}
-
-	@Valid
-	@OneToOne(optional = true)
-	public Picture getPicture() {
-		return picture;
-	}
-
-	public void setPicture(Picture picture) {
-		this.picture = picture;
+	public void setReserves(Collection<RSVP> reserves) {
+		this.reserves = reserves;
 	}
 
 	@NotNull

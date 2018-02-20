@@ -5,7 +5,6 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
@@ -21,10 +20,8 @@ public class User extends Actor {
 	
 	// Relationships ----------------------------------------------------------
 	private Collection<Rendezvous> 	createdRendezvouses;
-	private Collection<Rendezvous> 	attendedRendezvouses;
+	private Collection<RSVP>		reserves;
 	private Collection<Comment> 	comments;
-	private Collection<Question>	questions;
-	private Collection<Answer>		answers;
 	
 	@NotNull
 	@OneToMany(mappedBy="creator")
@@ -37,13 +34,13 @@ public class User extends Actor {
 	}
 	
 	@NotNull
-	@ManyToMany(mappedBy="attendants")
-	public Collection<Rendezvous> getAttendedRendezvouses() {
-		return attendedRendezvouses;
+	@OneToMany
+	public Collection<RSVP> getReserves() {
+		return reserves;
 	}
-	
-	public void setAttendedRendezvouses(Collection<Rendezvous> attendedRendezvouses) {
-		this.attendedRendezvouses = attendedRendezvouses;
+
+	public void setReserves(Collection<RSVP> reserves) {
+		this.reserves = reserves;
 	}
 	
 	@NotNull
@@ -54,26 +51,6 @@ public class User extends Actor {
 
 	public void setComments(Collection<Comment> comments) {
 		this.comments = comments;
-	}
-
-	@NotNull
-	@OneToMany
-	public Collection<Question> getQuestions() {
-		return questions;
-	}
-	
-	public void setQuestions(Collection<Question> questions) {
-		this.questions = questions;
-	}
-	
-	@NotNull
-	@OneToMany
-	public Collection<Answer> getAnswers() {
-		return answers;
-	}
-	
-	public void setAnswers(Collection<Answer> answers) {
-		this.answers = answers;
 	}
 	
 }

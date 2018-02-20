@@ -1,13 +1,14 @@
 
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -32,6 +34,7 @@ public class Comment extends DomainEntity {
 
 	private Date	moment;
 	private String	text;
+	private String 	urlPicture;
 
 
 	@NotNull
@@ -54,22 +57,28 @@ public class Comment extends DomainEntity {
 	public void setText(final String text) {
 		this.text = text;
 	}
+	
+	@URL
+	public String getUrlPicture() {
+		return urlPicture;
+	}
 
+	public void setUrlPicture(String urlPicture) {
+		this.urlPicture = urlPicture;
+	}
 
 	// Relationships ------------------------------------------------
 	private User	user;
-	private Picture	picture;
-	private Comment	comment;
+	private Collection<Comment> repliedComments;
 
-
-	@Valid
-	@ManyToOne(optional = true)
-	public Comment getComment() {
-		return this.comment;
+	@NotNull
+	@OneToMany
+	public Collection<Comment> getRepliedComments() {
+		return repliedComments;
 	}
 
-	public void setComment(final Comment comment) {
-		this.comment = comment;
+	public void setRepliedComments(Collection<Comment> repliedComments) {
+		this.repliedComments = repliedComments;
 	}
 
 	@NotNull
@@ -81,16 +90,6 @@ public class Comment extends DomainEntity {
 
 	public void setUser(final User user) {
 		this.user = user;
-	}
-
-	@Valid
-	@OneToOne(optional = true)
-	public Picture getPicture() {
-		return this.picture;
-	}
-
-	public void setPicture(final Picture picture) {
-		this.picture = picture;
 	}
 
 }
