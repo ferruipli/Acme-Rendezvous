@@ -6,8 +6,8 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -187,7 +187,8 @@ public class Rendezvous extends DomainEntity {
 
 	// Derived attribute
 	@NotNull
-	@ElementCollection
+	//	@ElementCollection
+	@ManyToMany
 	public Collection<User> getAttendants() {
 		return this.attendants;
 	}
