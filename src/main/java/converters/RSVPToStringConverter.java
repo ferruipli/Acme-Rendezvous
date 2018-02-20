@@ -4,20 +4,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Picture;
+import domain.RSVP;
 
 @Component
 @Transactional
-public class PictureToStringConverter implements Converter<Picture, String> {
+public class RSVPToStringConverter implements Converter<RSVP, String> {
 	
 	@Override
-	public String convert(Picture picture){
+	public String convert(RSVP rsvp){
 		String result;
 		
-		if(picture == null){
+		if(rsvp == null){
 			result = null;
 		} else {
-			result = String.valueOf(picture.getId());
+			result = String.valueOf(rsvp.getId());
 		}
 		
 		return result;

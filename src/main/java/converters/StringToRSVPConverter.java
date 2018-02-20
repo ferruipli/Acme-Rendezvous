@@ -5,25 +5,25 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.PictureRepository;
-import domain.Picture;
+import repositories.RSVPRepository;
+import domain.RSVP;
 
 @Component
 @Transactional
-public class StringToPictureConverter implements Converter<String, Picture> {
+public class StringToRSVPConverter implements Converter<String, RSVP> {
 	
 	@Autowired
-	PictureRepository	pictureRepository;
+	RSVPRepository	rsvpRepository;
 
 
 	@Override
-	public Picture convert(final String text) {
-		Picture result;
+	public RSVP convert(final String text) {
+		RSVP result;
 		int id;
 
 		try {
 			id = Integer.valueOf(text);
-			result = this.pictureRepository.findOne(id);
+			result = this.rsvpRepository.findOne(id);
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}

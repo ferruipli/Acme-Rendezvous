@@ -37,8 +37,8 @@
 		<bean class="converters.GPSToStringConverter" />
 		<bean class="converters.StringToGPSConverter" />
 		
-		<bean class="converters.PictureToStringConverter" />
-		<bean class="converters.StringToPictureConverter" />
+		<bean class="converters.RSVPToStringConverter" />
+		<bean class="converters.StringToRSVPConverter" />
 		
 		<bean class="converters.QuestionToStringConverter" />
 		<bean class="converters.StringToQuestionConverter" />
