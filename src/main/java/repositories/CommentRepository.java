@@ -10,6 +10,6 @@ import domain.Comment;
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
 	/** Level A **/
-	@Query("")
+	@Query("select avg(c.repliedComments.size), sqrt(sum(c.repliedComments.size*c.repliedComments.size)/count(c.repliedComments.size)-avg(c.repliedComments.size)*avg(c.repliedComments.size)) from Comment c")
 	Double[] avgSqrtRepliesPerComment();
 }

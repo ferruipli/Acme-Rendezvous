@@ -54,38 +54,42 @@ public class DashboardAdministratorController extends AbstractController {
 		Double[] avgSqrtAnswersToQuestionsPerRendezvous;
 		Double[] avgSqrtRepliesPerComment;
 		
+		String requestURI;
+		
 		avgSqrtRendezvousesPerUser = this.rendezvousService.avgSqrtRendezvousesPerUser();
 		ratioOfUsersWithRendezvousVsUsersWithoutRendezvous = this.rendezvousService.ratioOfUsersWithRendezvousVsUsersWithoutRendezvous();
 		avgSqrtUsersPerRendezvous = this.rendezvousService.avgSqrtUsersPerRendezvous();
 		avgSqrtRendezvousesRSVPdPerUser = this.rendezvousService.avgSqrtRendezvousesRSVPdPerUser();
 		top10RendezvousesRSVPd = this.rendezvousService.top10RendezvousesRSVPd();
 		rendezvousesLinkedPlus10 = this.rendezvousService.rendezvousesLinkedPlus10();
-		
 		avgSqrtAnnouncementsPerRendezvous = this.announcementService.avgSqrtAnnouncementsPerRendezvous();
 		rendezvousesWhoseMoreThat75Announcements = this.announcementService.rendezvousesWhoseMoreThat75Announcements();
-		
 		avgSqrtQuestionsPerRendezvous = this.questionService.avgSqrtQuestionsPerRendezvous();
 		avgSqrtAnswersToQuestionsPerRendezvous = this.questionService.avgSqrtAnswersToQuestionsPerRendezvous();
-		
 		avgSqrtRepliesPerComment = this.commentService.avgSqrtRepliesPerComment();
-		
-		
-		String requestURI = "dashboard/administrator/display.do";
-		
-
+		requestURI = "dashboard/administrator/display.do";
 		result = new ModelAndView("dashboard/display");
 
-		result.addObject("avgSqrtRendezvousesPerUser",avgSqrtRendezvousesPerUser);
+		
+
+		result.addObject("avgSqrtRendezvousesPerUser1",avgSqrtRendezvousesPerUser[0]);
+		result.addObject("avgSqrtRendezvousesPerUser2",avgSqrtRendezvousesPerUser[1]);
 		result.addObject("ratioOfUsersWithRendezvousVsUsersWithoutRendezvous",ratioOfUsersWithRendezvousVsUsersWithoutRendezvous);
-		result.addObject("avgSqrtUsersPerRendezvous",avgSqrtUsersPerRendezvous);
-		result.addObject("avgSqrtRendezvousesRSVPdPerUser",avgSqrtRendezvousesRSVPdPerUser);
+		result.addObject("avgSqrtUsersPerRendezvous1",avgSqrtUsersPerRendezvous[0]);
+		result.addObject("avgSqrtUsersPerRendezvous2",avgSqrtUsersPerRendezvous[1]);
+		result.addObject("avgSqrtRendezvousesRSVPdPerUser1",avgSqrtRendezvousesRSVPdPerUser[0]);
+		result.addObject("avgSqrtRendezvousesRSVPdPerUser2",avgSqrtRendezvousesRSVPdPerUser[1]);
 		result.addObject("top10RendezvousesRSVPd",top10RendezvousesRSVPd);
 		result.addObject("rendezvousesLinkedPlus10",rendezvousesLinkedPlus10);
-		result.addObject("avgSqrtAnnouncementsPerRendezvous",avgSqrtAnnouncementsPerRendezvous);
+		result.addObject("avgSqrtAnnouncementsPerRendezvous1",avgSqrtAnnouncementsPerRendezvous[0]);
+		result.addObject("avgSqrtAnnouncementsPerRendezvous2",avgSqrtAnnouncementsPerRendezvous[1]);
 		result.addObject("rendezvousesWhoseMoreThat75Announcements",rendezvousesWhoseMoreThat75Announcements);
-		result.addObject("avgSqrtQuestionsPerRendezvous",avgSqrtQuestionsPerRendezvous);
-		result.addObject("avgSqrtAnswersToQuestionsPerRendezvous",avgSqrtAnswersToQuestionsPerRendezvous);
-		result.addObject("avgSqrtRepliesPerComment", avgSqrtRepliesPerComment);
+		result.addObject("avgSqrtQuestionsPerRendezvous1",avgSqrtQuestionsPerRendezvous[0]);
+		result.addObject("avgSqrtQuestionsPerRendezvous2",avgSqrtQuestionsPerRendezvous[1]);
+		result.addObject("avgSqrtAnswersToQuestionsPerRendezvous1",avgSqrtAnswersToQuestionsPerRendezvous[0]);
+		result.addObject("avgSqrtAnswersToQuestionsPerRendezvous2",avgSqrtAnswersToQuestionsPerRendezvous[1]);
+		result.addObject("avgSqrtRepliesPerComment1", avgSqrtRepliesPerComment[0]);
+		result.addObject("avgSqrtRepliesPerComment2", avgSqrtRepliesPerComment[1]);
 		
 		result.addObject("requestURI",requestURI);
 		

@@ -10,9 +10,9 @@ import domain.Question;
 public interface QuestionRepository extends JpaRepository<Question, Integer>{
 
 	/** Level A **/
-	@Query("")
+	@Query("select avg(r.questions.size), sqrt(sum(r.questions.size*r.questions.size)/count(r.questions.size)-avg(r.questions.size)*avg(r.questions.size)) from Rendezvous r")
 	Double[] avgSqrtQuestionsPerRendezvous();
 	
-	@Query("")
+	//TODO: @Query("select avg(select q from Question q join Answer a) from Rendezvous r")
 	Double[] avgSqrtAnswersToQuestionsPerRendezvous(); // ¿Aquí o en answerRepository?
 }
