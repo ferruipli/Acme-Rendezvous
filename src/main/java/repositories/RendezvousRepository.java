@@ -13,28 +13,28 @@ import domain.User;
 public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> {
 
 	/** Level C **/
-	@Query("")
+	@Query("select avg(u.createdRendezvouses.size), sqrt(sum(u.createdRendezvouses.size*u.createdRendezvouses.size)/count(u.createdRendezvouses.size)-avg(u.createdRendezvouses.size)*avg(u.createdRendezvouses.size)) from User u")
 	Double[] avgSqrtRendezvousesPerUser();
 	
-	@Query("")
+	@Query("select (sum(case when u.createdRendezvouses is not empty then 1.0 else 0.0 end)/sum(case when u.createdRendezvouses is empty then 1.0 else 0.0 end)) from User u")
 	Double ratioOfUsersWithRendezvousVsUsersWithoutRendezvous();
 	
-	@Query("")
+	//TODO: @Query("select avg(u.createdRendezvouses.size), sqrt(sum(u.createdRendezvouses.size*u.createdRendezvouses.size)/count(u.createdRendezvouses.size)-avg(u.createdRendezvouses.size)*avg(u.createdRendezvouses.size)) from Rendezvous r")
 	Double[] avgSqrtUsersPerRendezvous();
 	
-	@Query("")
+	//TODO: @Query("")
 	Double[] avgSqrtRendezvousesRSVPdPerUser();
 	
-	//The top-10 rendezvouses in terms of users who have RSVPd them. 
+	//TODO: The top-10 rendezvouses in terms of users who have RSVPd them. 
 	@Query("")
 	Collection<Rendezvous> top10RendezvousesRSVPd();
 	
-	// Colección de Rendezvous reservadas de un user
+	// TODO: Colección de Rendezvous reservadas de un user
 	@Query("")
 	Collection<Rendezvous> findRendezvousReservedByUser(User user);
 	
 	/** Level B	**/
-	// The rendezvouses that are linked to a number of rendezvouses that is greater than the average plus 10%. 
+	// TODO: The rendezvouses that are linked to a number of rendezvouses that is greater than the average plus 10%. 
 	Collection<Rendezvous> rendezvousesLinkedPlus10();
 	
 	@Query("select r from Rendezvous r where r.finalModel=true")
