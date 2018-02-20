@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -17,40 +18,42 @@ public class User extends Actor {
 	public User() {
 		super();
 	}
-	
+
+
 	// Relationships ----------------------------------------------------------
-	private Collection<Rendezvous> 	createdRendezvouses;
+	private Collection<Rendezvous>	createdRendezvouses;
 	private Collection<RSVP>		reserves;
-	private Collection<Comment> 	comments;
-	
+	private Collection<Comment>		comments;
+
+
 	@NotNull
-	@OneToMany(mappedBy="creator")
+	@OneToMany(mappedBy = "creator")
 	public Collection<Rendezvous> getCreatedRendezvouses() {
-		return createdRendezvouses;
+		return this.createdRendezvouses;
 	}
-	
-	public void setCreatedRendezvouses(Collection<Rendezvous> createdRendezvouses) {
+
+	public void setCreatedRendezvouses(final Collection<Rendezvous> createdRendezvouses) {
 		this.createdRendezvouses = createdRendezvouses;
 	}
-	
+
 	@NotNull
 	@OneToMany
 	public Collection<RSVP> getReserves() {
-		return reserves;
+		return this.reserves;
 	}
 
-	public void setReserves(Collection<RSVP> reserves) {
+	public void setReserves(final Collection<RSVP> reserves) {
 		this.reserves = reserves;
 	}
-	
+
 	@NotNull
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy = "user")
 	public Collection<Comment> getComments() {
-		return comments;
+		return this.comments;
 	}
 
-	public void setComments(Collection<Comment> comments) {
+	public void setComments(final Collection<Comment> comments) {
 		this.comments = comments;
 	}
-	
+
 }

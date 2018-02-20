@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -18,32 +19,34 @@ public class RSVP extends DomainEntity {
 	public RSVP() {
 		super();
 	}
-	
+
+
 	// Attributes -------------------------------------
-	
+
 	// Relationships ----------------------------------
-	private Rendezvous rendezvous;
-	private Collection<Answer> answers;
-	
+	private Rendezvous			rendezvous;
+	private Collection<Answer>	answers;
+
+
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
 	public Rendezvous getRendezvous() {
-		return rendezvous;
+		return this.rendezvous;
 	}
-	
-	public void setRendezvous(Rendezvous rendezvous) {
+
+	public void setRendezvous(final Rendezvous rendezvous) {
 		this.rendezvous = rendezvous;
 	}
-	
+
 	@NotNull
 	@OneToMany
 	public Collection<Answer> getAnswers() {
-		return answers;
+		return this.answers;
 	}
-	
-	public void setAnswers(Collection<Answer> answers) {
+
+	public void setAnswers(final Collection<Answer> answers) {
 		this.answers = answers;
 	}
-	
+
 }

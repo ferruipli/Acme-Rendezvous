@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Collection;
@@ -27,23 +28,26 @@ public class Rendezvous extends DomainEntity {
 		super();
 	}
 
+
 	// Attributes -------------------------------------------------------------
 
-	private String name;
-	private String description;
-	private Date moment;
-	private GPS gpsCoordinates;
-	private boolean finalMode;
-	private boolean isFlagged;
-	private boolean adultOnly;
-	private String urlPicture;
+	private String				name;
+	private String				description;
+	private Date				moment;
+	private GPS					gpsCoordinates;
+	private boolean				finalMode;
+	private boolean				isFlagged;
+	private boolean				adultOnly;
+	private String				urlPicture;
+	private Collection<User>	attendants;
+
 
 	@NotBlank
 	public String getName() {
 		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -52,7 +56,7 @@ public class Rendezvous extends DomainEntity {
 		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -63,7 +67,7 @@ public class Rendezvous extends DomainEntity {
 		return this.moment;
 	}
 
-	public void setMoment(Date moment) {
+	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
 
@@ -72,7 +76,7 @@ public class Rendezvous extends DomainEntity {
 		return this.gpsCoordinates;
 	}
 
-	public void setGpsCoordinates(GPS gpsCoordinates) {
+	public void setGpsCoordinates(final GPS gpsCoordinates) {
 		this.gpsCoordinates = gpsCoordinates;
 	}
 
@@ -80,15 +84,15 @@ public class Rendezvous extends DomainEntity {
 		return this.finalMode;
 	}
 
-	public void setFinalMode(boolean finalMode) {
+	public void setFinalMode(final boolean finalMode) {
 		this.finalMode = finalMode;
 	}
 
 	public boolean getIsFlagged() {
-		return isFlagged;
+		return this.isFlagged;
 	}
 
-	public void setIsFlagged(boolean isFlagged) {
+	public void setIsFlagged(final boolean isFlagged) {
 		this.isFlagged = isFlagged;
 	}
 
@@ -96,86 +100,97 @@ public class Rendezvous extends DomainEntity {
 		return this.adultOnly;
 	}
 
-	public void setAdultOnly(boolean adultOnly) {
+	public void setAdultOnly(final boolean adultOnly) {
 		this.adultOnly = adultOnly;
 	}
-	
+
 	@URL
 	public String getUrlPicture() {
-		return urlPicture;
+		return this.urlPicture;
 	}
 
-	public void setUrlPicture(String urlPicture) {
+	public void setUrlPicture(final String urlPicture) {
 		this.urlPicture = urlPicture;
 	}
-	
+
+
 	// Relationships ----------------------------------------------
-	private User 						creator;
+	private User						creator;
 	private Collection<RSVP>			reserves;
 	private Collection<Comment>			comments;
-	private Collection<Rendezvous> 		similarOnes;
+	private Collection<Rendezvous>		similarOnes;
 	private Collection<Announcement>	announcements;
 	private Collection<Question>		questions;
+
 
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
 	public User getCreator() {
-		return creator;
+		return this.creator;
 	}
 
-	public void setCreator(User creator) {
+	public void setCreator(final User creator) {
 		this.creator = creator;
 	}
-	
+
 	@NotNull
-	@OneToMany(mappedBy="rendezvous")
+	@OneToMany(mappedBy = "rendezvous")
 	public Collection<RSVP> getReserves() {
-		return reserves;
+		return this.reserves;
 	}
 
-	public void setReserves(Collection<RSVP> reserves) {
+	public void setReserves(final Collection<RSVP> reserves) {
 		this.reserves = reserves;
 	}
 
 	@NotNull
 	@OneToMany
 	public Collection<Comment> getComments() {
-		return comments;
+		return this.comments;
 	}
 
-	public void setComments(Collection<Comment> comments) {
+	public void setComments(final Collection<Comment> comments) {
 		this.comments = comments;
 	}
 
 	@NotNull
 	@OneToMany
 	public Collection<Rendezvous> getSimilarOnes() {
-		return similarOnes;
+		return this.similarOnes;
 	}
 
-	public void setSimilarOnes(Collection<Rendezvous> similarOnes) {
+	public void setSimilarOnes(final Collection<Rendezvous> similarOnes) {
 		this.similarOnes = similarOnes;
 	}
 
 	@NotNull
 	@OneToMany
 	public Collection<Announcement> getAnnouncements() {
-		return announcements;
+		return this.announcements;
 	}
 
-	public void setAnnouncements(Collection<Announcement> announcements) {
+	public void setAnnouncements(final Collection<Announcement> announcements) {
 		this.announcements = announcements;
 	}
-	
+
 	@NotNull
 	@OneToMany
 	public Collection<Question> getQuestions() {
-		return questions;
+		return this.questions;
 	}
 
-	public void setQuestions(Collection<Question> questions) {
+	public void setQuestions(final Collection<Question> questions) {
 		this.questions = questions;
 	}
-	
+
+	@NotNull
+	public Collection<User> getAttendants() {
+		return this.attendants;
+	}
+
+	public void setAttendants(final Collection<User> attendants) {
+		this.attendants = attendants;
+	}
+
 }

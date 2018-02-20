@@ -10,9 +10,9 @@
 
 <tiles-definitions>
 
-	<definition name="dashboard/display" extends="master.page">
-		<put-attribute name="title" value="Dashboard" />
-		<put-attribute name="body" value="/views/dashboard/display.jsp" />
+	<definition name="legalTexts/termsAndConditions" extends="master.page">
+		<put-attribute name="title" value="Terms and Conditions" />
+		<put-attribute name="body" value="/views/legalTexts/termsAndConditions.jsp" />
 	</definition>
 
 </tiles-definitions>

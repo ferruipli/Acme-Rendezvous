@@ -211,7 +211,7 @@
 		<property value="2016/05/16 14:12" name="moment"/>
 		<property value="text_comment1" name="text"/>
 		<property ref="user1" name="user"/>	
-		<property ref="picture1" name="picture"/>
+		<property value="http://www.googleDrive.com/picture2" name="urlPicture"/>
 		<property name="comment">
 			<null></null>
 		</property>
@@ -221,7 +221,7 @@
 		<property value="2017/10/17 10:25" name="moment"/>
 		<property value="text_comment2" name="text"/>
 		<property ref="user1" name="user"/>	
-		<property ref="picture2" name="picture"/>
+		<property value="http://www.googleDrive.com/picture2" name="urlPicture"/>
 		<property ref="comment8" name="comment"/>
 	</bean>
 	
@@ -229,7 +229,7 @@
 		<property value="2016/10/16 09:44" name="moment"/>
 		<property value="text_comment3" name="text"/>
 		<property ref="user1" name="user"/>	
-		<property ref="picture3" name="picture"/>
+		<property value="http://www.googleDrive.com/picture3" name="urlPicture"/>
 		<property ref="comment7" name="comment"/>
 	</bean>
 	
@@ -237,7 +237,7 @@
 		<property value="2017/01/17 09:12" name="moment"/>
 		<property value="text_comment4" name="text"/>
 		<property ref="user1" name="user"/>	
-		<property ref="picture4" name="picture"/>		
+		<property value="http://www.googleDrive.com/picture4" name="urlPicture"/>		
 		<property ref = "comment6" name="comment"/>
 	</bean>
 	
@@ -245,7 +245,7 @@
 		<property value="2016/05/16 14:12" name="moment"/>
 		<property value="text_comment5" name="text"/>
 		<property ref="user1" name="user"/>	
-		<property ref="picture5" name="picture"/>
+		<property value="http://www.googleDrive.com/picture5" name="urlPicture"/>
 		<property name="comment">
 			<null/>
 		</property>
@@ -255,7 +255,7 @@
 		<property value="2016/05/16 14:12" name="moment"/>
 		<property value="text_comment6" name="text"/>
 		<property ref="user1" name="user"/>	
-		<property ref="picture6" name="picture"/>
+		<property value="http://www.googleDrive.com/picture6" name="urlPicture"/>
 	<property name="comment">
 			<null/>
 		</property>
@@ -265,7 +265,7 @@
 		<property value="2016/05/16 14:12" name="moment"/>
 		<property value="text_comment7" name="text"/>
 		<property ref="user1" name="user"/>	
-		<property ref="picture7" name="picture"/>
+		<property value="http://www.googleDrive.com/picture7" name="urlPicture"/>
 		<property name="comment">
 			<null/>
 		</property>
@@ -275,7 +275,7 @@
 		<property value="2017/10/17 10:25" name="moment"/>
 		<property value="text_comment8" name="text"/>
 		<property ref="user1" name="user"/>	
-		<property ref="picture8" name="picture"/>		
+		<property value="http://www.googleDrive.com/picture8" name="urlPicture"/>		
 		<property name="comment">
 			<null/>
 		</property>
@@ -285,56 +285,11 @@
 		<property value="2016/10/16 09:44" name="moment"/>
 		<property value="text_comment9" name="text"/>
 		<property ref="user1" name="user"/>	
-		<property ref="picture9" name="picture"/>
+		<property value="http://www.googleDrive.com/picture9" name="urlPicture"/>
 		<property name="comment">
 			<null/>
 		</property>
-	</bean>
-	
-	
-	
-	<!-- Picture -->
-	
-	<bean class="domain.Picture" id="picture1">
-		<property value="http://googleDrive.com/picture1" name="url"/>
-	</bean>
-	
-	<bean class="domain.Picture" id="picture2">
-		<property value="http://googleDrive.com/picture2" name="url"/>
-	</bean>
-	
-	<bean class="domain.Picture" id="picture3">
-		<property value="http://googleDrive.com/picture3" name="url"/>
-	</bean>
-	
-	<bean class="domain.Picture" id="picture4">
-		<property value="http://googleDrive.com/picture4" name="url"/>
-	</bean>
-	
-	<bean class="domain.Picture" id="picture5">
-		<property value="http://googleDrive.com/picture5" name="url"/>
-	</bean>
-	
-	<bean class="domain.Picture" id="picture6">
-		<property value="http://googleDrive.com/picture6" name="url"/>
-	</bean>
-	
-	<bean class="domain.Picture" id="picture7">
-		<property value="http://googleDrive.com/picture7" name="url"/>
-	</bean>
-	
-	<bean class="domain.Picture" id="picture8">
-		<property value="http://googleDrive.com/picture8" name="url"/>
-	</bean>
-	
-	<bean class="domain.Picture" id="picture9">
-		<property value="http://googleDrive.com/picture9" name="url"/>
-	</bean>
-	
-		<bean class="domain.Picture" id="picture10">
-		<property value="http://googleDrive.com/picture10" name="url"/>
-	</bean>
-	
+	</bean>	
 	
 	<!-- Question -->
 	
@@ -366,7 +321,7 @@
 		<property value="true" name="isFlagged"/>	
 		<property value="false" name="adultOnly"/>		
 		<property ref="user1" name="creator"/>	
-		<property ref="picture1" name="picture"/>	
+		<property value="http://www.googleDrive.com/picture10" name="urlPicture"/>	
 		<property name="attendants">
 			<list>
 				<ref bean = "user1"/>				
@@ -410,7 +365,7 @@
 		<property value="true" name="isFlagged"/>	
 		<property value="false" name="adultOnly"/>		
 		<property ref="user1" name="creator"/>	
-		<property ref="picture2" name="picture"/>
+		<property value="http://www.googleDrive.com/picture1" name="urlPicture"/>
 		<property name="attendants">
 			<list>
 				<ref bean = "user1"/>
