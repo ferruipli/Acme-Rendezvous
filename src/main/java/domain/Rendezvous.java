@@ -192,5 +192,5 @@ public class Rendezvous extends DomainEntity {
 	public void setQuestions(final Collection<Question> questions) {
 		this.questions = questions;
 	}
-	
+
 }

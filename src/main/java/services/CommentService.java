@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import repositories.CommentRepository;
 import domain.Comment;
+import domain.Rendezvous;
 import domain.User;
 
 @Service
@@ -28,8 +29,8 @@ public class CommentService {
 	@Autowired
 	private ActorService actorService;
 	
-	//@Autowired
-	//private RendezvousService rendezvousService;
+	@Autowired
+	private RendezvousService rendezvousService;
 
 	// Constructors ---------------------------------------------------------
 	public CommentService() {
@@ -70,18 +71,27 @@ public class CommentService {
 
 		return results;
 	}
-	/*
+	
 	public void delete(Comment comment){
 		Assert.isTrue(comment.getId() != 0);
-		Assert.isTrue(LoginService.getPrincipal().equals("ADMINISTRATOR"));
-		this.rendezvousService.removeComment(comment.g, comment);
+		Rendezvous rendezvous;
+		
+		rendezvous = this.rendezvousService.finRendezvousFromAComment(comment.getId());
+		this.rendezvousService.removeComment(rendezvous, comment);
 		
 		this.commentRepository.delete(comment);
 		
-	}*/
+	}
 	
 	public Comment save(Comment comment){
+		Assert.notNull(comment);
 		Comment result;
+		Rendezvous rendezvous;
+		User user;
+		
+		user = (User) this.actorService.findByPrincipal();
+		rendezvous = this.rendezvousService.finRendezvousFromAComment(comment.getId());
+		Assert.isTrue(rendezvous.getAttendants().contains(user));
 		
 		result = this.commentRepository.save(comment);
 		
@@ -96,5 +106,11 @@ public class CommentService {
 		result = this.commentRepository.avgSqrtRepliesPerComment();
 		
 		return result;
+	}
+	
+	public void remove(int commentId) {
+		Assert.isTrue(commentId != 0);
+
+		this.commentRepository.delete(commentId);
 	}
 }
