@@ -289,4 +289,12 @@ public class RendezvousService {
 		
 		return result;
 	}
+	
+	public Rendezvous finRendezvousFromAComment(int commentId){
+		Rendezvous result;
+		
+		result = this.rendezvousRepository.findRedezvousFromAComment(commentId);
+		
+		return result;
+	}
 }
