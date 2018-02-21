@@ -29,7 +29,6 @@ public class Rendezvous extends DomainEntity {
 		super();
 	}
 
-
 	// Attributes -------------------------------------------------------------
 
 	private String				name;

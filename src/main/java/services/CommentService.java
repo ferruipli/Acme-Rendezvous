@@ -28,8 +28,8 @@ public class CommentService {
 	@Autowired
 	private ActorService actorService;
 	
-	@Autowired
-	private RendezvousService rendezvousService;
+	//@Autowired
+	//private RendezvousService rendezvousService;
 
 	// Constructors ---------------------------------------------------------
 	public CommentService() {
