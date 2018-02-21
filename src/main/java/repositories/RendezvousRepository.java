@@ -11,7 +11,7 @@ import domain.User;
 
 @Repository
 public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> {
-
+	
 	/** Level C **/
 	@Query("select avg(u.createdRendezvouses.size), sqrt(sum(u.createdRendezvouses.size*u.createdRendezvouses.size)/count(u.createdRendezvouses.size)-avg(u.createdRendezvouses.size)*avg(u.createdRendezvouses.size)) from User u")
 	Double[] avgSqrtRendezvousesPerUser();
@@ -37,7 +37,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	// TODO: The rendezvouses that are linked to a number of rendezvouses that is greater than the average plus 10%. 
 	Collection<Rendezvous> rendezvousesLinkedPlus10();
 	
-	@Query("select r from Rendezvous r where r.finalModel=true")
+	@Query("select r from Rendezvous r where r.finalMode=true")
 	Collection<Rendezvous> findAllAvailable();
 
 }
