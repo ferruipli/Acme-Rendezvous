@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.CommentRepository;
-import security.LoginService;
 import domain.Comment;
 import domain.Rendezvous;
 import domain.User;
@@ -75,7 +74,6 @@ public class CommentService {
 	
 	public void delete(Comment comment){
 		Assert.isTrue(comment.getId() != 0);
-		Assert.isTrue(LoginService.getPrincipal().equals("ADMINISTRATOR"));
 		Rendezvous rendezvous;
 		
 		rendezvous = this.rendezvousService.finRendezvousFromAComment(comment.getId());
@@ -108,5 +106,11 @@ public class CommentService {
 		result = this.commentRepository.avgSqrtRepliesPerComment();
 		
 		return result;
+	}
+	
+	public void remove(int commentId) {
+		Assert.isTrue(commentId != 0);
+
+		this.commentRepository.delete(commentId);
 	}
 }
