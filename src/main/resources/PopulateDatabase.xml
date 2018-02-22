@@ -464,7 +464,7 @@
 		<property value="user1@gmail.com" name="email"/>
 		<property value="Calle Puerta Osuna" name="postalAddress"/>
 		<property value="+34 687458745" name="phoneNumber"/>
-		<property value = "1976/10/19" name="birthdate"/>
+		<property value = "2000/01/04" name="birthdate"/>
 		<property name="userAccount" ref="userAccount4"/>	
 		<property name="createdRendezvouses">
 			<list>
@@ -494,7 +494,7 @@
 		<property value="user2@gmail.com" name="email"/>
 		<property value="Calle Puerta Osario" name="postalAddress"/>
 		<property value="+34 681258745" name="phoneNumber"/>
-		<property value = "1984/10/19" name="birthdate"/>
+		<property value = "1997/03/10" name="birthdate"/>
 		<property name="userAccount" ref="userAccount5"/>	
 		<property name="createdRendezvouses">
 			<list>
@@ -513,6 +513,29 @@
 				<ref bean = "comment7"/>
 				<ref bean = "comment3"/>
 				<ref bean = "comment8"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="domain.User" id="user3">
+		<property value="user3" name="name"/>
+		<property value="Ramos Ramírez" name="surname"/>
+		<property value="user3@gmail.com" name="email"/>
+		<property value="Calle La Palmera" name="postalAddress"/>
+		<property value="+34 692368745" name="phoneNumber"/>
+		<property value = "1966/04/30" name="birthdate"/>
+		<property name="userAccount" ref="userAccount6"/>	
+		<property name="createdRendezvouses">
+			<list>
+			</list>
+		</property>
+		<property name="reserves">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="comments">
+			<list>
 			</list>
 		</property>
 	</bean>
