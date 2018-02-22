@@ -2,10 +2,7 @@
 package services;
 
 import java.util.Collection;
-<<<<<<< HEAD
 import java.util.HashSet;
-=======
->>>>>>> ece392c03b50378ffd76c0697a99bc7f020846bc
 
 import javax.transaction.Transactional;
 
