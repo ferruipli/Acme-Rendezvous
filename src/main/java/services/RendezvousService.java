@@ -257,8 +257,13 @@ public class RendezvousService {
 		
 		return result;
 	}
+<<<<<<< HEAD
 	/*
 	public Double[] avgSqrtRendezvousesRSVPdPerUser(){
+=======
+	
+	/*public Double[] avgSqrtRendezvousesRSVPdPerUser(){
+>>>>>>> 3523793808feadf65149f3446da867fbaf52dac3
 		Double[] result;
 		
 		result = this.rendezvousRepository.avgSqrtRendezvousesRSVPdPerUser();
@@ -283,6 +288,7 @@ public class RendezvousService {
 		result = this.rendezvousesLinkedPlus10();
 		
 		return result;
+<<<<<<< HEAD
 	}
 /*
 	public Collection<Rendezvous> findRendezvousReservedByUser(User user){
@@ -293,6 +299,11 @@ public class RendezvousService {
 		return result;
 	}
 	*/
+=======
+	}*/
+
+	
+>>>>>>> 3523793808feadf65149f3446da867fbaf52dac3
 	public Rendezvous finRendezvousFromAComment(int commentId){
 		Rendezvous result;
 		
