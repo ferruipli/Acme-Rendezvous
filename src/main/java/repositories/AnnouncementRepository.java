@@ -18,6 +18,6 @@ public interface AnnouncementRepository extends
 	Double[] avgSqrtAnnouncementsPerRendezvous();
 	
 	// TODO: The rendezvouses that whose number of announcements is above 75% the average number of announcements per rendezvous. 
-	/*@Query("")
-	Collection<Rendezvous> rendezvousesWhoseMoreThat75Announcements();*/
+	@Query("select r from Rendezvous r where r.announcements.size/(select avg(r1.announcements.size) from Rendezvous r1)>=7.5")
+	Collection<Rendezvous> rendezvousesWhoseMoreThat75Announcements();
 }
