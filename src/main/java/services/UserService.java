@@ -2,12 +2,16 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import domain.Rendezvous;
+import domain.User;
 
 import repositories.UserRepository;
 import domain.User;
@@ -52,4 +56,12 @@ public class UserService {
 
 	// Other business methods -----------------------------------------------
 
+	protected void addRendezvous(User user, Rendezvous rendezvous) {
+		Collection<Rendezvous> aux;
+		
+		aux = new HashSet<>(user.getCreatedRendezvouses());
+		aux.add(rendezvous);
+		user.setCreatedRendezvouses(aux);
+	}
+	
 }

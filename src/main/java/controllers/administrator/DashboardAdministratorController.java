@@ -17,7 +17,7 @@ import domain.Rendezvous;
 @Controller
 @RequestMapping("/dashboard/administrator")
 public class DashboardAdministratorController extends AbstractController {
-/*
+
 	// Services ---------------------------------------------------------------
 	@Autowired
 	private RendezvousService rendezvousService;
@@ -95,5 +95,5 @@ public class DashboardAdministratorController extends AbstractController {
 		
 		return result;
 	}
-*/
+
 }
