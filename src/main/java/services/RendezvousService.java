@@ -13,6 +13,8 @@ import org.springframework.util.Assert;
 import domain.Actor;
 import domain.Announcement;
 import domain.Comment;
+import domain.Question;
+import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
 
@@ -60,21 +62,19 @@ public class RendezvousService {
 
 	public Rendezvous create() {
 		Rendezvous result;
-		Collection<User> attendants;
 		User user;
 
 		user = (User) this.actorService.findByPrincipal();
 
-		attendants = new HashSet<User>();
-		attendants.add(user);
-
 		result = new Rendezvous();
 		result.setAnnouncements(Collections.<Announcement> emptySet());
-		result.setAttendants(attendants);
+		result.setAttendants(Collections.<User>emptySet());
 		result.setComments(Collections.<Comment> emptySet());
 		result.setCreator(user);
 		result.setSimilarOnes(Collections.<Rendezvous> emptySet());
-
+		result.setQuestions(Collections.<Question>emptySet());
+		result.setReserves(Collections.<RSVP>emptySet());
+		
 		return result;
 	}
 
@@ -190,7 +190,6 @@ public class RendezvousService {
 		rendezvous.setComments(aux);
 	}
 	
-
 	protected void removeComment(Rendezvous rendezvous, Comment comment) {
 		Collection<Comment> aux;
 
@@ -281,7 +280,7 @@ public class RendezvousService {
 		
 		return result;
 	}
-	
+
 	public Collection<Rendezvous> findRendezvousReservedByUser(User user){
 		Collection<Rendezvous> result;
 		
@@ -289,4 +288,21 @@ public class RendezvousService {
 		
 		return result;
 	}
+	
+	public Rendezvous finRendezvousFromAComment(int commentId){
+		Rendezvous result;
+		
+		result = this.rendezvousRepository.findRedezvousFromAComment(commentId);
+		
+		return result;
+	}
+	
+	public Collection<Rendezvous> findRendezvousesRSVPByUserId(int userId){
+		Collection<Rendezvous> result;
+		
+		result = this.rendezvousRepository.findRendezvousesRSVPByUserId(userId);
+		
+		return result;
+	}
+
 }

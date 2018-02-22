@@ -29,7 +29,6 @@ public class Rendezvous extends DomainEntity {
 		super();
 	}
 
-
 	// Attributes -------------------------------------------------------------
 
 	private String				name;
@@ -40,8 +39,6 @@ public class Rendezvous extends DomainEntity {
 	private boolean				isFlagged;
 	private boolean				adultOnly;
 	private String				urlPicture;
-	private Collection<User>	attendants;
-
 
 	@NotBlank
 	public String getName() {
@@ -117,6 +114,7 @@ public class Rendezvous extends DomainEntity {
 
 	// Relationships ----------------------------------------------
 	private User						creator;
+	private Collection<User>			attendants;
 	private Collection<RSVP>			reserves;
 	private Collection<Comment>			comments;
 	private Collection<Rendezvous>		similarOnes;
@@ -135,6 +133,16 @@ public class Rendezvous extends DomainEntity {
 		this.creator = creator;
 	}
 
+	@NotNull
+	@ManyToMany
+	public Collection<User> getAttendants() {
+		return this.attendants;
+	}
+
+	public void setAttendants(final Collection<User> attendants) {
+		this.attendants = attendants;
+	}
+	
 	@NotNull
 	@OneToMany(mappedBy = "rendezvous")
 	public Collection<RSVP> getReserves() {
@@ -183,18 +191,6 @@ public class Rendezvous extends DomainEntity {
 
 	public void setQuestions(final Collection<Question> questions) {
 		this.questions = questions;
-	}
-
-	// Derived attribute
-	@NotNull
-	//	@ElementCollection
-	@ManyToMany
-	public Collection<User> getAttendants() {
-		return this.attendants;
-	}
-
-	public void setAttendants(final Collection<User> attendants) {
-		this.attendants = attendants;
 	}
 
 }

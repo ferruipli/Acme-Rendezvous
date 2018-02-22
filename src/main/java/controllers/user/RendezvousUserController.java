@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.RendezvousService;
-
 import controllers.AbstractController;
 import domain.Rendezvous;
+import domain.User;
 
 @Controller
 @RequestMapping("/rendezvous/user")
@@ -25,12 +26,33 @@ public class RendezvousUserController extends AbstractController {
 	@Autowired
 	private RendezvousService rendezvousService;
 	
+	@Autowired
+	private ActorService actorService;
+	
 	// Constructors -----------------------------------------------------
 	public RendezvousUserController() {
 		super();
 	}
 	
 	// CRUD methods ----------------------------------------------------
+	
+	@RequestMapping(value="/list", method = RequestMethod.GET)
+	public ModelAndView list(){
+		ModelAndView result;
+		Collection<Rendezvous> rendezvouses;
+		User user;
+		
+		user = (User) this.actorService.findByPrincipal();
+		rendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
+		
+		result = new ModelAndView("rendezvous/list");
+		result.addObject("rendezvouses", rendezvouses);
+		result.addObject("requestURI", "rendezvous/user/list.do");
+		
+		return result;
+		
+		
+	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
