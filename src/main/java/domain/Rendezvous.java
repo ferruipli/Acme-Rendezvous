@@ -1,6 +1,7 @@
 
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -29,16 +31,18 @@ public class Rendezvous extends DomainEntity {
 		super();
 	}
 
+
 	// Attributes -------------------------------------------------------------
 
-	private String				name;
-	private String				description;
-	private Date				moment;
-	private GPS					gpsCoordinates;
-	private boolean				finalMode;
-	private boolean				isFlagged;
-	private boolean				adultOnly;
-	private String				urlPicture;
+	private String	name;
+	private String	description;
+	private Date	moment;
+	private GPS		gpsCoordinates;
+	private boolean	finalMode;
+	private boolean	isFlagged;
+	private boolean	adultOnly;
+	private String	urlPicture;
+
 
 	@NotBlank
 	public String getName() {
@@ -133,16 +137,28 @@ public class Rendezvous extends DomainEntity {
 		this.creator = creator;
 	}
 
-	@NotNull
+	// Derived relationship
 	@ManyToMany
+	@NotNull
+	@Transient
 	public Collection<User> getAttendants() {
-		return this.attendants;
+		Collection<User> result;
+
+		result = new ArrayList<>();
+
+		if (!this.reserves.isEmpty())
+			for (final RSVP r : this.reserves)
+				result.add(r.getUser());
+		else
+			result = this.attendants;
+
+		return result;
 	}
 
 	public void setAttendants(final Collection<User> attendants) {
 		this.attendants = attendants;
 	}
-	
+
 	@NotNull
 	@OneToMany(mappedBy = "rendezvous")
 	public Collection<RSVP> getReserves() {
