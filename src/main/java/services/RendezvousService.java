@@ -7,6 +7,7 @@ import java.util.HashSet;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -256,7 +257,7 @@ public class RendezvousService {
 		
 		return result;
 	}
-	
+	/*
 	public Double[] avgSqrtRendezvousesRSVPdPerUser(){
 		Double[] result;
 		
@@ -264,11 +265,14 @@ public class RendezvousService {
 		
 		return result;
 	}
-	
+	*/
 	public Collection<Rendezvous> top10RendezvousesRSVPd(){
 		Collection<Rendezvous> result;
+		String sql;
+		Query query;
 		
-		result = this.rendezvousRepository.top10RendezvousesRSVPd();
+		sql = "select r from Rendezvous r order by r.attendants.size desc";
+		query = new Query(sql);
 		
 		return result;
 	}
@@ -280,7 +284,7 @@ public class RendezvousService {
 		
 		return result;
 	}
-
+/*
 	public Collection<Rendezvous> findRendezvousReservedByUser(User user){
 		Collection<Rendezvous> result;
 		
@@ -288,7 +292,7 @@ public class RendezvousService {
 		
 		return result;
 	}
-	
+	*/
 	public Rendezvous finRendezvousFromAComment(int commentId){
 		Rendezvous result;
 		

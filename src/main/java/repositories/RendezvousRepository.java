@@ -25,19 +25,20 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	Double[] avgSqrtRendezvousesRSVPdPerUser(int userId);*/
 	
 	//TODO: The top-10 rendezvouses in terms of users who have RSVPd them. 
-	/*@Query("")
-	Collection<Rendezvous> top10RendezvousesRSVPd();*/
+	@Query("select r from Rendezvous r order by r.attendants.size desc")
+	Collection<Rendezvous> top10RendezvousesRSVPd();
 	
 	
 	@Query("select r from Rendezvous r join r.comments c where c.id=?1 and c member of r.comments")
-	Rendezvous findRedezvousFromAComment(int commentId);
+	Rendezvous findRendezvousFromAComment(int commentId);
 	
 	@Query("select r from Rendezvous r  join r.reserves re where re.user = ?1")
 	Collection<Rendezvous> findRendezvousesRSVPByUserId(int userId);
 	
 	/** Level B	**/
 	// TODO: The rendezvouses that are linked to a number of rendezvouses that is greater than the average plus 10%. 
-	//Collection<Rendezvous> rendezvousesLinkedPlus10();
+	@Query("select r1 from Rendezvous r1 where r1.similarOnes.size>(select avg(r2.similarOnes.size)*1.1 from Rendezvous r2)")
+	Collection<Rendezvous> rendezvousesLinkedPlus10();
 	
 	@Query("select r from Rendezvous r where r.finalMode=true")
 	Collection<Rendezvous> findAllAvailable();
