@@ -8,8 +8,8 @@
 
 <title><spring:message code="dashboard.title" /></title>
 
+<h2><spring:message code="dashboard.avgSqrtRendezvousesPerUser"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.avgSqrtRendezvousesPerUser"/></legend>
 
 	<ul>
 		<li><spring:message code="dashboard.avg"/>: <jstl:out value="${avgSqrtRendezvousesPerUser1}"/></li>
@@ -17,25 +17,25 @@
 	</ul>
 </fieldset>
 
+<h2><spring:message code="dashboard.ratioOfUsersWithRendezvousVsUsersWithoutRendezvous"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.ratioOfUsersWithRendezvousVsUsersWithoutRendezvous"/></legend>
 
 	<ul>
 		<li><spring:message code="dashboard.ratio"/>: <jstl:out value="${ratioOfUsersWithRendezvousVsUsersWithoutRendezvous}"/></li>
 	</ul>
 </fieldset>
 
+<h2><spring:message code="dashboard.avgSqrtUsersPerRendezvous"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.avgSqrtUsersPerRendezvous"/></legend>
-
+	
 	<ul>
 		<li><spring:message code="dashboard.avg"/>: <jstl:out value="${avgSqrtUsersPerRendezvous1}"/></li>
 		<li><spring:message code="dashboard.sqrt"/>: <jstl:out value="${avgSqrtUsersPerRendezvous2}"/></li>
 	</ul>
 </fieldset>
 
+<h2><spring:message code="dashboard.avgSqrtRendezvousesRSVPdPerUser"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.avgSqrtRendezvousesRSVPdPerUser"/></legend>
 
 	<ul>
 		<li><spring:message code="dashboard.avg"/>: <jstl:out value="${avgSqrtRendezvousesRSVPdPerUser1}"/></li>
@@ -43,22 +43,22 @@
 	</ul>
 </fieldset>
 
+<h2><spring:message code="dashboard.top10RendezvousesRSVPd"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.top10RendezvousesRSVPd"/></legend>
 	
 	<!--TODO: <jstl:out value="${top10RendezvousesRSVPd}"/>-->
 	
 </fieldset>
 
+<h2><spring:message code="dashboard.rendezvousesLinkedPlus10"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.rendezvousesLinkedPlus10"/></legend>
 	
 	<!--TODO: <jstl:out value="${rendezvousesLinkedPlus10}"/>-->
 	
 </fieldset>
 
+<h2><spring:message code="dashboard.avgSqrtAnnouncementsPerRendezvous"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.avgSqrtAnnouncementsPerRendezvous"/></legend>
 
 	<ul>
 		<li><spring:message code="dashboard.avg"/>: <jstl:out value="${avgSqrtAnnouncementsPerRendezvous1}"/></li>
@@ -66,15 +66,16 @@
 	</ul>
 </fieldset>
 
+<h2><spring:message code="dashboard.rendezvousesWhoseMoreThat75Announcements"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.rendezvousesWhoseMoreThat75Announcements"/></legend>
 	
 	<!--TODO: <jstl:out value="${rendezvousesWhoseMoreThat75Announcements}"/>-->
 	
+	
 </fieldset>
 
+<h2><spring:message code="dashboard.avgSqrtQuestionsPerRendezvous"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.avgSqrtQuestionsPerRendezvous"/></legend>
 
 	<ul>
 		<li><spring:message code="dashboard.avg"/>: <jstl:out value="${avgSqrtQuestionsPerRendezvous1}"/></li>
@@ -82,8 +83,8 @@
 	</ul>
 </fieldset>
 
+<h2><spring:message code="dashboard.avgSqrtAnswersToQuestionsPerRendezvous"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.avgSqrtAnswersToQuestionsPerRendezvous"/></legend>
 
 	<ul>
 		<li><spring:message code="dashboard.avg"/>: <jstl:out value="${avgSqrtAnswersToQuestionsPerRendezvous1}"/></li>
@@ -91,8 +92,8 @@
 	</ul>
 </fieldset>
 
+<h2><spring:message code="dashboard.avgSqrtRepliesPerComment"/></h2>
 <fieldset>
-	<legend><spring:message code="dashboard.avgSqrtRepliesPerComment"/></legend>
 
 	<ul>
 		<li><spring:message code="dashboard.avg"/>: <jstl:out value="${avgSqrtRepliesPerComment1}"/></li>

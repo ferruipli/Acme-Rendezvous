@@ -61,7 +61,7 @@ public class DashboardAdministratorController extends AbstractController {
 		avgSqrtUsersPerRendezvous = this.rendezvousService.avgSqrtUsersPerRendezvous();
 		avgSqrtRendezvousesRSVPdPerUser = this.rendezvousService.avgSqrtRendezvousesRSVPdPerUser();
 		top10RendezvousesRSVPd = this.rendezvousService.top10RendezvousesRSVPd();
-		//rendezvousesLinkedPlus10 = this.rendezvousService.rendezvousesLinkedPlus10();
+		rendezvousesLinkedPlus10 = this.rendezvousService.rendezvousesLinkedPlus10();
 		avgSqrtAnnouncementsPerRendezvous = this.announcementService.avgSqrtAnnouncementsPerRendezvous();
 		rendezvousesWhoseMoreThat75Announcements = this.announcementService.rendezvousesWhoseMoreThat75Announcements();
 		avgSqrtQuestionsPerRendezvous = this.questionService.avgSqrtQuestionsPerRendezvous();
@@ -69,8 +69,6 @@ public class DashboardAdministratorController extends AbstractController {
 		avgSqrtRepliesPerComment = this.commentService.avgSqrtRepliesPerComment();
 		requestURI = "dashboard/administrator/display.do";
 		result = new ModelAndView("dashboard/display");
-
-		
 
 		result.addObject("avgSqrtRendezvousesPerUser1",avgSqrtRendezvousesPerUser[0]);
 		result.addObject("avgSqrtRendezvousesPerUser2",avgSqrtRendezvousesPerUser[1]);
@@ -80,7 +78,7 @@ public class DashboardAdministratorController extends AbstractController {
 		result.addObject("avgSqrtRendezvousesRSVPdPerUser1",avgSqrtRendezvousesRSVPdPerUser[0]);
 		result.addObject("avgSqrtRendezvousesRSVPdPerUser2",avgSqrtRendezvousesRSVPdPerUser[1]);
 		result.addObject("top10RendezvousesRSVPd",top10RendezvousesRSVPd);
-		//result.addObject("rendezvousesLinkedPlus10",rendezvousesLinkedPlus10);
+		result.addObject("rendezvousesLinkedPlus10",rendezvousesLinkedPlus10);
 		result.addObject("avgSqrtAnnouncementsPerRendezvous1",avgSqrtAnnouncementsPerRendezvous[0]);
 		result.addObject("avgSqrtAnnouncementsPerRendezvous2",avgSqrtAnnouncementsPerRendezvous[1]);
 		result.addObject("rendezvousesWhoseMoreThat75Announcements",rendezvousesWhoseMoreThat75Announcements);
