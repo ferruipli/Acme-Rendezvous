@@ -1,7 +1,8 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -9,12 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.RSVPRepository;
 import domain.Answer;
 import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
-
-import repositories.RSVPRepository;
 
 @Service
 @Transactional
@@ -41,25 +41,18 @@ public class RSVPService {
 	
 	// CRUD methods ---------------------------------------------------------
 	
-	public RSVP create(){
+	public RSVP create(Rendezvous rendezvous){
 		RSVP result;
 		User user;
-		Collection<Answer> answers;
-		Rendezvous rendezvous;
 		
 		result = new RSVP();
 		user = (User) this.actorService.findByPrincipal();
-		answers = new ArrayList<Answer>();
-		rendezvous = new Rendezvous();
 		
-		
-		result.setAnswers(answers);
+		result.setAnswers(Collections.<Answer> emptySet());
 		result.setUser(user);
 		result.setRendezvous(rendezvous);
 		
-		
 		return result;
-		
 		
 	}
 	
@@ -84,13 +77,29 @@ public class RSVPService {
 	public RSVP save(RSVP rsvp){
 		Assert.notNull(rsvp);
 		RSVP result;
+		Date date;
+		User user;
+		long edad;
 		
+		user = (User) this.actorService.findByPrincipal();
+		edad = this.actorService.getEdad(user);
+		
+		Assert.isTrue(edad>=18);
+		date = new Date(System.currentTimeMillis());
+		
+		Assert.isTrue(rsvp.getRendezvous().getMoment().after(date));
+		
+		this.rendezvousService.addAttendant(rsvp.getRendezvous(), user);
 		result = this.rsvpRepository.save(rsvp);
 			
 		return result;
 	}
 	
-	public void delete(RSVP rsvp){
+	
+	
+	// Other business methods ------------------------------------------------------------
+	
+	public void cancel(RSVP rsvp){
 		Assert.isTrue(rsvp.getId() !=0);
 		User user;
 		
@@ -101,8 +110,6 @@ public class RSVPService {
 		
 		
 	}
-	
-	// Other business methods ------------------------------------------------------------
 	
 
 
