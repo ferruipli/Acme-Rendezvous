@@ -52,11 +52,11 @@ public class ActorService {
 		return result;
 	}
 	
-	public long getEdad(Actor actor) {
+	public int getEdad(Actor actor) {
 		Assert.notNull(actor);
 		Assert.isTrue(actor.getId() != 0);
 		
-		long result;
+		int result;
 		LocalDate birthdate, currentDate;
 		Years age;
 		
