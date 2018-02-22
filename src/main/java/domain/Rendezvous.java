@@ -1,9 +1,9 @@
 
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -144,12 +144,11 @@ public class Rendezvous extends DomainEntity {
 	public Collection<User> getAttendants() {
 		Collection<User> result;
 
-		result = new ArrayList<>();
-
-		if (!this.reserves.isEmpty())
+		if (this.reserves != null && !this.reserves.isEmpty()) {
+			result = new HashSet<>();
 			for (final RSVP r : this.reserves)
 				result.add(r.getUser());
-		else
+		} else
 			result = this.attendants;
 
 		return result;
