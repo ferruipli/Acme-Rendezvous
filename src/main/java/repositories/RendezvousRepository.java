@@ -19,7 +19,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	@Query("select (sum(case when u.createdRendezvouses is not empty then 1.0 else 0.0 end)/sum(case when u.createdRendezvouses is empty then 1.0 else 0.0 end)) from User u")
 	Double ratioOfUsersWithRendezvousVsUsersWithoutRendezvous();
 	
-	//TODO: @Query("select avg(u.createdRendezvouses.size), sqrt(sum(u.createdRendezvouses.size*u.createdRendezvouses.size)/count(u.createdRendezvouses.size)-avg(u.createdRendezvouses.size)*avg(u.createdRendezvouses.size)) from Rendezvous r")
+	/*TODO: @Query("select avg(u.createdRendezvouses.size), sqrt(sum(u.createdRendezvouses.size*u.createdRendezvouses.size)/count(u.createdRendezvouses.size)-avg(u.createdRendezvouses.size)*avg(u.createdRendezvouses.size)) from Rendezvous r")
 	Double[] avgSqrtUsersPerRendezvous();
 	
 	//TODO: @Query("")
@@ -35,7 +35,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	
 	/** Level B	**/
 	// TODO: The rendezvouses that are linked to a number of rendezvouses that is greater than the average plus 10%. 
-	Collection<Rendezvous> rendezvousesLinkedPlus10();
+	//Collection<Rendezvous> rendezvousesLinkedPlus10();
 	
 	@Query("select r from Rendezvous r where r.finalModel=true")
 	Collection<Rendezvous> findAllAvailable();
