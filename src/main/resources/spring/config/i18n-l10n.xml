@@ -22,10 +22,12 @@
 		<value>/views/misc/messages</value>
 		<value>/views/security/messages</value>		
 		<value>/views/welcome/messages</value>
-		<value>/views/announcement/messages</value>
 		
+		<value>/views/announcement/messages</value>
 		<value>/views/dashboard/messages</value>
 		<value>/views/legalTexts/messages</value>
+		<value>/views/questionAnswer/messages</value>
+		<value>/views/user/messages</value>
 	</util:list>
 
 </beans>

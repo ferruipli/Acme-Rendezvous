@@ -24,7 +24,7 @@ public class LegalTextsController extends AbstractController {
 		super();
 	}
 
-	// Terms and Conditions ------------------------------------------------------------------		
+	// Terms and Conditions ---------------------------------------------------		
 
 	@RequestMapping(value = "/termsAndConditions")
 	public ModelAndView termsAndConditions() {
