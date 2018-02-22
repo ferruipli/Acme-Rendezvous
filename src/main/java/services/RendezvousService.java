@@ -8,6 +8,9 @@ import java.util.HashSet;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -283,16 +286,22 @@ public class RendezvousService {
 
 	public Collection<Rendezvous> top10RendezvousesRSVPd(){
 		Collection<Rendezvous> result;
+		Page<Rendezvous> allRendezvouses;
+		Pageable pageable;
 		
-		result = this.rendezvousRepository.top10RendezvousesRSVPd();
-		//TODO: falta limitarlo a 10 resultados
+		pageable = new PageRequest(0,10);
+		allRendezvouses = this.rendezvousRepository.top10RendezvousesRSVPd(pageable);
+		
+		result = allRendezvouses.getContent();
+		
 		return result;
 	}
+	
 	
 	public Collection<Rendezvous> rendezvousesLinkedPlus10(){
 		Collection<Rendezvous> result;
 		
-		result = this.rendezvousesLinkedPlus10();
+		result = this.rendezvousRepository.rendezvousesLinkedPlus10();
 		
 		return result;
 

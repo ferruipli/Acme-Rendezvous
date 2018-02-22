@@ -2,6 +2,7 @@ package repositories;
 
 import java.util.Collection;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,7 +28,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	Double[] avgSqrtRendezvousesRSVPdPerUser();
 	 
 	@Query("select r from Rendezvous r order by r.attendants.size desc")
-	Collection<Rendezvous> top10RendezvousesRSVPd();
+	Page<Rendezvous> top10RendezvousesRSVPd(Pageable page);
 	
 	@Query("select r from Rendezvous r join r.comments c where c.id=?1 and c member of r.comments")
 	Rendezvous findRendezvousFromAComment(int commentId);
