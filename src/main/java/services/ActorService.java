@@ -1,9 +1,9 @@
 package services;
 
-import java.util.Date;
-
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -52,17 +52,19 @@ public class ActorService {
 		return result;
 	}
 	
-	public long getEdad(Actor actor) {
+	public int getEdad(Actor actor) {
 		Assert.notNull(actor);
 		Assert.isTrue(actor.getId() != 0);
 		
-		long result;
-		Date currentDate;
+		int result;
+		LocalDate birthdate, currentDate;
+		Years age;
 		
-		currentDate = new Date();
+		currentDate = new LocalDate();
+		birthdate = LocalDate.fromDateFields(actor.getBirthdate());
+		age = Years.yearsBetween(birthdate, currentDate);
 		
-		result = currentDate.getTime()-actor.getBirthdate().getTime();
-		result = result/(365*24*3600*1000);
+		result = age.getYears();
 		
 		return result;
 	}

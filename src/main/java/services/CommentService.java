@@ -69,7 +69,7 @@ public class CommentService {
 
 		return results;
 	}
-	
+	/*
 	public void delete(Comment comment){
 		Assert.isTrue(comment.getId() != 0);
 		Rendezvous rendezvous;
@@ -95,7 +95,7 @@ public class CommentService {
 		
 		return result;
 	}
-
+*/
 	// Other business methods ------------------------------------------------------------
 	
 	public Double[] avgSqrtRepliesPerComment(){

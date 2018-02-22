@@ -50,7 +50,7 @@ public class CommentUserController extends AbstractController {
 			result = this.createEditModelAndView(comment);
 		} else {
 			try {
-				this.commentService.save(comment);
+				//this.commentService.save(comment);
 				result = new ModelAndView("redirect:/rendezvous/user/list.do");	
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(comment, "comment.commit.error");
