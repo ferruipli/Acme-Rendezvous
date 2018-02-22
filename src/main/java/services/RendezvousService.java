@@ -232,7 +232,7 @@ public class RendezvousService {
 		aux.remove(announcement);
 		rendezvous.setAnnouncements(aux);
 	}
-
+/*
 	public Double[] avgSqrtRendezvousesPerUser() {
 		Double[] result;
 
@@ -256,7 +256,7 @@ public class RendezvousService {
 		
 		return result;
 	}
-	/*
+	
 	public Double[] avgSqrtRendezvousesRSVPdPerUser(){
 
 		Double[] result;
@@ -278,11 +278,12 @@ public class RendezvousService {
 		return result;
 
 	}
+	
 	/*
 	public Collection<Rendezvous> findRendezvousReservedByUser(User user){
 		Collection<Rendezvous> result;
 		
-		result = this.rendezvousRepository.findRendezvousReservedByUser(user);
+		result = this.rendezvousRepository.findRendezvousesRSVPByUserId(user.getId());
 		
 		return result;
 	}
@@ -290,7 +291,7 @@ public class RendezvousService {
 	public Rendezvous finRendezvousFromAComment(int commentId){
 		Rendezvous result;
 		
-		result = this.rendezvousRepository.findRedezvousFromAComment(commentId);
+		result = this.rendezvousRepository.findRendezvousFromAComment(commentId);
 		
 		return result;
 	}

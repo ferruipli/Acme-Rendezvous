@@ -12,7 +12,7 @@ import services.CommentService;
 import controllers.AbstractController;
 
 @Controller
-@RequestMapping("comment/administrator")
+@RequestMapping("/comment/administrator")
 public class CommentAdministratorController extends AbstractController {
 	
 	// Services ------------------------------------------------------
