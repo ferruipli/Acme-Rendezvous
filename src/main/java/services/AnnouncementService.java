@@ -38,12 +38,12 @@ public class AnnouncementService {
 			return result;
 		}
 		
-		public Collection<Rendezvous> rendezvousesWhoseMoreThat75Announcements(){
+		/*public Collection<Rendezvous> rendezvousesWhoseMoreThat75Announcements(){
 			Collection<Rendezvous> result;
 			
 			result = this.announcementRepository.rendezvousesWhoseMoreThat75Announcements();
 			
 			return result;
-		}
+		}*/
 		
 }
