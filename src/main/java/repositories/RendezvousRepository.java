@@ -21,10 +21,9 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	@Query("select avg(u.createdRendezvouses.size), sqrt(sum(u.createdRendezvouses.size*u.createdRendezvouses.size)/count(u.createdRendezvouses.size)-avg(u.createdRendezvouses.size)*avg(u.createdRendezvouses.size)) from Rendezvous r")
 	Double[] avgSqrtUsersPerRendezvous();
 	
-	/*@Query("select avg(r from Rendezvous r) join r.reserves re where re.user=?1")
-	Double[] avgSqrtRendezvousesRSVPdPerUser(int userId);*/
-	
-	//TODO: The top-10 rendezvouses in terms of users who have RSVPd them. 
+	@Query("select avg(r from Rendezvous r) join r.reserves re where re.user=?1")
+	Double[] avgSqrtRendezvousesRSVPdPerUser(int userId);
+	 
 	@Query("select r from Rendezvous r order by r.attendants.size desc")
 	Collection<Rendezvous> top10RendezvousesRSVPd();
 	
@@ -36,7 +35,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	Collection<Rendezvous> findRendezvousesRSVPByUserId(int userId);
 	
 	/** Level B	**/
-	// TODO: The rendezvouses that are linked to a number of rendezvouses that is greater than the average plus 10%. 
+	// The rendezvouses that are linked to a number of rendezvouses that is greater than the average plus 10%. 
 	@Query("select r1 from Rendezvous r1 where r1.similarOnes.size>(select avg(r2.similarOnes.size)*1.1 from Rendezvous r2)")
 	Collection<Rendezvous> rendezvousesLinkedPlus10();
 	
