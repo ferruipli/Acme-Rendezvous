@@ -2,6 +2,7 @@ package services;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 
 import javax.transaction.Transactional;
@@ -30,6 +31,9 @@ public class RendezvousService {
 	// Supporting services --------------------------------------------------
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private UserService userService;
 
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
@@ -79,11 +83,14 @@ public class RendezvousService {
 
 	public Rendezvous save(Rendezvous rendezvous) {
 		this.checkByPrincipal(rendezvous);
-
+		this.checkMoment(rendezvous.getMoment());
+		
 		Rendezvous result;
 
 		if (rendezvous.getId() != 0) {
 			this.checkFinalMode(rendezvous);
+		} else {
+			this.userService.addRendezvous(rendezvous.getCreator(), rendezvous);
 		}
 
 		result = this.rendezvousRepository.save(rendezvous);
@@ -110,7 +117,7 @@ public class RendezvousService {
 		
 		return results;
 	}
-
+/*
 	public void reserve(int rendezvousId) {
 		Assert.isTrue(rendezvousId != 0);
 		
@@ -122,13 +129,13 @@ public class RendezvousService {
 		
 		this.addAttendant(rendezvous, user);
 	}
-
+*/
 	public void remove(int rendezvousId) {
 		Assert.isTrue(rendezvousId != 0);
 
 		this.rendezvousRepository.delete(rendezvousId);
 	}
-
+/*
 	public void cancel(Rendezvous rendezvous) {
 		Assert.notNull(rendezvous);
 		User user;
@@ -137,8 +144,17 @@ public class RendezvousService {
 
 		this.removeAttendant(rendezvous, user);
 	}
-
-	public void checkByPrincipal(Rendezvous rendezvous) {
+*/
+	
+	private void checkMoment(Date date) {
+		Date currentMoment;
+		
+		currentMoment = new Date();
+		
+		Assert.isTrue(date.after(currentMoment));
+	}
+	
+	private void checkByPrincipal(Rendezvous rendezvous) {
 		Assert.notNull(rendezvous);
 
 		User user;
@@ -150,7 +166,7 @@ public class RendezvousService {
 
 	private void checkAdult() {
 		Actor actor;
-		long edad;
+		int edad;
 
 		actor = this.actorService.findByPrincipal();
 		edad = this.actorService.getEdad(actor);

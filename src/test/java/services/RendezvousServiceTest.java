@@ -1,5 +1,7 @@
 package services;
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,59 @@ public class RendezvousServiceTest extends AbstractTest {
 		Assert.isNull(rendezvous.getGpsCoordinates());
 		Assert.isNull(rendezvous.getMoment());
 		Assert.isNull(rendezvous.getName());
+		
+		super.authenticate(null);
+	}
+	
+	@Test
+	public void testSave() {
+		super.authenticate("user1");
+		
+		User user;
+		Rendezvous rendezvous, saved;
+		Date moment;
+		
+		user = (User)this.actorService.findByPrincipal();
+		rendezvous = this.rendezvousService.create();
+		
+		moment = new Date();
+		
+		rendezvous.setName("Name X");
+		rendezvous.setDescription("Description X");
+		rendezvous.setMoment(new Date(moment.getTime()+1000));
+		
+		saved = this.rendezvousService.save(rendezvous);
+		
+		Assert.isTrue(this.rendezvousService.findAll().contains(saved));
+		Assert.isTrue(user.getCreatedRendezvouses().contains(rendezvous));
+		
+		super.authenticate(null);
+	}
+	
+	@Test
+	public void testDelete() {
+		super.authenticate("user1");
+		
+		Rendezvous rendezvous, saved;
+		Date moment;
+		
+		rendezvous = this.rendezvousService.create();
+		
+		moment = new Date();
+		
+		rendezvous.setName("Name X");
+		rendezvous.setDescription("Description X");
+		rendezvous.setMoment(new Date(moment.getTime()+1000));
+		
+		saved = this.rendezvousService.save(rendezvous);
+		
+		Assert.isTrue(this.rendezvousService.findAll().contains(saved));
+		
+		this.rendezvousService.delete(saved);
+		
+		Assert.isTrue(this.rendezvousService.findAll().contains(saved));
+		Assert.isTrue(saved.getFinalMode());
+		Assert.isTrue(saved.getIsFlagged());
 		
 		super.authenticate(null);
 	}
