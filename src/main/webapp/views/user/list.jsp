@@ -11,9 +11,9 @@
 		<a href="user/profile.do?userId=${user.id}"> <spring:message code="user.link.profile"/> </a>
 	</display:column>
 	
-	<spring:message code="user.table.name" var="title.name"/>
-	<display:column property="name" title="title.name" sortable="true"/>
+	<spring:message code="user.table.name" var="titleName"/>
+	<display:column property="name" title="${titleName}" sortable="true"/>
 	
-	<spring:message code="user.table.surname" var="title.surname"/>
-	<display:column property="surname" title="title.surname" sortable="true"/>
+	<spring:message code="user.table.surname" var="titleSurname"/>
+	<display:column property="surname" title="${titleSurname}" sortable="true"/>
 </display:table>
