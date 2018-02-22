@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.RendezvousRepository;
 import domain.Actor;
 import domain.Announcement;
 import domain.Comment;
@@ -17,8 +18,6 @@ import domain.Question;
 import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
-
-import repositories.RendezvousRepository;
 
 @Service
 @Transactional
@@ -232,7 +231,7 @@ public class RendezvousService {
 		aux.remove(announcement);
 		rendezvous.setAnnouncements(aux);
 	}
-/*
+
 	public Double[] avgSqrtRendezvousesPerUser() {
 		Double[] result;
 
@@ -265,9 +264,13 @@ public class RendezvousService {
 		
 		return result;
 	}
-*/
+
 	public Collection<Rendezvous> top10RendezvousesRSVPd(){
-		return null;
+		Collection<Rendezvous> result;
+		
+		result = this.rendezvousRepository.top10RendezvousesRSVPd();
+		//TODO: falta limitarlo a 10 resultados
+		return result;
 	}
 	
 	public Collection<Rendezvous> rendezvousesLinkedPlus10(){
@@ -277,15 +280,6 @@ public class RendezvousService {
 		
 		return result;
 
-	}
-	
-	/*
-	public Collection<Rendezvous> findRendezvousReservedByUser(User user){
-		Collection<Rendezvous> result;
-		
-		result = this.rendezvousRepository.findRendezvousesRSVPByUserId(user.getId());
-		
-		return result;
 	}
 	
 	public Rendezvous finRendezvousFromAComment(int commentId){
@@ -303,5 +297,5 @@ public class RendezvousService {
 		
 		return result;
 	}
-*/
+
 }

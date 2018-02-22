@@ -17,10 +17,6 @@ public interface AnnouncementRepository extends
 	@Query("select avg(r.announcements.size), sqrt(sum(r.announcements.size*r.announcements.size)/count(r.announcements.size)-avg(r.announcements.size)*avg(r.announcements.size)) from Rendezvous r")
 	Double[] avgSqrtAnnouncementsPerRendezvous();
 	
-	// The rendezvouses that whose number of announcements is above 75% the average number of announcements per rendezvous. 
-	//@Query("select r1 from Rendezvous r1 where r1.announcements.size>(select 0.75*avg(r2.announcements.size) from Rendezvous r2)")
-	
-	// TODO: The rendezvouses that whose number of announcements is above 75% the average number of announcements per rendezvous. 
-	@Query("select r from Rendezvous r where r.announcements.size/(select avg(r1.announcements.size) from Rendezvous r1)>=7.5")
+	@Query("select r from Rendezvous r where r.announcements.size/(select avg(r1.announcements.size) from Rendezvous r1)>7.5")
 	Collection<Rendezvous> rendezvousesWhoseMoreThat75Announcements();
 }

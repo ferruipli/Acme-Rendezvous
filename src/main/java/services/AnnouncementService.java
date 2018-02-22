@@ -1,6 +1,6 @@
-
 package services;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -11,17 +11,19 @@ import org.springframework.util.Assert;
 
 import repositories.AnnouncementRepository;
 import domain.Announcement;
+import domain.Rendezvous;
 
 @Service
 @Transactional
 public class AnnouncementService {
 
-	// Managed repository --------------------------------------------------------------------
+	// Managed repository
+	// --------------------------------------------------------------------
 	@Autowired
-	private AnnouncementRepository	announcementRepository;
+	private AnnouncementRepository announcementRepository;
 
-
-	// Supporting services ------------------------------------------------------------------
+	// Supporting services
+	// ------------------------------------------------------------------
 
 	// Constructors ---------------------------------------------------------
 	public AnnouncementService() {
@@ -53,24 +55,26 @@ public class AnnouncementService {
 
 		return result;
 	}
-	// Other business methods ------------------------------------------------------------
+
+	// Other business methods
+	// ------------------------------------------------------------
 
 	public Double[] avgSqrtAnnouncementsPerRendezvous() {
 		Double[] result;
 
-		result = this.announcementRepository.avgSqrtAnnouncementsPerRendezvous();
+		result = this.announcementRepository
+				.avgSqrtAnnouncementsPerRendezvous();
 
 		return result;
 	}
 
-	/*
-	 * public Collection<Rendezvous> rendezvousesWhoseMoreThat75Announcements(){
-	 * Collection<Rendezvous> result;
-	 * 
-	 * result = this.announcementRepository.rendezvousesWhoseMoreThat75Announcements();
-	 * 
-	 * return result;
-	 * }
-	 */
+	public Collection<Rendezvous> rendezvousesWhoseMoreThat75Announcements() {
+		Collection<Rendezvous> result;
+
+		result = this.announcementRepository
+				.rendezvousesWhoseMoreThat75Announcements();
+
+		return result;
+	}
 
 }
