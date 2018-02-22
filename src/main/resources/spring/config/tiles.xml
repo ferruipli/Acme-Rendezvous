@@ -24,6 +24,7 @@
 		<value>/views/welcome/tiles.xml</value>
 		
 		<value>/views/dashboard/tiles.xml</value>
+		<value>/views/legalTexts/tiles.xml</value>
 	</util:list>
 
 </beans>

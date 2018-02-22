@@ -24,6 +24,7 @@
 		<value>/views/welcome/messages</value>
 		
 		<value>/views/dashboard/messages</value>
+		<value>/views/legalTexts/messages</value>
 	</util:list>
 
 </beans>

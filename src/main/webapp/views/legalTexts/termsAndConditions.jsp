@@ -6,3 +6,4 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<p> <spring:message code="termsAndCondition.text"/> </p>
