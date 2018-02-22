@@ -7,6 +7,7 @@ import java.util.HashSet;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -256,19 +257,27 @@ public class RendezvousService {
 		
 		return result;
 	}
+<<<<<<< HEAD
+	/*
+	public Double[] avgSqrtRendezvousesRSVPdPerUser(){
+=======
 	
 	/*public Double[] avgSqrtRendezvousesRSVPdPerUser(){
+>>>>>>> 3523793808feadf65149f3446da867fbaf52dac3
 		Double[] result;
 		
 		result = this.rendezvousRepository.avgSqrtRendezvousesRSVPdPerUser();
 		
 		return result;
 	}
-	
+	*/
 	public Collection<Rendezvous> top10RendezvousesRSVPd(){
 		Collection<Rendezvous> result;
+		String sql;
+		Query query;
 		
-		result = this.rendezvousRepository.top10RendezvousesRSVPd();
+		sql = "select r from Rendezvous r order by r.attendants.size desc";
+		query = new Query(sql);
 		
 		return result;
 	}
@@ -279,9 +288,22 @@ public class RendezvousService {
 		result = this.rendezvousesLinkedPlus10();
 		
 		return result;
+<<<<<<< HEAD
+	}
+/*
+	public Collection<Rendezvous> findRendezvousReservedByUser(User user){
+		Collection<Rendezvous> result;
+		
+		result = this.rendezvousRepository.findRendezvousReservedByUser(user);
+		
+		return result;
+	}
+	*/
+=======
 	}*/
 
 	
+>>>>>>> 3523793808feadf65149f3446da867fbaf52dac3
 	public Rendezvous finRendezvousFromAComment(int commentId){
 		Rendezvous result;
 		
