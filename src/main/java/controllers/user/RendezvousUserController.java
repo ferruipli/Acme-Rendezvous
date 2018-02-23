@@ -43,10 +43,10 @@ public class RendezvousUserController extends AbstractController {
 		User user;
 		
 		user = (User) this.actorService.findByPrincipal();
-		//rendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
+		rendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
 		
 		result = new ModelAndView("rendezvous/list");
-		result.addObject("rendezvouses", /*rendezvouses*/null);
+		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("requestURI", "rendezvous/user/list.do");
 		
 		return result;
