@@ -47,6 +47,16 @@
 <fieldset>
 	
 	<!--TODO: <jstl:out value="${top10RendezvousesRSVPd}"/>-->
+	<display:table name="top10RendezvousesRSVPd" id="top10RendezvousesRSVPd" requestURI="${requestURI}" pagesize="5" class="displaytag">
+	
+	<spring:message code="dashboard.rendezvous.name" var="titleName"/>
+	<display:column property="name" title="${titleName}" sortable="true"/>
+	
+	<spring:message code="dashboard.rendezvous.description" var="titleDescription"/>
+	<display:column property="description" title="${titleDescription}" sortable="true"/>
+	
+	
+</display:table>
 	
 </fieldset>
 
@@ -54,7 +64,17 @@
 <fieldset>
 	
 	<!--TODO: <jstl:out value="${rendezvousesLinkedPlus10}"/>-->
+	<display:table name="rendezvousesLinkedPlus10" id="rendezvousesLinkedPlus10" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	
+	<spring:message code="dashboard.rendezvous.name" var="titleName"/>
+	<display:column property="name" title="${titleName}" sortable="true"/>
+	
+	<spring:message code="dashboard.rendezvous.description" var="titleDescription"/>
+	<display:column property="description" title="${titleDescription}" sortable="true"/>
+	
+	
+</display:table>
+
 </fieldset>
 
 <h2><spring:message code="dashboard.avgSqrtAnnouncementsPerRendezvous"/></h2>
@@ -70,7 +90,16 @@
 <fieldset>
 	
 	<!--TODO: <jstl:out value="${rendezvousesWhoseMoreThat75Announcements}"/>-->
+	<display:table name="rendezvousesWhoseMoreThat75Announcements" id="rendezvousesWhoseMoreThat75Announcements" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	
+	<spring:message code="dashboard.rendezvous.name" var="titleName"/>
+	<display:column property="name" title="${titleName}" sortable="true"/>
+	
+	<spring:message code="dashboard.rendezvous.description" var="titleDescription"/>
+	<display:column property="description" title="${titleDescription}" sortable="true"/>
+	
+	
+</display:table>
 	
 </fieldset>
 
