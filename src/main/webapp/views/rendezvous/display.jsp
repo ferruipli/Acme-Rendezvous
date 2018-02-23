@@ -8,6 +8,8 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+
 <jstl:if test="${rendezvous.urlPicture != null || rendezvous.urlPicture != '' }">
 	<div id="picture">
 		<img src="images/${rendezvous.urlPicture}" alt="Picture" />
@@ -45,7 +47,7 @@
 <p>
 	<strong> <spring:message code="rendezvous.attendants"/>: </strong>
 	<a href="questions/user/list.do">
-	 	<jstl:out value="rendezvous.link" />
+	 	<jstl:out value="<spring:message code="rendezvous.link" />" />
 	</a>
 </p>
 
@@ -83,9 +85,18 @@
 		<spring:message code="announcement.description" var="descriptionHeader" />
 		<display:column property="description" title="${descriptionHeader}" sortable="true" />
 		
-		<spring:message code="" var="" />
+		<spring:message code="rendezvous.formatMoment" var="formatMomentVar" />
 		<spring:message code="announcement.moment" var="momentHeader" />
-		<display:column property="title" title="${titleHeader}" sortable="true" />
+		<display:column property="title" title="${momentHeader}" format="${formatMomentVar}" sortable="true" />
 	</display:table>
 	 
 </jstl:if>
+
+<security:authorize access="hasRole('USER')">
+	<a href="announcement/user/create.do?rendezvousId=${rendezvous.id}">
+		<spring:message code="announcement.create" />
+	</a>
+</security:authorize>
+
+<acme:submit name="rsvp" code="rendezvous.reserve" />
+<acme:submit name="cancelRSVP" code="rendezvous.cancelReserve" />
