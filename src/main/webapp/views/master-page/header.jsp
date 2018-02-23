@@ -76,7 +76,7 @@
 			<li><a class="fNiv"><spring:message code="master.page.announcement" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="announcement/create.do"><spring:message code="master.page.announcement.create"/></a></li>
+					<li><a href="announcement/user/create.do"><spring:message code="master.page.announcement.create"/></a></li>
 				</ul>
 			</li>
 		</security:authorize>

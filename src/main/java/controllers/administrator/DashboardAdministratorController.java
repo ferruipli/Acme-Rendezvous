@@ -70,8 +70,6 @@ public class DashboardAdministratorController extends AbstractController {
 		requestURI = "dashboard/administrator/display.do";
 		result = new ModelAndView("dashboard/display");
 
-		
-
 		result.addObject("avgSqrtRendezvousesPerUser1",avgSqrtRendezvousesPerUser[0]);
 		result.addObject("avgSqrtRendezvousesPerUser2",avgSqrtRendezvousesPerUser[1]);
 		result.addObject("ratioOfUsersWithRendezvousVsUsersWithoutRendezvous",ratioOfUsersWithRendezvousVsUsersWithoutRendezvous);

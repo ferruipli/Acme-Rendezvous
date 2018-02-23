@@ -37,7 +37,7 @@ public class QuestionService {
 	public Double[] avgSqrtAnswersToQuestionsPerRendezvous(){
 		Double[] result;
 		
-		result = this.avgSqrtAnswersToQuestionsPerRendezvous();
+		result = this.questionRepository.avgSqrtAnswersToQuestionsPerRendezvous();
 		
 		return result;
 	}
