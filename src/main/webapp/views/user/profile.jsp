@@ -14,6 +14,7 @@
 	<li> <spring:message code="user.table.email"/>: <jstl:out value="${user.email}"/> </li>
 	<li> <spring:message code="user.table.phone"/>: <jstl:out value="${user.phoneNumber}"/> </li>
 	<li> <spring:message code="user.table.address"/>: <jstl:out value="${user.postalAddress}"/> </li>
-	<li> <spring:message code="user.table.birth"/>: <jstl:out value="${user.birthdate}"/> </li>
+		 <spring:message code="user.format.date" var="formatDate"/>
+	<li> <spring:message code="user.table.birth"/>: <fmt:formatDate value="${user.birthdate}" pattern="${formatDate}"/> </li>
 	<li> <spring:message code="user.table.rsvpdRendezvouses"/>: <a href=""> <spring:message code="user.link.rsvpdRendezvouses"/> </a> </li>
 </ul>

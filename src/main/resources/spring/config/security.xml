@@ -43,11 +43,13 @@
 		
 		
 		<security:intercept-url pattern="/announcement/user/**" access = "hasRole('USER')"/>
-		<security:intercept-url pattern="announcement/**" access="permitAll" />
+		<security:intercept-url pattern="/announcement/**" access="permitAll" />
 		
 		<security:intercept-url pattern="/dashboard/administrator/**" access = "hasRole('ADMINISTRATOR')"/>
 		
 		<security:intercept-url pattern="/legalTexts/termsAndConditions.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/user/**" access="permitAll" />
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
