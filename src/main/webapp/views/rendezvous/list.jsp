@@ -64,7 +64,13 @@
 				<spring:message code="rendezvous.edit" />
 			</a>
 		</display:column>
+		<display:column>
+			<a href="comment/user/create.do?rendezvousId=${row.id}">
+				<spring:message code="rendezvous.comment" />
+			</a>
+		</display:column>
 	</security:authorize>
+	
 
 
 
