@@ -34,4 +34,21 @@ public class LegalTextsController extends AbstractController {
 
 		return result;
 	}
+
+	@RequestMapping(value = "/legalData")
+	public ModelAndView legalData() {
+		ModelAndView result;
+
+		result = new ModelAndView("legalTexts/legalData");
+
+		return result;
+	}
+	@RequestMapping(value = "/cookies")
+	public ModelAndView cookies() {
+		ModelAndView result;
+
+		result = new ModelAndView("legalTexts/cookies");
+
+		return result;
+	}
 }
