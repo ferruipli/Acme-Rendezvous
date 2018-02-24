@@ -40,6 +40,9 @@ public class RendezvousService {
 	private UserService				userService;
 
 
+	@Autowired
+	private GPSService gpsService;
+	
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
 		super();
@@ -122,6 +125,7 @@ public class RendezvousService {
 
 		return results;
 	}
+<<<<<<< HEAD
 	/*
 	 * public void reserve(int rendezvousId) {
 	 * Assert.isTrue(rendezvousId != 0);
@@ -139,6 +143,29 @@ public class RendezvousService {
 		Assert.isTrue(rendezvousId != 0);
 
 		this.rendezvousRepository.delete(rendezvousId);
+=======
+/*
+	public void reserve(int rendezvousId) {
+		Assert.isTrue(rendezvousId != 0);
+		
+		User user;
+		Rendezvous rendezvous;
+		
+		user = (User) this.actorService.findByPrincipal();
+		rendezvous = this.rendezvousRepository.findOne(rendezvousId);
+		
+		this.addAttendant(rendezvous, user);
+	}
+*/
+	public void remove(Rendezvous rendezvous) {
+		Assert.isTrue(rendezvous.getId() != 0);
+		
+		if (rendezvous.getGpsCoordinates() != null) {
+			this.gpsService.delete(rendezvous.getGpsCoordinates());
+		}
+		
+		this.rendezvousRepository.delete(rendezvous);
+>>>>>>> 42a88149d890f03a8a989f9d47710c560784f615
 	}
 	/*
 	 * public void cancel(Rendezvous rendezvous) {
