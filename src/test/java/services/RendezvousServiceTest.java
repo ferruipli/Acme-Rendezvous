@@ -1,9 +1,7 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,6 +81,7 @@ public class RendezvousServiceTest extends AbstractTest {
 		
 		saved = this.rendezvousService.save(rendezvous);
 		
+		Assert.isTrue(this.rendezvousService.findAll().contains(saved));
 		Assert.isTrue(saved.getId()!=0);
 		Assert.isTrue(user.getCreatedRendezvouses().contains(saved));
 		
@@ -113,7 +112,8 @@ public class RendezvousServiceTest extends AbstractTest {
 		
 		this.rendezvousService.delete(saved);
 		
-		//Assert.isTrue(this.rendezvousService.findAllAvailable().contains(saved));
+		Assert.isTrue(this.rendezvousService.findAll().contains(saved));
+		Assert.isTrue(this.rendezvousService.findAllAvailable().contains(saved));
 		Assert.isTrue(saved.getFinalMode());
 		Assert.isTrue(saved.getIsFlagged());
 		
@@ -122,25 +122,29 @@ public class RendezvousServiceTest extends AbstractTest {
 	
 	@Test
 	public void testRemove() {
+		super.authenticate("user2");
 		
-		Rendezvous rendezvous;
-		
-		rendezvous = this.getRendezvous();
-		
-		this.rendezvousService.remove(rendezvous.getId());
-		
-		Assert.isTrue(this.rendezvousService.findAll().contains(rendezvous));
-	}
+		Rendezvous rendezvous, saved;
+		Calendar c;
+		Date moment;
 	
-	private Rendezvous getRendezvous() {
-		Rendezvous result;
-		List<Rendezvous> all;
+		rendezvous = this.rendezvousService.create();
 		
-		all = new ArrayList<>(this.rendezvousService.findAll());
-		result = all.get(0);
-		Assert.notNull(result);
+		c = Calendar.getInstance();
+		c.set(2018, 04, 25, 20, 00);
+		moment = c.getTime();
+	
+		rendezvous.setName("Name X");
+		rendezvous.setDescription("Description X");
+		rendezvous.setMoment(moment);
 		
-		return result;
+		saved = this.rendezvousService.save(rendezvous);
+		
+		this.rendezvousService.remove(saved);
+		
+		Assert.isTrue(!this.rendezvousService.findAll().contains(saved));
+	
+		super.authenticate(null);
 	}
 	
 }

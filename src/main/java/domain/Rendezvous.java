@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -37,7 +38,6 @@ public class Rendezvous extends DomainEntity {
 	private String	name;
 	private String	description;
 	private Date	moment;
-	private GPS		gpsCoordinates;
 	private boolean	finalMode;
 	private boolean	isFlagged;
 	private boolean	adultOnly;
@@ -71,15 +71,6 @@ public class Rendezvous extends DomainEntity {
 
 	public void setMoment(final Date moment) {
 		this.moment = moment;
-	}
-
-	@Valid
-	public GPS getGpsCoordinates() {
-		return this.gpsCoordinates;
-	}
-
-	public void setGpsCoordinates(final GPS gpsCoordinates) {
-		this.gpsCoordinates = gpsCoordinates;
 	}
 
 	public boolean getFinalMode() {
@@ -119,6 +110,7 @@ public class Rendezvous extends DomainEntity {
 	// Relationships ----------------------------------------------
 	private User						creator;
 	private Collection<User>			attendants;
+	private GPS							gpsCoordinates;
 	private Collection<RSVP>			reserves;
 	private Collection<Comment>			comments;
 	private Collection<Rendezvous>		similarOnes;
@@ -158,6 +150,16 @@ public class Rendezvous extends DomainEntity {
 		this.attendants = attendants;
 	}
 
+	@Valid
+	@OneToOne(optional = true)
+	public GPS getGpsCoordinates() {
+		return this.gpsCoordinates;
+	}
+
+	public void setGpsCoordinates(final GPS gpsCoordinates) {
+		this.gpsCoordinates = gpsCoordinates;
+	}
+	
 	@NotNull
 	@OneToMany(mappedBy = "rendezvous")
 	public Collection<RSVP> getReserves() {
