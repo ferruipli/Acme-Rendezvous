@@ -35,6 +35,10 @@ public class RendezvousUserController extends AbstractController {
 		super();
 	}
 	
+	
+	
+	// CRUD methods ----------------------------------------------------
+	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public ModelAndView list(){
 		ModelAndView result;
@@ -49,8 +53,6 @@ public class RendezvousUserController extends AbstractController {
 		return result;
 	}
 	
-	// CRUD methods ----------------------------------------------------
-	/*
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public ModelAndView listRSVP(){
 		ModelAndView result;
@@ -66,7 +68,7 @@ public class RendezvousUserController extends AbstractController {
 		
 		return result;
 	}
-	*/
+	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
