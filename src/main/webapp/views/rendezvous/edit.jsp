@@ -11,6 +11,15 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="rendezvous/user/edit.do" modelAttribute="rendezvous">
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	<form:hidden path="isFlagged" />
+	<form:hidden path="creator" />
+	<form:hidden path="attendants" />
+	<form:hidden path="reserves" />
+	<form:hidden path="comments" />
+	<form:hidden path="announcements" />
+	<form:hidden path="questions" />
 	
 	<acme:textbox code="rendezvous.name" path="name" />
 	<acme:textbox code="rendezvous.description" path="description" />

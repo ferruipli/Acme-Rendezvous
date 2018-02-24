@@ -50,6 +50,9 @@
 		<security:intercept-url pattern="/legalTexts/termsAndConditions.do" access="permitAll" />
 		<security:intercept-url pattern="/legalTexts/legalData.do" access="permitAll" />
 		
+		<security:intercept-url pattern="/rendezvous/list.do" access="permitAll" />
+		<security:intercept-url pattern="/rendezvous/user/**" access="hasRole('USER')" />
+		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 

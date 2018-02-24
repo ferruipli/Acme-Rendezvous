@@ -62,7 +62,7 @@ public class RendezvousService {
 		Collection<Rendezvous> results;
 
 		results = this.rendezvousRepository.findAll();
-
+		
 		return results;
 	}
 
@@ -89,15 +89,18 @@ public class RendezvousService {
 		this.checkMoment(rendezvous.getMoment());
 		
 		Rendezvous result;
-
+		
 		if (rendezvous.getId() != 0) {
 			this.checkFinalMode(rendezvous);
-		} else {
-			this.userService.addRendezvous(rendezvous.getCreator(), rendezvous);
 		}
-
+		
 		result = this.rendezvousRepository.save(rendezvous);
 
+		if (rendezvous.getId() == 0) {
+			// Updates User::createdRendezvous of creator
+			this.userService.addRendezvous(rendezvous.getCreator(), result);
+		}
+		
 		return result;
 	}
 
@@ -322,5 +325,5 @@ public class RendezvousService {
 		
 		return result;
 	}
-
+	
 }

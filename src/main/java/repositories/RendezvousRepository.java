@@ -13,7 +13,6 @@ import domain.Rendezvous;
 @Repository
 public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> {
 	
-	
 	@Query("select avg(u.createdRendezvouses.size), sqrt(sum(u.createdRendezvouses.size*u.createdRendezvouses.size)/count(u.createdRendezvouses.size)-avg(u.createdRendezvouses.size)*avg(u.createdRendezvouses.size)) from User u")
 	Double[] avgSqrtRendezvousesPerUser();
 	
@@ -37,7 +36,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous,Integer> 
 	
 	@Query("select r1 from Rendezvous r1 where r1.similarOnes.size>(select avg(r2.similarOnes.size)*1.1 from Rendezvous r2)")
 	Collection<Rendezvous> rendezvousesLinkedPlus10();
-	
+
 	@Query("select r from Rendezvous r where r.finalMode=true")
 	Collection<Rendezvous> findAllAvailable();
 	
