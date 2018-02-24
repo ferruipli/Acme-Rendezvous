@@ -38,6 +38,9 @@ public class RendezvousService {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private GPSService gpsService;
+	
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
 		super();
@@ -136,10 +139,14 @@ public class RendezvousService {
 		this.addAttendant(rendezvous, user);
 	}
 */
-	public void remove(int rendezvousId) {
-		Assert.isTrue(rendezvousId != 0);
-
-		this.rendezvousRepository.delete(rendezvousId);
+	public void remove(Rendezvous rendezvous) {
+		Assert.isTrue(rendezvous.getId() != 0);
+		
+		if (rendezvous.getGpsCoordinates() != null) {
+			this.gpsService.delete(rendezvous.getGpsCoordinates());
+		}
+		
+		this.rendezvousRepository.delete(rendezvous);
 	}
 /*
 	public void cancel(Rendezvous rendezvous) {

@@ -332,12 +332,7 @@
 		<property value="rendezvous1" name="name"/>
 		<property value="description_rendezvous1" name="description"/>
 		<property value="2017/01/20 09:00" name="moment"/>
-		<property name="gpsCoordinates" >
-			<bean class="domain.GPS">
-			<property name="latitude" value = "45.52530825394937" />
-			<property name="longitude" value = "-293.70071785000005" />
-			</bean>
-		</property>
+		<property name="gpsCoordinates" ref="gps1" />
 		<property value="true" name="finalMode"/>
 		<property value="true" name="isFlagged"/>	
 		<property value="false" name="adultOnly"/>		
@@ -385,10 +380,7 @@
 		<property value="description_rendezvous2" name="description"/>
 		<property value="2017/02/17 10:00" name="moment"/>
 		<property name="gpsCoordinates" >
-			<bean class="domain.GPS">
-				<property name="latitude" value = "16.893527767168244" />
-				<property name="longitude" value = "-311.98196785000005" />
-			</bean>
+			<null></null>
 		</property>
 		<property value="false" name="finalMode"/>
 		<property value="true" name="isFlagged"/>	
@@ -523,7 +515,7 @@
 		<property value="user3@gmail.com" name="email"/>
 		<property value="Calle La Palmera" name="postalAddress"/>
 		<property value="+34 692368745" name="phoneNumber"/>
-		<property value = "1966/04/30" name="birthdate"/>
+		<property value = "2002/04/30" name="birthdate"/>
 		<property name="userAccount" ref="userAccount6"/>	
 		<property name="createdRendezvouses">
 			<list>
@@ -538,6 +530,12 @@
 			<list>
 			</list>
 		</property>
+	</bean>
+	
+	<!-- GPS  -->
+	<bean class="domain.GPS" id="gps1">
+		<property value="40.7127837" name="latitude" />
+		<property value="-74.0059413" name="longitude" />
 	</bean>
 	
 </beans>
