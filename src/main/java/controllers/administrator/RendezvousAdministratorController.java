@@ -27,7 +27,7 @@ public class RendezvousAdministratorController extends AbstractController {
 	
 	// Methods -------------------------------------------------------
 	
-	@RequestMapping(value="/remove", method = RequestMethod.GET)
+/*	@RequestMapping(value="/remove", method = RequestMethod.GET)
 	public ModelAndView remove(@RequestParam int rendezvousId) {
 		ModelAndView result;
 		Rendezvous rendezvous;
@@ -42,5 +42,5 @@ public class RendezvousAdministratorController extends AbstractController {
 		 }
 		
 		return result;
-	}
+	}*/
 }

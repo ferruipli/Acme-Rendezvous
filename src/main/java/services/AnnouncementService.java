@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -12,7 +13,9 @@ import org.springframework.util.Assert;
 
 import repositories.AnnouncementRepository;
 import domain.Announcement;
+import domain.RSVP;
 import domain.Rendezvous;
+import domain.User;
 
 @Service
 @Transactional
@@ -100,6 +103,30 @@ public class AnnouncementService {
 		result = this.announcementRepository.rendezvousesWhoseMoreThat75Announcements();
 
 		return result;
+	}
+
+	public Collection<Announcement> getAnnouncementsByUserRsvps(final User user) {
+		Collection<RSVP> rsvps;
+		Collection<Announcement> announcements;
+		Collection<Announcement> res;
+		Rendezvous rendezvous;
+
+		rsvps = user.getReserves();
+		announcements = Collections.emptyList();
+		res = Collections.emptyList();
+
+		for (final RSVP r : rsvps) {
+			rendezvous = r.getRendezvous();
+			res = rendezvous.getAnnouncements();
+			if (res.isEmpty())
+				break;
+			else
+				for (final Announcement a : res)
+					announcements.add(a);
+
+		}
+		return announcements;
+
 	}
 
 }

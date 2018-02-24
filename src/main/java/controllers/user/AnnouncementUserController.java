@@ -15,9 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AnnouncementService;
 import services.RendezvousService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Announcement;
 import domain.Rendezvous;
+import domain.User;
 
 @Controller
 @RequestMapping("/announcement/user")
@@ -31,6 +33,9 @@ public class AnnouncementUserController extends AbstractController {
 	@Autowired
 	private RendezvousService	rendezvousService;
 
+	@Autowired
+	private UserService			userService;
+
 
 	// Constructors-------------------------------------
 
@@ -39,6 +44,27 @@ public class AnnouncementUserController extends AbstractController {
 	}
 
 	// Listing------------------------------------------
+
+	@RequestMapping("/list")
+	public ModelAndView list() {
+		ModelAndView result;
+		try {
+			User user;
+			Collection<Announcement> announcements;
+
+			user = this.userService.findByPrincipal();
+			announcements = this.announcementService.getAnnouncementsByUserRsvps(user);
+
+			result = new ModelAndView("announcement/list");
+			result.addObject(announcements);
+			result.addObject("requestMapping", "rendezvous/list.do");
+		} catch (final Exception e) {
+			// TODO: handle exception
+			result = this.newModelAndView("redirect:index/welcome.do");
+		}
+
+		return result;
+	}
 
 	// Creation---------------------------------------------
 

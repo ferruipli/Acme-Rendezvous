@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.Rendezvous;
-import domain.User;
-
 import repositories.UserRepository;
+import security.LoginService;
+import security.UserAccount;
+import domain.Rendezvous;
 import domain.User;
 
 @Service
@@ -56,12 +56,36 @@ public class UserService {
 
 	// Other business methods -----------------------------------------------
 
-	protected void addRendezvous(User user, Rendezvous rendezvous) {
+	protected void addRendezvous(final User user, final Rendezvous rendezvous) {
 		Collection<Rendezvous> aux;
-		
+
 		aux = new HashSet<>(user.getCreatedRendezvouses());
 		aux.add(rendezvous);
 		user.setCreatedRendezvouses(aux);
 	}
-	
+
+	public User findByPrincipal() {
+		User res;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+
+		res = this.findUserByUserAccount(userAccount.getId());
+		Assert.notNull(res);
+
+		return res;
+	}
+	public User findUserByUserAccount(final int userAccountId) {
+		Assert.isTrue(userAccountId != 0);
+
+		User result;
+
+		result = this.userRepository.findUserByUserAccount(userAccountId);
+
+		Assert.notNull(result);
+
+		return result;
+	}
+
 }
