@@ -32,7 +32,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	@Query("select r from Rendezvous r join r.comments c where c.id=?1 and c member of r.comments")
 	Rendezvous findRendezvousFromAComment(int commentId);
 
-	@Query("select r from Rendezvous r  join r.reserves re where re.user = ?1")
+	@Query("select r from Rendezvous r join r.reserves re where re.user.id =?1 and re member of r.reserves")
 	Collection<Rendezvous> findRendezvousesRSVPByUserId(int userId);
 
 	@Query("select r1 from Rendezvous r1 where r1.similarOnes.size>(select avg(r2.similarOnes.size)*1.1 from Rendezvous r2)")
