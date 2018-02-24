@@ -1,6 +1,7 @@
 package controllers.user;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.validation.Valid;
 
@@ -34,10 +35,24 @@ public class RendezvousUserController extends AbstractController {
 		super();
 	}
 	
-	// CRUD methods ----------------------------------------------------
-	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public ModelAndView list(){
+		ModelAndView result;
+		Collection<Rendezvous> rendezvouses;
+		
+		rendezvouses = this.rendezvousService.findAllAvailable();
+		
+		result = new ModelAndView("rendezvous/list");
+		result.addObject("rendezvouses", rendezvouses);
+		result.addObject("requestURI", "rendezvous/user/list.do");
+		
+		return result;
+	}
+	
+	// CRUD methods ----------------------------------------------------
+	/*
+	@RequestMapping(value="/list", method = RequestMethod.GET)
+	public ModelAndView listRSVP(){
 		ModelAndView result;
 		Collection<Rendezvous> rendezvouses;
 		User user;
@@ -50,10 +65,8 @@ public class RendezvousUserController extends AbstractController {
 		result.addObject("requestURI", "rendezvous/user/list.do");
 		
 		return result;
-		
-		
 	}
-	
+	*/
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
@@ -125,11 +138,15 @@ public class RendezvousUserController extends AbstractController {
 		ModelAndView result;
 		Collection<Rendezvous> similarOnes;
 		
-		similarOnes = rendezvous.getSimilarOnes();
+		if (rendezvous.getCreator().getCreatedRendezvouses().isEmpty()) {
+			similarOnes = Collections.<Rendezvous>emptySet();
+		} else {
+			similarOnes = rendezvous.getCreator().getCreatedRendezvouses(); 
+		}
 		
 		result = new ModelAndView("rendezvous/edit");
 		result.addObject("rendezvous", rendezvous);
-		result.addObject("similarOnes", similarOnes);
+		result.addObject("similarRendezvouses", similarOnes);
 		result.addObject("message", messageCode);
 		
 		return result;
