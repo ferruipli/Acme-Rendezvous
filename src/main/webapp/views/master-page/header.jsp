@@ -42,12 +42,14 @@
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+		<!-- 
 			<li><a class="fNiv"><spring:message code="master.page.rendezvous" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="rendezvous/user/list.do"><spring:message code="master.page.rendezvous.list"/></a></li>
 				</ul>
 			</li>
+		 -->
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 
@@ -71,7 +73,9 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="rendezvous/user/create.do"><spring:message code="master.page.rendezvous.create"/></a></li>
+					<li><a href="rendezvous/list.do"><spring:message code="master.page.rendezvous.list"/></a></li>
 					<li><a href="rendezvous/user/list.do"><spring:message code="master.page.rendezvous.list.rsvp"/></a></li>
+					
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.announcement" /></a>
@@ -88,6 +92,12 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="dashboard/administrator/display.do"><spring:message code="master.page.dashboard.display"/></a></li>
+				</ul>
+			</li>
+			<li><a class="fNiv"><spring:message code="master.page.rendezvous" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="rendezvous/list.do"><spring:message code="master.page.rendezvous.list"/></a></li>
 				</ul>
 			</li>
 		</security:authorize>

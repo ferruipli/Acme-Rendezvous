@@ -39,24 +39,9 @@ public class RendezvousUserController extends AbstractController {
 
 	// CRUD methods ----------------------------------------------------
 
-	/*
-	 * @RequestMapping(value = "/list", method = RequestMethod.GET)
-	 * public ModelAndView list() {
-	 * ModelAndView result;
-	 * Collection<Rendezvous> rendezvouses;
-	 * 
-	 * rendezvouses = this.rendezvousService.findAllAvailable();
-	 * 
-	 * result = new ModelAndView("rendezvous/list");
-	 * result.addObject("rendezvouses", rendezvouses);
-	 * result.addObject("requestURI", "rendezvous/user/list.do");
-	 * 
-	 * return result;
-	 * }
-	 */
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView listRSVP() {
+	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Rendezvous> rendezvouses;
 		User user;
@@ -66,7 +51,7 @@ public class RendezvousUserController extends AbstractController {
 
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
-		result.addObject("requestURI", "rendezvous/user/list.do");
+		result.addObject("requestMapping", "rendezvous/user/list.do");
 
 		return result;
 	}

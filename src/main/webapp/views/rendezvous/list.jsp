@@ -10,9 +10,10 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
 <display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="rendezvous" requestURI="${requestURI}" id="row">
-	
+	name="rendezvouses" requestURI="${requestURI}" id="row">
 
 	<spring:message code="rendezvous.name" var="nameHeader" />
 	<display:column property="name" title="${nameHeader}" sortable="true" />
@@ -40,10 +41,10 @@
 			<br/>
 		</jstl:forEach>
 	</display:column>
-	
+
 	<spring:message code="rendezvous.finalMode" var="finalModeHeader" />
 	<display:column property="finalMode" title="${finalModeHeader}" />
-
+	
 	<security:authorize access="hasRole('ADMINISTRATOR')">
 		<display:column>
 			<a href="rendezvous/administrator/remove.do?rendezvousId=${row.id}">
@@ -64,7 +65,7 @@
 			</a>
 		</display:column>
 	</security:authorize>
-	
+
+
+
 </display:table>
-
-
