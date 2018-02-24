@@ -12,7 +12,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="rendezvouses" requestURI="rendezvous/list.do" id="row">
+	name="rendezvouses" requestURI="${requestURI}" id="row">
 
 	<spring:message code="rendezvous.name" var="nameHeader" />
 	<display:column property="name" title="${nameHeader}" sortable="true" />
@@ -20,41 +20,57 @@
 	<spring:message code="rendezvous.description" var="descriptionHeader"/>
 	<display:column property="description" title="${descriptionHeader}" sortable="true"/>
 	
+	<spring:message code="rendezvous.formatMoment" var="formatMomentHeader" />
 	<spring:message code="rendezvous.moment" var="momentHeader" />
-	<display:column property="moment" title="${momentHeader}"/>
+	<display:column property="moment" title="${momentHeader}" format="${formatMomentHeader}" sortable="true" />
 
 	<spring:message code="rendezvous.creator" var="creatorHeader" />
-	<display:column property="creator.name" title="${creatorHeader}"/>
-
+	<display:column title="${creatorHeader}">
+		<a href="user/profile.do?userId=${row.creator.id}">
+			 <jstl:out value="${row.creator.name}"/>
+		</a>
+	</display:column>
+	
+	<spring:message code="rendezvous.attendants" var="attendantsHeader" />
+	<display:column title="${attendantsHeader}">
+		<jstl:forEach items="${row.attendants}" var="attendant">
+			<a href="user/profile.do?userId=${attendant.id}">
+			 	<jstl:out value="${attendant.name}"/>
+			</a>
+			<br/>
+		</jstl:forEach>
+	</display:column>
+	
 	<spring:message code="rendezvous.finalMode" var="finalModeHeader" />
 	<display:column property="finalMode" title="${finalModeHeader}" />
 
-
-	<spring:message code="rendezvous.remove" var="removeHeader" />
-	<display:column title="${removeHeader}">
-
-		<!--  <a href="rendezvous/edit.do?rendezvousId=${row.id}"><spring:message
-				code="rendezvous.edit" /> </a> AÑADIR URL DE BORRAR -->
-
-	</display:column>
-	<spring:message code="rendezvous.display" var="displayHeader" />
-	<display:column title="${displayHeader}">
-
-		<a href="rendezvous/display.do?rendezvousId=${row.id}"><spring:message
-				code="rendezvous.display" /> </a>
-
-	</display:column>
+	<security:authorize access="hasRole('ADMINISTRATOR')">
+		<display:column>
+			<a href="rendezvous/administrator/remove.do?rendezvousId=${row.id}">
+				<spring:message code="rendezvous.remove" /> 		
+			</a>
+		</display:column>
+	</security:authorize>
 	
-	<spring:message code="rendezvous.edit" var="editHeader" />
-	<display:column title="${editHeader}">
-
-		<a href="rendezvous/edit.do?rendezvousId=${row.id}"><spring:message
-				code="rendezvous.edit" /> </a>
-
-	</display:column>
-
-
-
-
-
+	<security:authorize access="hasRole('USER')">
+		<display:column>
+			<a href="rendezvous/user/display.do?rendezvousId=${row.id}">
+				<spring:message code="rendezvous.display" />
+			</a>
+		</display:column>
+		<display:column>
+			<a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
+				<spring:message code="rendezvous.edit" />
+			</a>
+		</display:column>
+	</security:authorize>
+	
 </display:table>
+
+<security:authorize access="hasRole('USER')">
+	<display:column>
+		<a href="rendezvous/user/create.do">
+			<spring:message code="rendezvous.create" />
+		</a>
+	</display:column>
+</security:authorize>
