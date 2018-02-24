@@ -32,24 +32,23 @@
 	<br /><br />
 	
 	
-	<form:label path="rendezvous">	
-		<spring:message code="announcement.rendezvous" />
-	</form:label>
 
-			<form:select path="rendezvous">
-				<jstl:forEach var="rendezvous" items="${allRendezvous}">
-					<form:option value="${rendezvous.id}" >
-						<jstl:out value="${rendezvous.name}" />
-					</form:option>
-				</jstl:forEach>
-			</form:select>
-			<br><br>
+<%-- 		<spring:message code="announcement.rendezvous" /> --%>
+
+<!-- 			<select> -->
+<%-- 				<jstl:forEach var="rendezvous" items="${allRendezvous}"> --%>
+<%-- 					<form:option value="${rendezvous.id}" > --%>
+<%-- 						<jstl:out value="${rendezvous.name}" /> --%>
+<%-- 					</form:option> --%>
+<%-- 				</jstl:forEach> --%>
+<!-- 			</select> -->
+<!-- 			<br><br> -->
 
 	
 	
 	<input type="submit" name="save" value="<spring:message code="announcement.save" />" />
 	<input type="button" name="cancel"	value="<spring:message code="announcement.cancel" />
-		"onclick="javascript: relativeRedir('rendezvous/list.do');" />
+			"onclick="javascript: relativeRedir('welcome/index.do');" />
 	<br />
 	
 
