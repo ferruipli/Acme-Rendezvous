@@ -45,7 +45,7 @@ public class AnnouncementUserController extends AbstractController {
 
 	// Listing------------------------------------------
 
-	@RequestMapping("/list")
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		try {
