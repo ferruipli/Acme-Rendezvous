@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.RendezvousRepository;
 import domain.Actor;
@@ -117,7 +119,32 @@ public class RendezvousService {
 	}
 
 	// Other business methods -----------------------------------------------
-
+	
+	@Autowired
+	private Validator validator;
+	
+	public Rendezvous reconstruct(Rendezvous rendezvous, BindingResult binding) {
+		Rendezvous result;
+		
+		if (rendezvous.getId() == 0) {
+			result = rendezvous;
+		} else {
+			result = this.rendezvousRepository.findOne(rendezvous.getId());
+			result.setName(rendezvous.getName());
+			result.setDescription(rendezvous.getDescription());
+			result.setMoment(rendezvous.getMoment());
+			result.setGpsCoordinates(rendezvous.getGpsCoordinates());
+			result.setFinalMode(rendezvous.getFinalMode());
+			result.setAdultOnly(rendezvous.getAdultOnly());
+			result.setUrlPicture(rendezvous.getUrlPicture());
+			result.setSimilarOnes(rendezvous.getSimilarOnes());
+			
+			validator.validate(result, binding);
+		}
+		
+		return result;
+	}
+	
 	public Collection<Rendezvous> findAllAvailable() {
 		Collection<Rendezvous> results;
 
@@ -125,6 +152,7 @@ public class RendezvousService {
 
 		return results;
 	}
+<<<<<<< HEAD
 
 	/*
 	 * public void reserve(int rendezvousId) {
@@ -145,6 +173,11 @@ public class RendezvousService {
 		this.rendezvousRepository.delete(rendezvousId);
 	}
 	public void reserve(final int rendezvousId) {
+=======
+
+/*
+	public void reserve(int rendezvousId) {
+>>>>>>> ce84ceb016467d66736e799292cb00757cc881e4
 		Assert.isTrue(rendezvousId != 0);
 
 		User user;
@@ -163,7 +196,10 @@ public class RendezvousService {
 			this.gpsService.delete(rendezvous.getGpsCoordinates());
 
 		this.rendezvousRepository.delete(rendezvous);
+<<<<<<< HEAD
 
+=======
+>>>>>>> ce84ceb016467d66736e799292cb00757cc881e4
 	}
 	/*
 	 * public void cancel(Rendezvous rendezvous) {
