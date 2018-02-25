@@ -51,7 +51,7 @@
 
 <p>
 	<strong> <spring:message code="rendezvous.attendants"/>: </strong>
-	<a href="questions/user/list.do">
+	<a href="questions/list.do?rendezvousIs=${rendezvous.id}">
 	 	<spring:message code="rendezvous.link" />
 	</a>
 </p>

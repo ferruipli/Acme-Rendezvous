@@ -30,6 +30,14 @@
 			</a>
 		</display:column>
 	</security:authorize>
+	
+	<security:authorize access="hasRole('USER')">
+		<display:column>
+			<a href="comment/user/reply.do?commentId=${row.id}">
+				<spring:message code="comment.reply" /> 		
+			</a>
+		</display:column>
+	</security:authorize>
 
 	
 	

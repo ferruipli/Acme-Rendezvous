@@ -49,7 +49,7 @@ public class CommentAdministratorController extends AbstractController {
 		ModelAndView result;
 		Comment comment;
 		
-		result = new ModelAndView("redirect:/welcome/index.do");
+		result = new ModelAndView("redirect:/comment/administrator/list.do");
 		
 		try{
 			comment = this.commentService.findOne(commentId);

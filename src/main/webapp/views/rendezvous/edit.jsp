@@ -7,20 +7,10 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="rendezvous/user/edit.do" modelAttribute="rendezvous">
+<form:form action="rendezvous/user/edit.do" modelAttribute="rendezvousForm">	
 	<form:hidden path="id" />
-	<form:hidden path="version" />
-	<form:hidden path="isFlagged" />
-	<form:hidden path="creator" />
-	<form:hidden path="attendants" />
-	<form:hidden path="reserves" />
-	<form:hidden path="comments" />
-	<form:hidden path="announcements" />
-	<form:hidden path="questions" />
-	<form:hidden path="gpsCoordinates" />
 	
 	<acme:textbox code="rendezvous.name" path="name" />
 	<acme:textbox code="rendezvous.description" path="description" />
@@ -32,11 +22,18 @@
 		 message1="finalMode.true" message2="finalMode.false" />
 	<acme:textbox code="rendezvous.urlPicture" path="urlPicture" />
 	
+	<p> 
+		<spring:message code="rendezvous.gpsCoordinates" />:
+	</p>
+	
+	<acme:textbox code="gps.latitude" path="gpsCoordinates.latitude" />
+	<acme:textbox code="gps.longitude" path="gpsCoordinates.longitude"/>
+	
 	<acme:selectMultiple path="similarOnes" code="rendezvous.similarOnes"
 		items="${similarRendezvouses}" itemLabel="name" />
 	
 	<acme:submit name="save" code="rendezvous.save" />
-	<jstl:if test="${rendezvous.id != 0}">
+	<jstl:if test="${rendezvousForm.id != 0}">
 		<acme:submit name="delete" code="rendezvous.delete" />
 	</jstl:if>
 	<acme:cancel code="rendezvous.return" url="rendezvous/user/list.do" />

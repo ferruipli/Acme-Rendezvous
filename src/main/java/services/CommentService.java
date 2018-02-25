@@ -2,6 +2,7 @@ package services;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -111,4 +112,13 @@ public class CommentService {
 
 		this.commentRepository.delete(commentId);
 	}
+	
+	public void addReply(Comment comment, Comment reply){
+		Collection<Comment> aux;
+		
+		aux = new HashSet<>(comment.getRepliedComments());
+		aux.add(reply);
+		comment.setRepliedComments(aux);
+	}
+	
 }

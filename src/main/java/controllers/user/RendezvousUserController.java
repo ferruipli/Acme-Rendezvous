@@ -2,9 +2,6 @@
 package controllers.user;
 
 import java.util.Collection;
-import java.util.Collections;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +17,8 @@ import controllers.AbstractController;
 import domain.Announcement;
 import domain.Rendezvous;
 import domain.User;
+import forms.GPSForm;
+import forms.RendezvousForm;
 
 @Controller
 @RequestMapping("/rendezvous/user")
@@ -59,11 +58,11 @@ public class RendezvousUserController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		Rendezvous rendezvous;
+		RendezvousForm rendezvousForm;
 
-		rendezvous = this.rendezvousService.create();
+		rendezvousForm = new RendezvousForm();
 
-		result = this.createEditModelAndView(rendezvous);
+		result = this.createEditModelAndView(rendezvousForm);
 
 		return result;
 	}
@@ -72,40 +71,60 @@ public class RendezvousUserController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int rendezvousId) {
 		ModelAndView result;
 		Rendezvous rendezvous;
+		RendezvousForm rendezvousForm;
+		GPSForm	gpsForm;
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
-
-		result = this.createEditModelAndView(rendezvous);
+		rendezvousForm = new RendezvousForm();
+		gpsForm = new GPSForm();
+		
+		gpsForm.setLatitude(rendezvous.getGpsCoordinates().getLatitude());
+		gpsForm.setLongitude(rendezvous.getGpsCoordinates().getLongitude());
+		
+		rendezvousForm.setName(rendezvous.getName());
+		rendezvousForm.setDescription(rendezvous.getDescription());
+		rendezvousForm.setMoment(rendezvous.getMoment());
+		rendezvousForm.setFinalMode(rendezvous.getFinalMode());
+		rendezvousForm.setAdultOnly(rendezvous.getAdultOnly());
+		rendezvousForm.setGpsCoordinates(gpsForm);
+		rendezvousForm.setSimilarOnes(rendezvous.getSimilarOnes());
+		
+		result = this.createEditModelAndView(rendezvousForm);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Rendezvous rendezvous, final BindingResult binding) {
+	public ModelAndView save(RendezvousForm rendezvousForm, final BindingResult binding) {
 		ModelAndView result;
+		Rendezvous rendezvous;
 
+		rendezvous = this.rendezvousService.reconstruct(rendezvousForm, binding);
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(rendezvous);
+			result = this.createEditModelAndView(rendezvousForm);
 		else
 			try {
 				this.rendezvousService.save(rendezvous);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
+				result = this.createEditModelAndView(rendezvousForm,
+						"rendezvous.commit.error");
 			}
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final Rendezvous rendezvous, final BindingResult binding) {
+	public ModelAndView delete(final RendezvousForm rendezvousForm, final BindingResult binding) {
 		ModelAndView result;
+		Rendezvous rendezvous;
 
+		rendezvous = this.rendezvousService.reconstruct(rendezvousForm, binding);
 		try {
 			this.rendezvousService.delete(rendezvous);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
+			result = this.createEditModelAndView(rendezvousForm, "rendezvous.commit.error");
 		}
 
 		return result;
@@ -141,25 +160,28 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	// Arcillary methods ------------------------------------------------
-	protected ModelAndView createEditModelAndView(final Rendezvous rendezvous) {
+	protected ModelAndView createEditModelAndView(final RendezvousForm rendezvousForm) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(rendezvous, null);
+		result = this.createEditModelAndView(rendezvousForm, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Rendezvous rendezvous, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final RendezvousForm rendezvousForm, final String messageCode) {
 		ModelAndView result;
 		Collection<Rendezvous> similarOnes;
-
+		/*
 		if (rendezvous.getCreator().getCreatedRendezvouses().isEmpty())
 			similarOnes = Collections.<Rendezvous> emptySet();
 		else
 			similarOnes = rendezvous.getCreator().getCreatedRendezvouses();
-
+		 */
+		
+		similarOnes = rendezvousForm.getSimilarOnes();
+		
 		result = new ModelAndView("rendezvous/edit");
-		result.addObject("rendezvous", rendezvous);
+		result.addObject("rendezvousForm", rendezvousForm);
 		result.addObject("similarRendezvouses", similarOnes);
 		result.addObject("message", messageCode);
 

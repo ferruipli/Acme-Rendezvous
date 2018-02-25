@@ -1,17 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	
-<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
-
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="rendezvouses" requestURI="${requestURI}" id="row">
@@ -22,9 +19,8 @@
 	<spring:message code="rendezvous.description" var="descriptionHeader"/>
 	<display:column property="description" title="${descriptionHeader}" sortable="true"/>
 	
-	<spring:message code="rendezvous.formatMoment" var="formatMomentHeader" />
 	<spring:message code="rendezvous.moment" var="momentHeader" />
-	<display:column property="moment" title="${momentHeader}" format="${formatMomentHeader}" sortable="true" />
+	<display:column property="moment" title="${momentHeader}"/>
 
 	<spring:message code="rendezvous.creator" var="creatorHeader" />
 	<display:column title="${creatorHeader}">
@@ -48,7 +44,7 @@
 	
 	<spring:message code="rendezvous.adultOnly" var="adultOnlyHeader" />
 	<display:column property="adultOnly" title="${adultOnlyHeader}" />
-	
+
 	<security:authorize access="hasRole('ADMINISTRATOR')">
 		<display:column>
 			<a href="rendezvous/administrator/remove.do?rendezvousId=${row.id}">
@@ -86,7 +82,7 @@
 		</display:column>
 		
 	</security:authorize>
-	
+
 </display:table>
 
 <security:authorize access="hasRole('USER')">

@@ -21,10 +21,12 @@ import repositories.RendezvousRepository;
 import domain.Actor;
 import domain.Announcement;
 import domain.Comment;
+import domain.GPS;
 import domain.Question;
 import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
+import forms.RendezvousForm;
 
 @Service
 @Transactional
@@ -75,14 +77,17 @@ public class RendezvousService {
 	public Rendezvous create() {
 		Rendezvous result;
 		User user;
+		GPS gpsCoordinates;
 
 		user = (User) this.actorService.findByPrincipal();
+		gpsCoordinates = this.gpsService.create();
 
 		result = new Rendezvous();
 		result.setAnnouncements(Collections.<Announcement> emptySet());
 		result.setAttendants(Collections.<User> emptySet());
 		result.setComments(Collections.<Comment> emptySet());
 		result.setCreator(user);
+		result.setGpsCoordinates(gpsCoordinates);
 		result.setSimilarOnes(Collections.<Rendezvous> emptySet());
 		result.setQuestions(Collections.<Question> emptySet());
 		result.setReserves(Collections.<RSVP> emptySet());
@@ -124,21 +129,26 @@ public class RendezvousService {
 	@Autowired
 	private Validator	validator;
 
-	public Rendezvous reconstruct(final Rendezvous rendezvous, final BindingResult binding) {
+	public Rendezvous reconstruct(final RendezvousForm rendezvousForm, final BindingResult binding) {
 		Rendezvous result;
+		GPS gpsCoordinates;
 
-		if (rendezvous.getId() == 0)
-			result = rendezvous;
+		if (rendezvousForm.getId() == 0)
+			result = this.create();
 		else {
-			result = this.rendezvousRepository.findOne(rendezvous.getId());
-			result.setName(rendezvous.getName());
-			result.setDescription(rendezvous.getDescription());
-			result.setMoment(rendezvous.getMoment());
-			result.setGpsCoordinates(rendezvous.getGpsCoordinates());
-			result.setFinalMode(rendezvous.getFinalMode());
-			result.setAdultOnly(rendezvous.getAdultOnly());
-			result.setUrlPicture(rendezvous.getUrlPicture());
-			result.setSimilarOnes(rendezvous.getSimilarOnes());
+			result = this.rendezvousRepository.findOne(rendezvousForm.getId());
+			result.setName(rendezvousForm.getName());
+			result.setDescription(rendezvousForm.getDescription());
+			result.setMoment(rendezvousForm.getMoment());
+			
+			gpsCoordinates = result.getGpsCoordinates();
+			gpsCoordinates.setLatitude(rendezvousForm.getGpsCoordinates().getLatitude());
+			gpsCoordinates.setLongitude(rendezvousForm.getGpsCoordinates().getLongitude());
+			
+			result.setFinalMode(rendezvousForm.isFinalMode());
+			result.setAdultOnly(rendezvousForm.isAdultOnly());
+			result.setUrlPicture(rendezvousForm.getUrlPicture());
+			result.setSimilarOnes(rendezvousForm.getSimilarOnes());
 
 			this.validator.validate(result, binding);
 		}
