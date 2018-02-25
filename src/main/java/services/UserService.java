@@ -64,6 +64,14 @@ public class UserService {
 		user.setCreatedRendezvouses(aux);
 	}
 
+	protected void removeRendezvous(User user, Rendezvous rendezvous) {
+		Collection<Rendezvous> aux;
+		
+		aux = new HashSet<>(user.getCreatedRendezvouses());
+		aux.remove(rendezvous);
+		user.setCreatedRendezvouses(aux);
+	}
+	
 	public User findByPrincipal() {
 		User res;
 		UserAccount userAccount;

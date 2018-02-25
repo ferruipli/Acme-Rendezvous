@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.RendezvousService;
 import controllers.AbstractController;
+import domain.Announcement;
 import domain.Rendezvous;
 import domain.User;
 
@@ -39,6 +40,35 @@ public class RendezvousUserController extends AbstractController {
 
 	// CRUD methods ----------------------------------------------------
 
+	@RequestMapping(value="/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam int rendezvousId) {
+		ModelAndView result;
+		User user;
+		Rendezvous rendezvous;
+		Collection<Rendezvous> similarOnes, reservedRendezvouses;
+		Collection<Announcement> announcements;
+		boolean isReserved, isCreator;
+		
+		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		user = (User)this.actorService.findByPrincipal();
+		
+		similarOnes = rendezvous.getSimilarOnes();
+		announcements = rendezvous.getAnnouncements();
+		
+		reservedRendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
+		
+		isReserved = reservedRendezvouses.contains(rendezvous);
+		isCreator = rendezvous.getCreator().equals(user);
+		
+		result = new ModelAndView("rendezvous/display");
+		result.addObject("rendezvous", rendezvous);
+		result.addObject("similarOnes", similarOnes);
+		result.addObject("announcements", announcements);
+		result.addObject("isReserved", isReserved);
+		result.addObject("isCreator", isCreator);
+		
+		return result;
+	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {

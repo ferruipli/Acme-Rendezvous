@@ -120,10 +120,9 @@ public class RendezvousService {
 
 
 	// Other business methods -----------------------------------------------
-
+	
 	@Autowired
 	private Validator	validator;
-
 
 	public Rendezvous reconstruct(final Rendezvous rendezvous, final BindingResult binding) {
 		Rendezvous result;
@@ -155,12 +154,6 @@ public class RendezvousService {
 		return results;
 	}
 
-	public void remove(final int rendezvousId) {
-		Assert.isTrue(rendezvousId != 0);
-
-		this.rendezvousRepository.delete(rendezvousId);
-	}
-
 	public void reserve(final int rendezvousId) {
 		Assert.isTrue(rendezvousId != 0);
 
@@ -181,6 +174,8 @@ public class RendezvousService {
 
 		this.rendezvousRepository.delete(rendezvous);
 
+		// Update User::createdRendezvouses
+		this.userService.removeRendezvous(rendezvous.getCreator(), rendezvous);
 	}
 
 	public void cancel(final Rendezvous rendezvous) {

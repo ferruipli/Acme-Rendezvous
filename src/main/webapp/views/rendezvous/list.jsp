@@ -45,6 +45,9 @@
 	<spring:message code="rendezvous.finalMode" var="finalModeHeader" />
 	<display:column property="finalMode" title="${finalModeHeader}" />
 	
+	<spring:message code="rendezvous.adultOnly" var="adultOnlyHeader" />
+	<display:column property="adultOnly" title="${adultOnlyHeader}" />
+	
 	<security:authorize access="hasRole('ADMINISTRATOR')">
 		<display:column>
 			<a href="rendezvous/administrator/remove.do?rendezvousId=${row.id}">
@@ -71,7 +74,12 @@
 		</display:column>
 	</security:authorize>
 	
-
-
-
 </display:table>
+
+<security:authorize access="hasRole('USER')">
+	<p>
+		<a href="rendezvous/user/create.do">
+			<spring:message code="rendezvous.create" />
+		</a>
+	</p>
+</security:authorize>

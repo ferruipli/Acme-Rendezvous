@@ -32,11 +32,12 @@ public class RendezvousAdministratorController extends AbstractController {
 		Rendezvous rendezvous;
 		
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		result = new ModelAndView("redirect:/rendezvous/list.do");
+		
 		 try {
 			 this.rendezvousService.remove(rendezvous);
-			 result = new ModelAndView("redirect:/rendezvous/list.do");
 		 } catch (Throwable oops) {
-			 result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
+			 throw new IllegalArgumentException(oops);
 		 }
 		
 		return result;
