@@ -12,9 +12,11 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.UserRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
 import domain.RSVP;
@@ -33,12 +35,8 @@ public class UserService {
 
 	// Supporting services --------------------------------------------------
 
-	// TODO: comentamos esto de prueba
-	//@Autowired
-	//private Validator			validator;
-
 	@Autowired
-	Md5PasswordEncoder		encoder;
+	private Validator		validator;
 
 
 	// Constructors ---------------------------------------------------------
@@ -72,13 +70,14 @@ public class UserService {
 	}
 
 	public void save(final User user) {
-		final String password, hash;
-		/*
-		 * TODO: comentamos esto de prueba
-		 * password = user.getUserAccount().getPassword();
-		 * hash = this.encoder.encodePassword(password, null);
-		 * user.getUserAccount().setPassword(hash);
-		 */
+		String password, hash;
+		Md5PasswordEncoder encoder;
+		// TODO: alomejor con el autowired funciona
+		encoder = new Md5PasswordEncoder();
+		password = user.getUserAccount().getPassword();
+		hash = encoder.encodePassword(password, null);
+		user.getUserAccount().setPassword(hash);
+
 		this.userRepository.save(user);
 	}
 
@@ -115,13 +114,27 @@ public class UserService {
 		result.setBirthdate(registrationForm.getBirthdate());
 
 		userAccount = result.getUserAccount();
-		userAccount.setUsername(registrationForm.getUsername());
-		userAccount.setPassword(registrationForm.getPassword());
+		userAccount.setUsername(registrationForm.getUserAccount().getUsername());
+		userAccount.setPassword(registrationForm.getUserAccount().getPassword());
 
-		// TODO: comentamos esto de prueba
-		//this.validator.validate(result, binding);
+		this.validateRegistration(result, registrationForm, binding);
 
 		return result;
+	}
+
+	private void validateRegistration(final User user, final RegistrationForm registrationForm, final BindingResult binding) {
+		String password, confirmPassword;
+
+		password = registrationForm.getUserAccount().getPassword();
+		confirmPassword = registrationForm.getConfirmPassword();
+
+		if (!password.equals(confirmPassword))
+			binding.rejectValue("confirmPassword", "user.missmatch.password", "Does not match with password");
+
+		if (!"accept".equals(registrationForm.getAgreement()))
+			binding.rejectValue("agreement", "user.termsAndConditions.rejected", "Must be accepted");
+
+		this.validator.validate(user, binding);
 	}
 
 	protected void addRendezvous(final User user, final Rendezvous rendezvous) {
@@ -130,6 +143,31 @@ public class UserService {
 		aux = new HashSet<>(user.getCreatedRendezvouses());
 		aux.add(rendezvous);
 		user.setCreatedRendezvouses(aux);
+	}
+
+	public User findByPrincipal() {
+		User res;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+
+		res = this.findUserByUserAccount(userAccount.getId());
+		Assert.notNull(res);
+
+		return res;
+	}
+
+	public User findUserByUserAccount(final int userAccountId) {
+		Assert.isTrue(userAccountId != 0);
+
+		User result;
+
+		result = this.userRepository.findUserByUserAccount(userAccountId);
+
+		Assert.notNull(result);
+
+		return result;
 	}
 
 }

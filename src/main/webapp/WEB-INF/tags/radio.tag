@@ -31,9 +31,12 @@
 
 <div>
 	<form:label path="${path}">
-		<spring:message code="${code}" />
+		<spring:message code="${code}" />:
 	</form:label>
-	<form:checkbox path="${path}" value="1"/> <jstl:out value="<spring:message code="message1" />" />
-	<form:checkbox path="${path}" value="0" /> <jstl:out value="<spring:message code="message2" />" />
+	<spring:message code="${message1}" var="message1Header" />
+	<spring:message code="${message2}" var="message2Header" />
+	<form:radiobutton path="${path}" value="1"/> <jstl:out value="${message1Header}" />
+	<form:radiobutton path="${path}" value="0" /> <jstl:out value="${message2Header}" />
+	
 	<form:errors path="${path}" cssClass="error" />
 </div>

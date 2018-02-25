@@ -11,24 +11,32 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="rendezvous/user/edit.do" modelAttribute="rendezvous">
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	<form:hidden path="isFlagged" />
+	<form:hidden path="creator" />
+	<form:hidden path="attendants" />
+	<form:hidden path="reserves" />
+	<form:hidden path="comments" />
+	<form:hidden path="announcements" />
+	<form:hidden path="questions" />
+	<form:hidden path="gpsCoordinates" />
 	
 	<acme:textbox code="rendezvous.name" path="name" />
 	<acme:textbox code="rendezvous.description" path="description" />
 	<acme:textbox code="rendezvous.moment" path="moment" />
 	
-	<spring:message code="rendezvous.gpsCoordinates" var="gpsVar" />
-	<p> <jstl:out value="${gpsVar}" /> </p>:
-		<acme:textbox code="gps.latitude" path="latitude" />
-		<acme:textbox code="gps.longitude" path="longitude" />
-		
-	<acme:checkbox code="rendezvous.finalMode" path="finalMode" message1="finalMode.true" message2="finalMode.false" />
-	<acme:checkbox code="rendezvous.adultOnly" path="adultOnly" message1="finalMode.true" message2="finalMode.false" />
+	<acme:radio code="rendezvous.finalMode" path="finalMode"
+		 message1="finalMode.true" message2="finalMode.false" />
+	<acme:radio code="rendezvous.adultOnly" path="adultOnly"
+		 message1="finalMode.true" message2="finalMode.false" />
 	<acme:textbox code="rendezvous.urlPicture" path="urlPicture" />
-	<acme:select code="rendezvous.similarOnes" path="similarOnes" items="rendezvouses" itemLabel="name" />
-	
+	<!--
+	<acme:select path="similarOnes" code="rendezvous.similarOnes" items="similarRendezvouses" itemLabel="name" />
+	-->
 	<acme:submit name="save" code="rendezvous.save" />
 	<jstl:if test="${rendezvous.id != 0}">
 		<acme:submit name="delete" code="rendezvous.delete" />
 	</jstl:if>
-	<acme:cancel code="rendezvous.cancel" url="rendezvous/user/list.do" />
+	<acme:cancel code="rendezvous.return" url="rendezvous/user/list.do" />
 </form:form>

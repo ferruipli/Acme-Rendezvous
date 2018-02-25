@@ -41,13 +41,20 @@
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 		
+		<security:intercept-url pattern="/user/profile.do" access= "permitAll" />
 		
 		<security:intercept-url pattern="/announcement/user/**" access = "hasRole('USER')"/>
 		<security:intercept-url pattern="/announcement/**" access="permitAll" />
 		
 		<security:intercept-url pattern="/dashboard/administrator/**" access = "hasRole('ADMINISTRATOR')"/>
+		<security:intercept-url pattern="/rendezvous/administrator/**" access = "hasRole('ADMINISTRATOR')"/>
 		
 		<security:intercept-url pattern="/legalTexts/termsAndConditions.do" access="permitAll" />
+		<security:intercept-url pattern="/legalTexts/legalData.do" access="permitAll" />
+		<security:intercept-url pattern="/legalTexts/cookies.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/rendezvous/list.do" access="permitAll" />
+		<security:intercept-url pattern="/rendezvous/user/**" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/user/**" access="permitAll" />
 		

@@ -1,5 +1,6 @@
 package services;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Test;
@@ -64,21 +65,25 @@ public class RendezvousServiceTest extends AbstractTest {
 		
 		User user;
 		Rendezvous rendezvous, saved;
+		Calendar c;
 		Date moment;
 		
 		user = (User)this.actorService.findByPrincipal();
 		rendezvous = this.rendezvousService.create();
 		
-		moment = new Date();
-		
+		c = Calendar.getInstance();
+		c.set(2018, 04, 25, 20, 00);
+		moment = c.getTime();
+	
 		rendezvous.setName("Name X");
 		rendezvous.setDescription("Description X");
-		rendezvous.setMoment(new Date(moment.getTime()+1000));
+		rendezvous.setMoment(moment);
 		
 		saved = this.rendezvousService.save(rendezvous);
 		
 		Assert.isTrue(this.rendezvousService.findAll().contains(saved));
-		Assert.isTrue(user.getCreatedRendezvouses().contains(rendezvous));
+		Assert.isTrue(saved.getId()!=0);
+		Assert.isTrue(user.getCreatedRendezvouses().contains(saved));
 		
 		super.authenticate(null);
 	}
@@ -89,25 +94,56 @@ public class RendezvousServiceTest extends AbstractTest {
 		
 		Rendezvous rendezvous, saved;
 		Date moment;
+		Calendar c;
+		
+		c = Calendar.getInstance();
+		c.set(2018, 04, 25, 20, 00);
+		moment = c.getTime();
 		
 		rendezvous = this.rendezvousService.create();
 		
-		moment = new Date();
-		
 		rendezvous.setName("Name X");
 		rendezvous.setDescription("Description X");
-		rendezvous.setMoment(new Date(moment.getTime()+1000));
+		rendezvous.setMoment(moment);
 		
 		saved = this.rendezvousService.save(rendezvous);
 		
-		Assert.isTrue(this.rendezvousService.findAll().contains(saved));
+		Assert.isTrue(saved.getId() != 0);
 		
 		this.rendezvousService.delete(saved);
 		
 		Assert.isTrue(this.rendezvousService.findAll().contains(saved));
+		Assert.isTrue(this.rendezvousService.findAllAvailable().contains(saved));
 		Assert.isTrue(saved.getFinalMode());
 		Assert.isTrue(saved.getIsFlagged());
 		
+		super.authenticate(null);
+	}
+	
+	@Test
+	public void testRemove() {
+		super.authenticate("user2");
+		
+		Rendezvous rendezvous, saved;
+		Calendar c;
+		Date moment;
+	
+		rendezvous = this.rendezvousService.create();
+		
+		c = Calendar.getInstance();
+		c.set(2018, 04, 25, 20, 00);
+		moment = c.getTime();
+	
+		rendezvous.setName("Name X");
+		rendezvous.setDescription("Description X");
+		rendezvous.setMoment(moment);
+		
+		saved = this.rendezvousService.save(rendezvous);
+		
+		this.rendezvousService.remove(saved);
+		
+		Assert.isTrue(!this.rendezvousService.findAll().contains(saved));
+	
 		super.authenticate(null);
 	}
 	

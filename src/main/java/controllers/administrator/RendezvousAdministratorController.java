@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.RendezvousService;
-
 import controllers.AbstractController;
+import domain.Rendezvous;
 
 @Controller
 @RequestMapping("/rendezvous/administrator")
@@ -29,15 +29,37 @@ public class RendezvousAdministratorController extends AbstractController {
 	@RequestMapping(value="/remove", method = RequestMethod.GET)
 	public ModelAndView remove(@RequestParam int rendezvousId) {
 		ModelAndView result;
+		Rendezvous rendezvous;
 		
-		result = new ModelAndView("redirect:list.do");
-		
+		rendezvous = this.rendezvousService.findOne(rendezvousId);
 		 try {
-			 this.rendezvousService.remove(rendezvousId);
+			 this.rendezvousService.remove(rendezvous);
+			 result = new ModelAndView("redirect:/rendezvous/list.do");
 		 } catch (Throwable oops) {
-			 result.addObject("notice", "No se ha podido reservar la cita");
+			 result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
 		 }
 		
+		return result;
+	}
+	
+	// Ancillary methods ------------------------------------------------------
+	
+	protected ModelAndView createEditModelAndView(Rendezvous rendezvous) {
+		ModelAndView result;
+
+		result = this.createEditModelAndView(rendezvous, null);
+
+		return result;
+
+	}
+
+	protected ModelAndView createEditModelAndView(Rendezvous rendezvous, String messageCode) {
+		ModelAndView result;
+
+		result = new ModelAndView("rendezvous/edit");
+		result.addObject("rendezvous", rendezvous);
+		result.addObject("message", messageCode);
+
 		return result;
 	}
 }

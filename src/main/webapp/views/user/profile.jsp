@@ -9,12 +9,12 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <ul>
-	<li> <spring:message code="user.table.name"/>: <jstl:out value="${user.name}"/> </li>
-	<li> <spring:message code="user.table.surname"/>: <jstl:out value="${user.surname}"/> </li>
-	<li> <spring:message code="user.table.email"/>: <jstl:out value="${user.email}"/> </li>
-	<li> <spring:message code="user.table.phone"/>: <jstl:out value="${user.phoneNumber}"/> </li>
-	<li> <spring:message code="user.table.address"/>: <jstl:out value="${user.postalAddress}"/> </li>
+	<li> <spring:message code="user.label.name"/>: <jstl:out value="${user.name}"/> </li>
+	<li> <spring:message code="user.label.surname"/>: <jstl:out value="${user.surname}"/> </li>
+	<li> <spring:message code="user.label.email"/>: <jstl:out value="${user.email}"/> </li>
+	<li> <spring:message code="user.label.phone"/>: <jstl:out value="${user.phoneNumber}"/> </li>
+	<li> <spring:message code="user.label.address"/>: <jstl:out value="${user.postalAddress}"/> </li>
 		 <spring:message code="user.format.date" var="formatDate"/>
-	<li> <spring:message code="user.table.birth"/>: <fmt:formatDate value="${user.birthdate}" pattern="${formatDate}"/> </li>
-	<li> <spring:message code="user.table.rsvpdRendezvouses"/>: <a href=""> <spring:message code="user.link.rsvpdRendezvouses"/> </a> </li>
+	<li> <spring:message code="user.label.birth"/>: <fmt:formatDate value="${user.birthdate}" pattern="${formatDate}"/> </li>
+	<li> <spring:message code="user.label.rsvpdRendezvouses"/>: <a href=""> <spring:message code="user.link.rsvpdRendezvouses"/> </a> </li>
 </ul>
