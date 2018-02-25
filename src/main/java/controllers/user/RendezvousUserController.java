@@ -20,6 +20,7 @@ import controllers.AbstractController;
 import domain.Announcement;
 import domain.Rendezvous;
 import domain.User;
+import forms.RendezvousForm;
 
 @Controller
 @RequestMapping("/rendezvous/user")
@@ -111,9 +112,11 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Rendezvous rendezvous, final BindingResult binding) {
+	public ModelAndView save(RendezvousForm rendezvousForm, final BindingResult binding) {
 		ModelAndView result;
+		Rendezvous rendezvous;
 
+		rendezvous = this.rendezvousService.reconstruct(rendezvousForm, binding);
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(rendezvous);
 		else
@@ -121,7 +124,8 @@ public class RendezvousUserController extends AbstractController {
 				this.rendezvousService.save(rendezvous);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
+				result = this.createEditModelAndView(rendezvousForm,
+						"rendezvous.commit.error");
 			}
 
 		return result;

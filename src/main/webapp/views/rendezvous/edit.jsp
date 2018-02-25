@@ -32,6 +32,13 @@
 		 message1="finalMode.true" message2="finalMode.false" />
 	<acme:textbox code="rendezvous.urlPicture" path="urlPicture" />
 	
+	<p> 
+		<spring:message code="rendezvous.gpsCoordinates" />:
+	</p>
+	
+	<acme:textbox code="gps.latitude" path="gpsCoordinates.latitude" />
+	<acme:textbox code="gps.longitude" path="gpsCoordinates.longitude"/>
+	
 	<acme:selectMultiple path="similarOnes" code="rendezvous.similarOnes"
 		items="${similarRendezvouses}" itemLabel="name" />
 	

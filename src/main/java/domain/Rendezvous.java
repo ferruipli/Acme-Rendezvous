@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -42,7 +43,6 @@ public class Rendezvous extends DomainEntity {
 	private boolean	isFlagged;
 	private boolean	adultOnly;
 	private String	urlPicture;
-
 
 	@NotBlank
 	public String getName() {

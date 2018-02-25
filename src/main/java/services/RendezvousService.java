@@ -21,6 +21,7 @@ import repositories.RendezvousRepository;
 import domain.Actor;
 import domain.Announcement;
 import domain.Comment;
+import domain.GPS;
 import domain.Question;
 import domain.RSVP;
 import domain.Rendezvous;
@@ -75,14 +76,17 @@ public class RendezvousService {
 	public Rendezvous create() {
 		Rendezvous result;
 		User user;
+		GPS gpsCoordinates;
 
 		user = (User) this.actorService.findByPrincipal();
+		gpsCoordinates = this.gpsService.create();
 
 		result = new Rendezvous();
 		result.setAnnouncements(Collections.<Announcement> emptySet());
 		result.setAttendants(Collections.<User> emptySet());
 		result.setComments(Collections.<Comment> emptySet());
 		result.setCreator(user);
+		result.setGpsCoordinates(gpsCoordinates);
 		result.setSimilarOnes(Collections.<Rendezvous> emptySet());
 		result.setQuestions(Collections.<Question> emptySet());
 		result.setReserves(Collections.<RSVP> emptySet());
