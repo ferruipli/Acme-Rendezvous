@@ -46,6 +46,10 @@
 		<security:intercept-url pattern="/announcement/user/**" access = "hasRole('USER')"/>
 		<security:intercept-url pattern="announcement/**" access="permitAll" />
 		
+		<security:intercept-url pattern="/comment/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/comment/administrator/**" access="hasRole('ADMINISTRATOR')" />
+		
+		
 		<security:intercept-url pattern="/dashboard/administrator/**" access = "hasRole('ADMINISTRATOR')"/>
 		<security:intercept-url pattern="/rendezvous/administrator/**" access = "hasRole('ADMINISTRATOR')"/>
 		

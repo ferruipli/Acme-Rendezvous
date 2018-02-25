@@ -235,7 +235,7 @@ public class RendezvousService {
 		rendezvous.setAttendants(aux);
 	}
 
-	protected void addComment(final Rendezvous rendezvous, final Comment comment) {
+		public void addComment(final Rendezvous rendezvous, final Comment comment) {
 		User user;
 		user = (User) this.actorService.findByPrincipal();
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
@@ -246,7 +246,7 @@ public class RendezvousService {
 		rendezvous.setComments(aux);
 	}
 
-	protected void removeComment(final Rendezvous rendezvous, final Comment comment) {
+		public void removeComment(final Rendezvous rendezvous, final Comment comment) {
 		Collection<Comment> aux;
 
 		aux = new HashSet<>(rendezvous.getComments());

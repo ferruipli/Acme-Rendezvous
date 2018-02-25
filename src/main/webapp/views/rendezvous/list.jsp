@@ -12,6 +12,7 @@
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="rendezvouses" requestURI="${requestURI}" id="row">
 
@@ -67,11 +68,7 @@
 				<spring:message code="rendezvous.edit" />
 			</a>
 		</display:column>
-		<display:column>
-			<a href="comment/user/create.do?rendezvousId=${row.id}">
-				<spring:message code="rendezvous.comment" />
-			</a>
-		</display:column>
+		
 	</security:authorize>
 	
 </display:table>

@@ -44,7 +44,7 @@
 
 <p>
 	<strong> <spring:message code="rendezvous.comments"/>: </strong>
-	<a href="comment/user/list.do">
+	<a href="comment/user/list.do?rendezvousId=${rendezvous.id }">
 	 	<spring:message code="comment.list" />
 	</a>
 </p>
