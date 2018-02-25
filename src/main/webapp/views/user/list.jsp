@@ -1,6 +1,8 @@
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
@@ -11,9 +13,9 @@
 		<a href="user/profile.do?userId=${user.id}"> <spring:message code="user.link.profile"/> </a>
 	</display:column>
 	
-	<spring:message code="user.table.name" var="titleName"/>
+	<spring:message code="user.label.name" var="titleName"/>
 	<display:column property="name" title="${titleName}" sortable="true"/>
 	
-	<spring:message code="user.table.surname" var="titleSurname"/>
+	<spring:message code="user.label.surname" var="titleSurname"/>
 	<display:column property="surname" title="${titleSurname}" sortable="true"/>
 </display:table>

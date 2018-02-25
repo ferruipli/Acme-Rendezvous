@@ -13,13 +13,17 @@ package controllers;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.UserService;
 import domain.User;
+import forms.RegistrationForm;
 
 @Controller
 @RequestMapping("/user")
@@ -39,7 +43,7 @@ public class UserController extends AbstractController {
 
 	// Listing ----------------------------------------------------------------
 
-	@RequestMapping(value = "/list")
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<User> users;
@@ -55,7 +59,7 @@ public class UserController extends AbstractController {
 
 	// Profile ----------------------------------------------------------------
 
-	@RequestMapping(value = "/profile")
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public ModelAndView profile(@RequestParam final int userId) {
 		ModelAndView result;
 		User user;
@@ -67,4 +71,59 @@ public class UserController extends AbstractController {
 
 		return result;
 	}
+
+	// Registration -----------------------------------------------------------
+
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		RegistrationForm registrationForm;
+
+		registrationForm = new RegistrationForm();
+		result = this.createModelAndView(registrationForm);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "register")
+	public ModelAndView save(final RegistrationForm registrationForm, final BindingResult binding) {
+		ModelAndView result;
+		User user;
+
+		user = this.userService.reconstruct(registrationForm, binding);
+		if (binding.hasErrors())
+			result = this.createModelAndView(registrationForm);
+		else
+			try {
+				this.userService.save(user);
+				result = new ModelAndView("redirect:/security/login.do");
+			} catch (final DataIntegrityViolationException oops) {
+				result = this.createModelAndView(registrationForm, "user.duplicated.username");
+			} catch (final Throwable oops) {
+				result = this.createModelAndView(registrationForm, "user.registration.error");
+			}
+
+		return result;
+	}
+
+	// Ancillary methods ------------------------------------------------------
+
+	protected ModelAndView createModelAndView(final RegistrationForm registrationForm) {
+		ModelAndView result;
+
+		result = this.createModelAndView(registrationForm, null);
+
+		return result;
+	}
+
+	protected ModelAndView createModelAndView(final RegistrationForm registrationForm, final String messageCode) {
+		ModelAndView result;
+
+		result = new ModelAndView("user/register");
+		result.addObject("registrationForm", registrationForm);
+		result.addObject("message", messageCode);
+
+		return result;
+	}
+
 }

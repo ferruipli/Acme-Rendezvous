@@ -57,6 +57,22 @@
 		</display:column>
 	</security:authorize>
 	
+	<security:authorize access="isAnonymous()">
+	<display:column>
+			<a href="rendezvous/display.do?rendezvousId=${row.id}">
+				<spring:message code="rendezvous.display" />
+			</a>
+		</display:column>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('ADMINISTRATOR')">
+	<display:column>
+			<a href="rendezvous/display.do?rendezvousId=${row.id}">
+				<spring:message code="rendezvous.display" />
+			</a>
+		</display:column>
+		</security:authorize>
+	
 	<security:authorize access="hasRole('USER')">
 		<display:column>
 			<a href="rendezvous/user/display.do?rendezvousId=${row.id}">

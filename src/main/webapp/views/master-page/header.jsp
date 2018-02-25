@@ -23,7 +23,7 @@
 			<li><a class="fNiv"><spring:message code="master.page.register" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="actor/create.do?role=user"><spring:message code="master.page.register.user"/></a></li>
+					<li><a href="user/register.do"><spring:message code="master.page.register.user"/></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
@@ -82,7 +82,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="announcement/user/create.do"><spring:message code="master.page.announcement.create"/></a></li>
-					<li><a href="announcement/user/list.do"><spring:message code="master.page.announcement.list"/></a></li>
+					
 				</ul>
 			</li>
 		</security:authorize>
