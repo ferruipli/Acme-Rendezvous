@@ -1,5 +1,9 @@
 #./src/main/resources/Entities.map
+<<<<<<< HEAD
 #Sun Feb 25 15:23:18 CET 2018
+=======
+#Sun Feb 25 13:27:35 CET 2018
+>>>>>>> 398f48ee575c7cbcef9bc3031a9f91bb0f4d72c4
 question1=316
 rsvp2=335
 gps1=322
