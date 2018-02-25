@@ -14,7 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<img src="images/logo.png" alt="Acme Rendezvous Co., Inc." />
+	<a href="welcome/index.do"><img src="images/logo.png" alt="Acme Rendezvous Co., Inc." /></a>
 </div>
 
 <div>
@@ -23,7 +23,7 @@
 			<li><a class="fNiv"><spring:message code="master.page.register" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="actor/create.do?role=user"><spring:message code="master.page.register.user"/></a></li>
+					<li><a href="user/register.do"><spring:message code="master.page.register.user"/></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
@@ -82,7 +82,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="announcement/user/create.do"><spring:message code="master.page.announcement.create"/></a></li>
-					<li><a href="announcement/user/list.do"><spring:message code="master.page.announcement.list"/></a></li>
+					
 				</ul>
 			</li>
 		</security:authorize>
@@ -98,6 +98,12 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="rendezvous/list.do"><spring:message code="master.page.rendezvous.list"/></a></li>
+				</ul>
+			</li>
+			<li><a class="fNiv"><spring:message code="master.page.comment" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="comment/administrator/list.do"><spring:message code="master.page.comment.list"/></a></li>
 				</ul>
 			</li>
 		</security:authorize>

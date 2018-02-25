@@ -16,6 +16,7 @@ import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import security.UserAccount;
@@ -37,10 +38,11 @@ public abstract class Actor extends DomainEntity {
 	private String	postalAddress;
 	private String	phoneNumber;
 	private String	email;
-	private Date	birthDate;
+	private Date	birthdate;
 
 
 	@NotBlank
+	@SafeHtml
 	public String getName() {
 		return this.name;
 	}
@@ -50,6 +52,7 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getSurname() {
 		return this.surname;
 	}
@@ -58,6 +61,7 @@ public abstract class Actor extends DomainEntity {
 		this.surname = surname;
 	}
 
+	@SafeHtml
 	public String getPostalAddress() {
 		return this.postalAddress;
 	}
@@ -66,6 +70,7 @@ public abstract class Actor extends DomainEntity {
 		this.postalAddress = postalAddress;
 	}
 
+	@SafeHtml
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
@@ -76,6 +81,7 @@ public abstract class Actor extends DomainEntity {
 
 	@NotBlank
 	@Email
+	@SafeHtml
 	public String getEmail() {
 		return this.email;
 	}
@@ -89,11 +95,11 @@ public abstract class Actor extends DomainEntity {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getBirthdate() {
-		return this.birthDate;
+		return this.birthdate;
 	}
 
 	public void setBirthdate(final Date birthDate) {
-		this.birthDate = birthDate;
+		this.birthdate = birthDate;
 	}
 
 

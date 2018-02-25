@@ -44,7 +44,7 @@
 
 <p>
 	<strong> <spring:message code="rendezvous.comments"/>: </strong>
-	<a href="comment/user/list.do">
+	<a href="comment/user/list.do?rendezvousId=${rendezvous.id }">
 	 	<spring:message code="comment.list" />
 	</a>
 </p>
@@ -88,6 +88,17 @@
 		<spring:message code="rendezvous.formatMoment" var="formatMomentVar" />
 		<spring:message code="announcement.moment" var="momentHeader" />
 		<display:column property="title" title="${momentHeader}" format="${formatMomentVar}" sortable="true" />
+		
+		<security:authorize access="hasRole('ADMINISTRATOR')">
+		<display:column>
+			<a href="announcement/administrator/display.do?announcementId=${row.id}">
+				<spring:message code="rendezvous.display" />
+			</a>
+		</display:column>
+		
+	</security:authorize>
+	
+		
 	</display:table>
 </jstl:if>
 

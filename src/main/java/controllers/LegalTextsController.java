@@ -12,6 +12,7 @@ package controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -26,7 +27,7 @@ public class LegalTextsController extends AbstractController {
 
 	// Terms and Conditions ---------------------------------------------------		
 
-	@RequestMapping(value = "/termsAndConditions")
+	@RequestMapping(value = "/termsAndConditions", method = RequestMethod.GET)
 	public ModelAndView termsAndConditions() {
 		ModelAndView result;
 

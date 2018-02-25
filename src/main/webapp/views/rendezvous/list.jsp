@@ -12,6 +12,7 @@
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="rendezvouses" requestURI="${requestURI}" id="row">
 
@@ -56,6 +57,22 @@
 		</display:column>
 	</security:authorize>
 	
+	<security:authorize access="isAnonymous()">
+	<display:column>
+			<a href="rendezvous/display.do?rendezvousId=${row.id}">
+				<spring:message code="rendezvous.display" />
+			</a>
+		</display:column>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('ADMINISTRATOR')">
+	<display:column>
+			<a href="rendezvous/display.do?rendezvousId=${row.id}">
+				<spring:message code="rendezvous.display" />
+			</a>
+		</display:column>
+		</security:authorize>
+	
 	<security:authorize access="hasRole('USER')">
 		<display:column>
 			<a href="rendezvous/user/display.do?rendezvousId=${row.id}">
@@ -67,11 +84,7 @@
 				<spring:message code="rendezvous.edit" />
 			</a>
 		</display:column>
-		<display:column>
-			<a href="comment/user/create.do?rendezvousId=${row.id}">
-				<spring:message code="rendezvous.comment" />
-			</a>
-		</display:column>
+		
 	</security:authorize>
 	
 </display:table>
