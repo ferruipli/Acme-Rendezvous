@@ -26,28 +26,33 @@
 	<jstl:out value="${rendezvous.description}" />
 </p>
 
-<p>
-	<spring:message code="rendezvous.formatMoment" var="formatMomentVar" />
-	<strong> <spring:message code="rendezvous.moment"/>: </strong>
-	<fmt:formatDate value="${rendezvous.moment}" pattern="${formatMomentVar}" />
-</p>
+<spring:message code="moment.format" var="formatMomentVar" />
+<strong> <spring:message code="rendezvous.moment" />: </strong>
+<fmt:formatDate value="${rendezvous.moment}" pattern="${formatMomentVar}" />
 
 <jstl:if test="${rendezvous.gpsCoordinates != null}">
 	<p> <strong> <spring:message code="rendezvous.gpsCoordinates" />: </strong> </p>
-	<p>
+	<p style="text-indent:1.5em">
 		<strong> <spring:message code="gps.latitude"/>: </strong>
 		<jstl:out value="${rendezvous.gpsCoordinates.latitude}" />
 	</p>
-	<p>
+	<p style="text-indent:1.5em">
 		<strong> <spring:message code="gps.longitude"/>: </strong>
 		<jstl:out value="${rendezvous.gpsCoordinates.longitude}" />
 	</p>	
 </jstl:if>
 
 <p>
+	<strong> <spring:message code="rendezvous.comments"/>: </strong>
+	<a href="comment/user/list.do">
+	 	<spring:message code="comment.list" />
+	</a>
+</p>
+
+<p>
 	<strong> <spring:message code="rendezvous.attendants"/>: </strong>
 	<a href="questions/user/list.do">
-	 	<jstl:out value="<spring:message code="rendezvous.link" />" />
+	 	<spring:message code="rendezvous.link" />
 	</a>
 </p>
 
@@ -58,27 +63,22 @@
 	</a>
 </p>
 
-<jstl:if test="${similarOnes.size > 0}">
+<jstl:if test="${similarOnes.size() > 0}">
 	<p> <strong> <spring:message code="rendezvous.similarOnes" />: </strong> </p>
-	<jstl:forEach items="${similarOnes}" var="similarOne">
-		<p>
-			<a href="rendezvous/user/display.do?rendezvousId=${similarOne.id}">
-		 		<jstl:out value="${similarOne.name}" />
-		 	</a>
-		</p>
+	<ul>
+		<jstl:forEach items="${similarOnes}" var="similarOne">
+			<li>
+				<a href="rendezvous/user/display.do?rendezvousId=${similarOne.id}">
+		 			<jstl:out value="${similarOne.name}" />
+		 		</a>
+			</li>
 	</jstl:forEach>
+	</ul>
 </jstl:if>
 
-<p>
-	<strong> <spring:message code="rendezvous.comments"/>: </strong>
-	<a href="comment/user/list.do">
-	 	<jstl:out value="<spring:message code="comment.list" />" />
-	</a>
-</p>
-
-<jstl:if test="${rendezvous.announcements.size > 0}">
+<jstl:if test="${announcements.size() > 0}">
 	<p> <strong> <spring:message code="rendezvous.announcements" /> </strong> </p>
-	<display:table name="announcements" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
+	<display:table name="announcements" id="row" class="displaytag">
 		<spring:message code="announcement.title" var="titleHeader" />
 		<display:column property="title" title="${titleHeader}" sortable="true" />
 	
@@ -88,15 +88,36 @@
 		<spring:message code="rendezvous.formatMoment" var="formatMomentVar" />
 		<spring:message code="announcement.moment" var="momentHeader" />
 		<display:column property="title" title="${momentHeader}" format="${formatMomentVar}" sortable="true" />
+		
+		<security:authorize access="hasRole('ADMINISTRATOR')">
+		<display:column>
+			<a href="announcement/administrator/display.do?announcementId=${row.id}">
+				<spring:message code="rendezvous.display" />
+			</a>
+		</display:column>
+		
+	</security:authorize>
+	
+		
 	</display:table>
-	 
 </jstl:if>
 
 <security:authorize access="hasRole('USER')">
-	<a href="announcement/user/create.do?rendezvousId=${rendezvous.id}">
-		<spring:message code="announcement.create" />
-	</a>
+	
+	<jstl:if test="${isCreator==true}">
+		<a href="announcement/user/create.do?rendezvousId=${rendezvous.id}">
+			<spring:message code="announcement.create" />
+		</a>
+	</jstl:if>
+	
+	<br />
+	
+	<jstl:choose>
+		<jstl:when test="${isReserved==false}">
+			<acme:submit name="rsvp" code="rendezvous.reserve" />	
+		</jstl:when>
+		<jstl:when test="${isReserved==true}">
+			<acme:submit name="cancelRSVP" code="rendezvous.cancelReserve" />
+		</jstl:when>
+	</jstl:choose>
 </security:authorize>
-
-<acme:submit name="rsvp" code="rendezvous.reserve" />
-<acme:submit name="cancelRSVP" code="rendezvous.cancelReserve" />

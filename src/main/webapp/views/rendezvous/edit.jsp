@@ -31,9 +31,10 @@
 	<acme:radio code="rendezvous.adultOnly" path="adultOnly"
 		 message1="finalMode.true" message2="finalMode.false" />
 	<acme:textbox code="rendezvous.urlPicture" path="urlPicture" />
-	<!--
-	<acme:select path="similarOnes" code="rendezvous.similarOnes" items="similarRendezvouses" itemLabel="name" />
-	-->
+	
+	<acme:selectMultiple path="similarOnes" code="rendezvous.similarOnes"
+		items="${similarRendezvouses}" itemLabel="name" />
+	
 	<acme:submit name="save" code="rendezvous.save" />
 	<jstl:if test="${rendezvous.id != 0}">
 		<acme:submit name="delete" code="rendezvous.delete" />

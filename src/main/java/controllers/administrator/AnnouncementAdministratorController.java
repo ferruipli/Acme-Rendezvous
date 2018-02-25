@@ -3,6 +3,7 @@ package controllers.administrator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,19 +30,30 @@ public class AnnouncementAdministratorController extends AbstractController {
 	}
 
 	// Delete---------------------------------------------
-	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "delete")
-	public ModelAndView remove(@RequestParam final int announcementId) {
+	@RequestMapping(value = "/display", method = RequestMethod.POST, params = "delete")
+	public ModelAndView remove(@RequestParam final Announcement announcement, final BindingResult binding) {
+		ModelAndView result;
+
+		try {
+			this.announcementService.delete(announcement);
+			result = this.newModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(announcement, "announcement.commit.error");
+		}
+
+		return result;
+	}
+
+	// Display--------------------------------------------
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int announcementId) {
 		ModelAndView result;
 		Announcement announcement;
 
-		result = new ModelAndView("redirect:/welcome/index.do");
+		announcement = this.announcementService.findOne(announcementId);
 
-		try {
-			announcement = this.announcementService.findOne(announcementId);
-			this.announcementService.delete(announcement);
-		} catch (final Throwable oops) {
-			result.addObject("notice", "No se ha podido eliminar el comentario");
-		}
+		result = new ModelAndView("announcement/display");
+		result.addObject("announcement", announcement);
 
 		return result;
 	}

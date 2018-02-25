@@ -32,6 +32,21 @@ public class RendezvousServiceTest extends AbstractTest {
 	private ActorService actorService;
 	
 	@Test
+	public void testFindOne() {
+		super.authenticate("user1");
+		
+		int rendezvousId;
+		Rendezvous rendezvous;
+		
+		rendezvousId = 332;
+		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		
+		Assert.notNull(rendezvous);
+		
+		super.authenticate(null);
+	}
+	
+	@Test
 	public void testCreate() {
 		super.authenticate("user1");
 		
@@ -124,10 +139,12 @@ public class RendezvousServiceTest extends AbstractTest {
 	public void testRemove() {
 		super.authenticate("user2");
 		
+		User user;
 		Rendezvous rendezvous, saved;
 		Calendar c;
 		Date moment;
 	
+		user = (User)this.actorService.findByPrincipal();
 		rendezvous = this.rendezvousService.create();
 		
 		c = Calendar.getInstance();
@@ -142,6 +159,7 @@ public class RendezvousServiceTest extends AbstractTest {
 		
 		this.rendezvousService.remove(saved);
 		
+		Assert.isTrue(!user.getCreatedRendezvouses().contains(saved));
 		Assert.isTrue(!this.rendezvousService.findAll().contains(saved));
 	
 		super.authenticate(null);
