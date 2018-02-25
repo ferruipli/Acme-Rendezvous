@@ -33,7 +33,7 @@
 		items="${similarRendezvouses}" itemLabel="name" />
 	
 	<acme:submit name="save" code="rendezvous.save" />
-	<jstl:if test="${rendezvous.id != 0}">
+	<jstl:if test="${rendezvousForm.id != 0}">
 		<acme:submit name="delete" code="rendezvous.delete" />
 	</jstl:if>
 	<acme:cancel code="rendezvous.return" url="rendezvous/user/list.do" />
