@@ -70,15 +70,20 @@ public class AnnouncementUserController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final int rendezvousId) {
-		final ModelAndView result;
-		Announcement announcement;
-		Rendezvous rendezvous;
+		ModelAndView result;
+		try {
+			Announcement announcement;
+			Rendezvous rendezvous;
 
-		rendezvous = this.rendezvousService.findOne(rendezvousId);
-		announcement = this.announcementService.create();
-		this.rendezvousService.addAnnouncement(rendezvous, announcement);
+			rendezvous = this.rendezvousService.findOne(rendezvousId);
 
-		result = this.createEditModelAndView(announcement);
+			announcement = this.announcementService.create();
+			this.rendezvousService.addAnnouncement(rendezvous, announcement);
+
+			result = this.createEditModelAndView(announcement);
+		} catch (final Throwable opps) {
+			result = this.newModelAndView("redirect=welcome/index.do");
+		}
 
 		return result;
 
