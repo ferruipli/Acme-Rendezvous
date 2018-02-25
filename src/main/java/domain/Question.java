@@ -44,7 +44,7 @@ public class Question extends DomainEntity {
 
 
 	@NotNull
-	@OneToMany
+	@OneToMany(mappedBy = "question")
 	public Collection<Answer> getAnswers() {
 		return this.answers;
 	}
