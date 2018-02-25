@@ -26,6 +26,7 @@ import domain.Question;
 import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
+import forms.RendezvousForm;
 
 @Service
 @Transactional
@@ -128,21 +129,26 @@ public class RendezvousService {
 	@Autowired
 	private Validator	validator;
 
-	public Rendezvous reconstruct(final Rendezvous rendezvous, final BindingResult binding) {
+	public Rendezvous reconstruct(final RendezvousForm rendezvousForm, final BindingResult binding) {
 		Rendezvous result;
+		GPS gpsCoordinates;
 
-		if (rendezvous.getId() == 0)
-			result = rendezvous;
+		if (rendezvousForm.getId() == 0)
+			result = this.create();
 		else {
-			result = this.rendezvousRepository.findOne(rendezvous.getId());
-			result.setName(rendezvous.getName());
-			result.setDescription(rendezvous.getDescription());
-			result.setMoment(rendezvous.getMoment());
-			result.setGpsCoordinates(rendezvous.getGpsCoordinates());
-			result.setFinalMode(rendezvous.getFinalMode());
-			result.setAdultOnly(rendezvous.getAdultOnly());
-			result.setUrlPicture(rendezvous.getUrlPicture());
-			result.setSimilarOnes(rendezvous.getSimilarOnes());
+			result = this.rendezvousRepository.findOne(rendezvousForm.getId());
+			result.setName(rendezvousForm.getName());
+			result.setDescription(rendezvousForm.getDescription());
+			result.setMoment(rendezvousForm.getMoment());
+			
+			gpsCoordinates = result.getGpsCoordinates();
+			gpsCoordinates.setLatitude(rendezvousForm.getGpsCoordinates().getLatitude());
+			gpsCoordinates.setLongitude(rendezvousForm.getGpsCoordinates().getLongitude());
+			
+			result.setFinalMode(rendezvousForm.isFinalMode());
+			result.setAdultOnly(rendezvousForm.isAdultOnly());
+			result.setUrlPicture(rendezvousForm.getUrlPicture());
+			result.setSimilarOnes(rendezvousForm.getSimilarOnes());
 
 			this.validator.validate(result, binding);
 		}

@@ -3,11 +3,16 @@ package forms;
 import java.util.Collection;
 import java.util.Date;
 
-import domain.GPS;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import domain.Rendezvous;
 
 public class RendezvousForm {
 
+	private int id;
 	private String name;
 	private String description;
 	private Date moment;
@@ -15,7 +20,15 @@ public class RendezvousForm {
 	private boolean adultOnly;
 	private String urlPicture;
 	private Collection<Rendezvous> similarOnes;
-	private GPS gpsCoordinates;
+	private GPSForm gpsCoordinates;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getName() {
 		return name;
@@ -33,6 +46,8 @@ public class RendezvousForm {
 		this.description = description;
 	}
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm")
 	public Date getMoment() {
 		return moment;
 	}
@@ -73,11 +88,11 @@ public class RendezvousForm {
 		this.similarOnes = similarOnes;
 	}
 	
-	public GPS getGpsCoordinates() {
+	public GPSForm getGpsCoordinates() {
 		return gpsCoordinates;
 	}
 	
-	public void setGpsCoordinates(GPS gpsCoordinates) {
+	public void setGpsCoordinates(GPSForm gpsCoordinates) {
 		this.gpsCoordinates = gpsCoordinates;
 	}
 	
