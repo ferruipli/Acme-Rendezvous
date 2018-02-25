@@ -31,12 +31,15 @@ public class UserService {
 	// Managed repository ---------------------------------------------------
 
 	@Autowired
-	private UserRepository	userRepository;
+	private UserRepository		userRepository;
 
 	// Supporting services --------------------------------------------------
 
 	@Autowired
-	private Validator		validator;
+	private Validator			validator;
+
+	@Autowired
+	private Md5PasswordEncoder	encoder;
 
 
 	// Constructors ---------------------------------------------------------
@@ -71,11 +74,9 @@ public class UserService {
 
 	public void save(final User user) {
 		String password, hash;
-		Md5PasswordEncoder encoder;
-		// TODO: alomejor con el autowired funciona
-		encoder = new Md5PasswordEncoder();
+
 		password = user.getUserAccount().getPassword();
-		hash = encoder.encodePassword(password, null);
+		hash = this.encoder.encodePassword(password, null);
 		user.getUserAccount().setPassword(hash);
 
 		this.userRepository.save(user);
@@ -145,14 +146,14 @@ public class UserService {
 		user.setCreatedRendezvouses(aux);
 	}
 
-	protected void removeRendezvous(User user, Rendezvous rendezvous) {
+	protected void removeRendezvous(final User user, final Rendezvous rendezvous) {
 		Collection<Rendezvous> aux;
-		
+
 		aux = new HashSet<>(user.getCreatedRendezvouses());
 		aux.remove(rendezvous);
 		user.setCreatedRendezvouses(aux);
 	}
-	
+
 	public User findByPrincipal() {
 		User res;
 		UserAccount userAccount;
