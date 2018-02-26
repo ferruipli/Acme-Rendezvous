@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -5,8 +6,10 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -21,42 +24,55 @@ public class Announcement extends DomainEntity {
 	public Announcement() {
 		super();
 	}
-	
+
+
 	// Attributes ---------------------------------------
-	private Date moment;
-	private String title;
-	private String description;
-	
+	private Date	moment;
+	private String	title;
+	private String	description;
+
+
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getMoment() {
-		return moment;
+		return this.moment;
 	}
-	
-	public void setMoment(Date moment) {
+
+	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
-	
+
 	@NotBlank
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
-	
-	public void setTitle(String title) {
+
+	public void setTitle(final String title) {
 		this.title = title;
 	}
-	
+
 	@NotBlank
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
-	
-	public void setDescription(String description) {
+
+	public void setDescription(final String description) {
 		this.description = description;
 	}
-	
+
+
 	// Relationships ------------------------------------
-	
+	private Rendezvous	rendezvous;
+
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Rendezvous getRendezvous() {
+		return this.rendezvous;
+	}
+	public void setRendezvous(final Rendezvous rendezvous) {
+		this.rendezvous = rendezvous;
+	}
 }

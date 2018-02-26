@@ -49,6 +49,12 @@ public class RendezvousService {
 	@Autowired
 	private RSVPService				rsvpService;
 
+	@Autowired
+	private AnnouncementService 	announcementService;
+	
+	@Autowired
+	private QuestionService 		questionService;
+	
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
 		super();
@@ -184,14 +190,32 @@ public class RendezvousService {
 		
 		Collection<Rendezvous> rendezvouses;
 		Collection<RSVP> RSVPs;
-
-		rendezvouses = this.findSimilarOnes(rendezvous.getId());
-		RSVPs = this.rsvpService.findRSVPByRendezvous(rendezvous.getId());
+		Collection<Question> questions;
+		Collection<Announcement> announcements;
+		
+		rendezvouses = rendezvous.getSimilarOnes();
+		RSVPs = rendezvous.getReserves();
+		questions = rendezvous.getQuestions();
+		announcements = rendezvous.getAnnouncements();
 		
 		//Removing all the RSVP relates with this rendezvous
 		if (RSVPs != null && !RSVPs.isEmpty()) {
 			for (RSVP rs: RSVPs) {
 				this.rsvpService.removeByAdmin(rs);
+			}
+		}
+		
+		// Removing all the announcements relates with this rendezvous
+		if (announcements != null && !announcements.isEmpty()) {
+			for (Announcement a: announcements) {
+				this.announcementService.removeByAdmin(a);
+			}
+		}
+		
+		// Removing all the questions relates with this rendezvous
+		if (questions != null && !questions.isEmpty()) {
+			for (Question q: questions) {
+				this.questionService.delete(q);
 			}
 		}
 		
@@ -397,20 +421,6 @@ public class RendezvousService {
 		result = this.rendezvousRepository.findRendezvousByAnnouncement(announcementId);
 
 		return result;
-	}
-
-	/* Este método devuelve aquellas citas que tienen a la cita que se pasa
-	 * por parámetro contenida en el atributo Rendezvous::similarOnes
-	 */
-	
-	public Collection<Rendezvous> findSimilarOnes(int rendezvousId) {
-		Assert.notNull(rendezvousId);
-		
-		Collection<Rendezvous> results;
-		
-		results = this.rendezvousRepository.findSimilarOnes(rendezvousId);
-		
-		return results;
-	}
+	}	
 	
 }

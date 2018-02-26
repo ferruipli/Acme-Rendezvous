@@ -21,4 +21,5 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
 	@Query("select q from RSVP r join r.rendezvous.questions q where r.id=?1 order by q.id asc")
 	Collection<Question> findOrderedQuestionsByRSVPId(int rsvpId);
+		
 }

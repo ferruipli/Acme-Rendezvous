@@ -33,6 +33,13 @@ public class AnswerService {
 
 	// CRUD methods ---------------------------------------------------------
 
+	public void delete(Answer answer) {
+		Assert.notNull(answer);
+		Assert.isTrue(answer.getId() != 0);
+		
+		this.answerRepository.delete(answer);
+	}
+	
 	// Other business methods -----------------------------------------------
 
 	public List<Answer> findOrderedAnswersByRendezvousId(final int rendezvousId) {
