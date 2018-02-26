@@ -38,11 +38,14 @@ public class RendezvousController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Rendezvous> rendezvouses;
+		boolean isReserved;
 
 		rendezvouses = this.rendezvousService.findAllAvailable();
-
+		isReserved = false;
+		
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
+		result.addObject("isReserved", isReserved);
 		result.addObject("requestMapping", "rendezvous/list.do");
 
 		return result;
