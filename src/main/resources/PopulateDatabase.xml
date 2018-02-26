@@ -145,31 +145,36 @@
 	<bean class="domain.Announcement" id="announcement1">
 		<property value="2017/05/17 12:12" name="moment"/>
 		<property value="announcement1" name="title"/>
-		<property value="description_announcement1" name="description"/>	
+		<property value="description_announcement1" name="description"/>
+		<property name = "rendezvous" ref = "rendezvous1"/>	
 	</bean>
 	
 	<bean class="domain.Announcement" id="announcement2">
 		<property value="2016/10/19 21:12" name="moment"/>
 		<property value="announcement2" name="title"/>
-		<property value="description_announcement2" name="description"/>	
+		<property value="description_announcement2" name="description"/>
+		<property name = "rendezvous" ref = "rendezvous1"/>		
 	</bean>
 	
 	<bean class="domain.Announcement" id="announcement3">
 		<property value="2017/12/17 08:20" name="moment"/>
 		<property value="announcement3" name="title"/>
-		<property value="description_announcement3" name="description"/>	
+		<property value="description_announcement3" name="description"/>
+		<property name = "rendezvous" ref = "rendezvous2"/>		
 	</bean>
 	
 	<bean class="domain.Announcement" id="announcement4">
 		<property value="2016/05/16 14:12" name="moment"/>
 		<property value="announcement4" name="title"/>
-		<property value="description_announcement4" name="description"/>	
+		<property value="description_announcement4" name="description"/>
+		<property name = "rendezvous" ref = "rendezvous2"/>		
 	</bean>
 	
 	<bean class="domain.Announcement" id="announcement5">
 		<property value="2015/09/15 19:25" name="moment"/>
 		<property value="announcement5" name="title"/>
 		<property value="description_announcement5" name="description"/>	
+		<property name = "rendezvous" ref = "rendezvous2"/>	
 	</bean>
 
 	<!-- Answer -->
