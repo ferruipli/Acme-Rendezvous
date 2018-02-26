@@ -174,21 +174,6 @@
 
 	<!-- Answer -->
 	
-	<bean class="domain.Answer" id="answer1">
-		<property value="text_answer1" name="text"/>
-		<property name="question" ref="question2"/>
-	</bean>
-	
-	<bean class="domain.Answer" id="answer2">
-		<property value="text_answer2" name="text"/>
-		<property name="question" ref="question3"/>
-	</bean>
-	
-	<bean class="domain.Answer" id="answer5">
-		<property value="text_answer5" name="text"/>
-		<property name="question" ref="question4"/>
-	</bean>
-	
 	<bean class="domain.Answer" id="answer3">
 		<property value="text_answer3" name="text"/>
 		<property name="question" ref="question1"/>
@@ -197,6 +182,11 @@
 	<bean class="domain.Answer" id="answer4">
 		<property value="text_answer4" name="text"/>
 		<property name="question" ref="question1"/>
+	</bean>
+	
+	<bean class="domain.Answer" id="answer5">
+		<property value="text_answer5" name="text"/>
+		<property name="question" ref="question4"/>
 	</bean>
 	
 	<bean class="domain.Answer" id="answer6">
@@ -315,46 +305,6 @@
 		</property>
 	</bean>	
 	
-	<!-- Question -->
-	
-	<bean class="domain.Question" id="question1">
-		<property value="statement_question1" name="statement"/>
-		<property name="answers">
-			<list>
-				<ref bean="answer3"/>
-				<ref bean="answer4"/>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Question" id="question2">
-		<property value="statement_question2" name="statement"/>
-		<property name="answers">
-			<list>
-				<ref bean="answer1"/>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Question" id="question3">
-		<property value="statement_question3" name="statement"/>
-		<property name="answers">
-			<list>
-				<ref bean="answer2"/>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Question" id="question4">
-		<property value="statement_question4" name="statement"/>
-		<property name="answers">
-			<list>
-				<ref bean="answer5"/>
-				<ref bean="answer6"/>
-			</list>
-		</property>
-	</bean>
-		
 	<!-- Rendezvous -->
 	
 	<bean class="domain.Rendezvous" id="rendezvous1">
@@ -367,12 +317,6 @@
 		<property value="false" name="adultOnly"/>		
 		<property ref="user2" name="creator"/>	
 		<property value="http://www.googleDrive.com/picture10" name="urlPicture"/>	
-		<property name="attendants">
-			<list>
-				<ref bean = "user1"/>		
-				<ref bean = "user3"/>		
-			</list>
-		</property>
 		<property name="comments">
 			<list>
 				<ref bean = "comment1"/>
@@ -419,11 +363,6 @@
 		<property value="false" name="adultOnly"/>		
 		<property ref="user2" name="creator"/>	
 		<property value="http://www.googleDrive.com/picture1" name="urlPicture"/>
-		<property name="attendants">
-			<list>
-				<ref bean = "user1"/>
-			</list>
-		</property>
 		<property name="comments">
 			<list>
 				<ref bean = "comment3"/>
@@ -452,23 +391,116 @@
 		</property>
 		<property name="reserves">
 			<list>
-				<ref bean="rsvp2"/>
+				<null></null>
 			</list>
 		</property>
 	</bean>
 	
-	<!-- RSVP -->
+	<bean class="domain.Rendezvous" id="rendezvous3">
+		<property value="rendezvous2" name="name"/>
+		<property value="description_rendezvous3" name="description"/>
+		<property value="2018/10/17 10:00" name="moment"/>
+		<property name="gpsCoordinates" >
+			<null></null>
+		</property>
+		<property value="false" name="finalMode"/>
+		<property value="false" name="isFlagged"/>	
+		<property value="false" name="adultOnly"/>		
+		<property ref="user2" name="creator"/>	
+		<property value="http://www.googleDrive.com/picture23" name="urlPicture"/>
+		<property name="comments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="similarOnes">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="announcements">
+			<list>
+				<null></null>
+			</list>
+		</property>	
+		<property name="questions">
+			<list>
+				<ref bean = "question5"/>
+				<ref bean = "question6"/>
+			</list>
+		</property>
+		<property name="reserves">
+			<list>
+				<null></null>
+			</list>
+		</property>
+	</bean>
 	
-	<bean class="domain.RSVP" id="rsvp3">
-		<property ref="rendezvous1" name="rendezvous"/>
+	<!-- Question -->
+	
+	<bean class="domain.Question" id="question1">
+		<property value="statement_question1" name="statement"/>
 		<property name="answers">
 			<list>
-				<ref bean = "answer6"/>
-				<ref bean = "answer4"/>
+				<ref bean="answer3"/>
+				<ref bean="answer4"/>
 			</list>
 		</property>
-		<property ref="user3" name="user"/>
+		<property name="rendezvous" ref="rendezvous1"/>
 	</bean>
+	
+	<bean class="domain.Question" id="question2">
+		<property value="statement_question2" name="statement"/>
+		<property name="answers">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="rendezvous" ref="rendezvous2"/>
+	</bean>
+	
+	<bean class="domain.Question" id="question3">
+		<property value="statement_question3" name="statement"/>
+		<property name="answers">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="rendezvous" ref="rendezvous2"/>
+	</bean>
+	
+	<bean class="domain.Question" id="question4">
+		<property value="statement_question4" name="statement"/>
+		<property name="answers">
+			<list>
+				<ref bean="answer5"/>
+				<ref bean="answer6"/>
+			</list>
+		</property>
+		<property name="rendezvous" ref="rendezvous1"/>
+	</bean>
+	
+	<bean class="domain.Question" id="question5">
+		<property value="statement_question5" name="statement"/>
+		<property name="answers">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="rendezvous" ref="rendezvous3"/>
+	</bean>
+	
+	<bean class="domain.Question" id="question6">
+		<property value="statement_question6" name="statement"/>
+		<property name="answers">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="rendezvous" ref="rendezvous3"/>
+	</bean>
+		
+	<!-- RSVP -->
 	
 	<bean class="domain.RSVP" id="rsvp1">
 		<property ref="rendezvous1" name="rendezvous"/>
@@ -481,15 +513,15 @@
 		<property ref="user1" name="user"/>
 	</bean>
 	
-	<bean class="domain.RSVP" id="rsvp2">
-		<property ref="rendezvous2" name="rendezvous"/>
+	<bean class="domain.RSVP" id="rsvp3">
+		<property ref="rendezvous1" name="rendezvous"/>
 		<property name="answers">
 			<list>
-				<ref bean = "answer1"/>
-				<ref bean = "answer2"/>
+				<ref bean = "answer6"/>
+				<ref bean = "answer4"/>
 			</list>
 		</property>
-		<property ref="user1" name="user"/>
+		<property ref="user3" name="user"/>
 	</bean>
 	
 	<!-- User -->
@@ -510,7 +542,6 @@
 		<property name="reserves">
 			<list>
 				<ref bean = "rsvp1"/>
-				<ref bean = "rsvp2"/>
 			</list>
 		</property>
 		<property name="comments">
