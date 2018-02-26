@@ -79,7 +79,7 @@ public class RendezvousService {
 		User user;
 		GPS gpsCoordinates;
 
-		user = (User) this.actorService.findByPrincipal();
+		user = this.userService.findByPrincipal();
 		gpsCoordinates = this.gpsService.create();
 
 		result = new Rendezvous();
@@ -98,7 +98,7 @@ public class RendezvousService {
 	public Rendezvous save(final Rendezvous rendezvous) {
 		this.checkByPrincipal(rendezvous);
 		this.checkMoment(rendezvous.getMoment());
-
+		
 		Rendezvous result;
 
 		if (rendezvous.getId() != 0)
@@ -149,6 +149,7 @@ public class RendezvousService {
 			result.setAdultOnly(rendezvousForm.isAdultOnly());
 			result.setUrlPicture(rendezvousForm.getUrlPicture());
 			result.setSimilarOnes(rendezvousForm.getSimilarOnes());
+			result.setGpsCoordinates(gpsCoordinates);
 
 			this.validator.validate(result, binding);
 		}
@@ -178,14 +179,26 @@ public class RendezvousService {
 
 	public void remove(final Rendezvous rendezvous) {
 		Assert.isTrue(rendezvous.getId() != 0);
+		
+		Collection<Rendezvous> rendezvouses;
 
+		rendezvouses = this.findSimilarOnes(rendezvous.getId());
+		
+		// Update User::createdRendezvouses
+		this.userService.removeRendezvous(rendezvous.getCreator(), rendezvous);
+		
+		// Update Rendezvous::similarOnes
+		if (rendezvouses != null && !rendezvouses.isEmpty()) {
+			for (Rendezvous r: rendezvouses) {
+				this.removeSimilarOnes(r, rendezvous);
+			}
+		}
+		
 		if (rendezvous.getGpsCoordinates() != null)
 			this.gpsService.delete(rendezvous.getGpsCoordinates());
 
 		this.rendezvousRepository.delete(rendezvous);
 
-		// Update User::createdRendezvouses
-		this.userService.removeRendezvous(rendezvous.getCreator(), rendezvous);
 	}
 
 	public void cancel(final Rendezvous rendezvous) {
@@ -276,7 +289,7 @@ public class RendezvousService {
 		Collection<Rendezvous> aux;
 
 		aux = new HashSet<>(rendezvous.getSimilarOnes());
-		aux.remove(rendezvous);
+		aux.remove(similarOne);
 		rendezvous.setSimilarOnes(aux);
 	}
 
@@ -375,4 +388,18 @@ public class RendezvousService {
 		return result;
 	}
 
+	/* Este método devuelve aquellas citas que tienen a la cita que se pasa
+	 * por parámetro contenida en el atributo Rendezvous::similarOnes
+	 */
+	
+	public Collection<Rendezvous> findSimilarOnes(int rendezvousId) {
+		Assert.notNull(rendezvousId);
+		
+		Collection<Rendezvous> results;
+		
+		results = this.rendezvousRepository.findSimilarOnes(rendezvousId);
+		
+		return results;
+	}
+	
 }

@@ -139,30 +139,30 @@ public class RendezvousServiceTest extends AbstractTest {
 	public void testRemove() {
 		super.authenticate("user2");
 		
+		Rendezvous rendezvous1, rendezvous2;
 		User user;
-		Rendezvous rendezvous, saved;
-		Calendar c;
-		Date moment;
-	
+		
+		rendezvous1 = this.getRendezvous(333);
+		rendezvous2 = this.getRendezvous(332);
 		user = (User)this.actorService.findByPrincipal();
-		rendezvous = this.rendezvousService.create();
 		
-		c = Calendar.getInstance();
-		c.set(2018, 04, 25, 20, 00);
-		moment = c.getTime();
-	
-		rendezvous.setName("Name X");
-		rendezvous.setDescription("Description X");
-		rendezvous.setMoment(moment);
+		Assert.isTrue(rendezvous1.getSimilarOnes().contains(rendezvous2));
 		
-		saved = this.rendezvousService.save(rendezvous);
+		this.rendezvousService.remove(rendezvous2);
 		
-		this.rendezvousService.remove(saved);
+		Assert.isTrue(!user.getCreatedRendezvouses().contains(rendezvous2));
+		Assert.isTrue(!this.rendezvousService.findAll().contains(rendezvous2));
+		Assert.isTrue(!rendezvous1.getSimilarOnes().contains(rendezvous2));
 		
-		Assert.isTrue(!user.getCreatedRendezvouses().contains(saved));
-		Assert.isTrue(!this.rendezvousService.findAll().contains(saved));
-	
 		super.authenticate(null);
+	}
+	
+	private Rendezvous getRendezvous(int id) {
+		Rendezvous result;
+	
+		result = this.rendezvousService.findOne(id);
+		
+		return result;
 	}
 	
 }

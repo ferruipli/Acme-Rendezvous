@@ -33,6 +33,8 @@ public class ActorServiceTest extends AbstractTest {
 		user = this.actorService.findByPrincipal(); 
 		edad = this.actorService.getEdad(user);
 		
+		System.out.println("Edad:"+edad);
+		
 		Assert.isTrue(edad == 18);
 		
 		super.authenticate(null);
@@ -41,6 +43,8 @@ public class ActorServiceTest extends AbstractTest {
 		user = this.actorService.findByPrincipal();
 		edad = this.actorService.getEdad(user);
 		
+		System.out.println("Edad:"+edad);
+		
 		Assert.isTrue(edad == 20);
 		
 		super.authenticate(null);
@@ -48,6 +52,8 @@ public class ActorServiceTest extends AbstractTest {
 		
 		user = this.actorService.findByPrincipal();
 		edad = this.actorService.getEdad(user);
+		
+		System.out.println("Edad:"+edad);
 		
 		Assert.isTrue(edad == 51);
 		

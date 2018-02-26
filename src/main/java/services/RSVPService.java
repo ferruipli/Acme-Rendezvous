@@ -121,4 +121,14 @@ public class RSVPService {
 		return result;
 	}
 
+	public Collection<RSVP> findRSVPByRendezvous(int rendezvousId) {
+		Assert.isTrue(rendezvousId != 0);
+		
+		Collection<RSVP> results;
+		
+		results = this.rsvpRepository.findRSVPByRendezvous(rendezvousId);
+		
+		return results;
+	}
+	
 }
