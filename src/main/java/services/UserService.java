@@ -4,6 +4,7 @@ package services;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -177,6 +178,15 @@ public class UserService {
 		Assert.notNull(result);
 
 		return result;
+	}
+	
+	protected void removeRSVP(User user, RSVP rsvp) {
+		Set<RSVP> aux;
+		
+		aux = new HashSet<>(user.getReserves());
+		aux.remove(rsvp);
+		user.setReserves(aux);
+		
 	}
 
 }

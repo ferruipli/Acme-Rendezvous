@@ -2,6 +2,8 @@
 package domain;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -54,6 +56,13 @@ public class User extends Actor {
 
 	public void setComments(final Collection<Comment> comments) {
 		this.comments = comments;
+	}
+	
+	protected void removeRSVP(User user, RSVP rsvp) {
+		Set<RSVP> aux;
+		aux = new HashSet<>(user.getReserves());
+		aux.remove(rsvp);
+		user.setReserves(aux);
 	}
 
 }

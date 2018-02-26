@@ -134,6 +134,7 @@ public class RendezvousUserController extends AbstractController {
 
 		return result;
 	}
+	
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int rendezvousId) {
 		ModelAndView result;

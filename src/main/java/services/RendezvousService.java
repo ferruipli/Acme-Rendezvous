@@ -46,6 +46,8 @@ public class RendezvousService {
 	@Autowired
 	private GPSService				gpsService;
 
+	@Autowired
+	private RSVPService				rsvpService;
 
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
@@ -181,8 +183,17 @@ public class RendezvousService {
 		Assert.isTrue(rendezvous.getId() != 0);
 		
 		Collection<Rendezvous> rendezvouses;
+		Collection<RSVP> RSVPs;
 
 		rendezvouses = this.findSimilarOnes(rendezvous.getId());
+		RSVPs = this.rsvpService.findRSVPByRendezvous(rendezvous.getId());
+		
+		//Removing all the RSVP relates with this rendezvous
+		if (RSVPs != null && !RSVPs.isEmpty()) {
+			for (RSVP rs: RSVPs) {
+				this.rsvpService.removeByAdmin(rs);
+			}
+		}
 		
 		// Update User::createdRendezvouses
 		this.userService.removeRendezvous(rendezvous.getCreator(), rendezvous);
