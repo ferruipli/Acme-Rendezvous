@@ -58,6 +58,7 @@ public class CommentUserController extends AbstractController {
 	@RequestMapping(value="/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam int rendezvousId){
 		ModelAndView result;
+		try {
 		Comment comment;
 		Rendezvous rendezvous;
 		
@@ -65,63 +66,69 @@ public class CommentUserController extends AbstractController {
 		comment = this.commentService.create();
 		this.rendezvousService.addComment(rendezvous, comment);
 		
-		result = this.createEditModelAndView(comment);
+		result = this.createEditModelAndView(comment, rendezvousId);
+		} catch (Throwable oops) {
+			result = this.newModelAndView("redirect:/welcome/index.do");
+		}
 		
 		return result;
 	}
 	
-	@RequestMapping(value="/save", method = RequestMethod.GET, params = "save")
-	public ModelAndView save(@Valid Comment comment, BindingResult binding){
+	@RequestMapping(value="/edit", method = RequestMethod.GET, params = "save")
+	public ModelAndView save(@RequestParam("rendezvous") int rendezvousId, @Valid Comment comment, BindingResult binding){
 		ModelAndView result;
 		
 		if(binding.hasErrors()){
-			result = this.createEditModelAndView(comment);
+			result = this.createEditModelAndView(comment, rendezvousId, "comment.commit.error");
 		} else {
 			try {
 				this.commentService.save(comment);
 				result = new ModelAndView("redirect:/rendezvous/user/list.do");	
 			} catch (Throwable oops) {
-				result = this.createEditModelAndView(comment, "comment.commit.error");
+				result = this.createEditModelAndView(comment, rendezvousId, "comment.commit.error");
 			}
 		}
 		
 		return result;
 	}
 	
-	@RequestMapping(value="/reply", method = RequestMethod.GET)
-	public ModelAndView reply(@RequestParam int commentId){
-		ModelAndView result;
-		Comment comment;
-		Comment reply;
-		
-		result = new ModelAndView("redirect:/welcome/index.do");
-		
-		try{
-			comment = this.commentService.findOne(commentId);
-			reply = this.commentService.create();
-			this.commentService.addReply(comment, reply);
-		} catch (Throwable oops) {
-			result.addObject("notice", "comment.commit.error");
-		}
-		
-		return result;
-	}
+//	@RequestMapping(value="/reply", method = RequestMethod.GET)
+//	public ModelAndView reply(@RequestParam int commentId){
+//		ModelAndView result;
+//		try {
+//
+//		Comment comment;
+//		Comment reply;
+//		
+//		comment = this.commentService.findOne(commentId);
+//		
+//		reply = this.commentService.create();
+//		this.commentService.addReply(comment, reply);
+//		
+//		result = this.createEditModelAndView(reply);
+//		} catch (Throwable oops) {
+//			result = this.newModelAndView("redirect:/welcome/index.do");
+//		}
+//		
+//		return result;
+//	}
 	
 	// Ancillary methods ------------------------------------------------------
 	
-	protected ModelAndView createEditModelAndView(Comment comment) {
+	protected ModelAndView createEditModelAndView(Comment comment, int rendezvousId) {
 		ModelAndView result;
 		
-		result = createEditModelAndView(comment,null);
+		result = createEditModelAndView(comment,rendezvousId,null);
 		
 		return result;
 	}
 	
-	protected ModelAndView createEditModelAndView(Comment comment, String messageCode) {
+	protected ModelAndView createEditModelAndView(Comment comment, int rendezvousId, String messageCode) {
 		ModelAndView result;
 		
 		result = new ModelAndView("comment/edit");
 		result.addObject("comment", comment);
+		result.addObject("rendezvous", rendezvousId);
 		result.addObject("message", messageCode);
 		
 		

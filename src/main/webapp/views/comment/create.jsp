@@ -9,11 +9,12 @@
 <!-- EDIT/CREATE  TRIP -->
 
 
-<form:form action="comment/user/create.do" modelAttribute="comment">
+<form:form action="comment/user/edit.do" modelAttribute="comment">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="moment" />
+	<input type="hidden" name="rendezvous" id="rendezvous" value="${rendezvous}"/>
 	
 	<form:label path="text">
 		<spring:message code="comment.text" />:

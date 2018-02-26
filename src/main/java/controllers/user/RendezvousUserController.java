@@ -44,12 +44,16 @@ public class RendezvousUserController extends AbstractController {
 		ModelAndView result;
 		Collection<Rendezvous> rendezvouses;
 		User user;
+		boolean isReserved;
+		
+		isReserved = true;
 
 		user = (User) this.actorService.findByPrincipal();
 		rendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
 
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
+		result.addObject("isReserved", isReserved);
 		result.addObject("requestMapping", "rendezvous/user/list.do");
 
 		return result;

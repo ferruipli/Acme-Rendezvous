@@ -7,8 +7,8 @@ import java.util.HashSet;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -43,6 +43,7 @@ public class Rendezvous extends DomainEntity {
 	private boolean	isFlagged;
 	private boolean	adultOnly;
 	private String	urlPicture;
+
 
 	@NotBlank
 	@SafeHtml
@@ -133,16 +134,16 @@ public class Rendezvous extends DomainEntity {
 	}
 
 	// Derived relationship
-	@ManyToMany
-	@NotNull
 	@Transient
+	@ElementCollection
 	public Collection<User> getAttendants() {
 		Collection<User> result;
 
 		if (this.reserves != null && !this.reserves.isEmpty()) {
 			result = new HashSet<>();
 			for (final RSVP r : this.reserves)
-				result.add(r.getUser());
+				if (r != null)
+					result.add(r.getUser());
 		} else
 			result = this.attendants;
 
@@ -162,7 +163,7 @@ public class Rendezvous extends DomainEntity {
 	public void setGpsCoordinates(final GPS gpsCoordinates) {
 		this.gpsCoordinates = gpsCoordinates;
 	}
-	
+
 	@NotNull
 	@OneToMany(mappedBy = "rendezvous")
 	public Collection<RSVP> getReserves() {
@@ -204,7 +205,7 @@ public class Rendezvous extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToMany
+	@OneToMany(mappedBy = "rendezvous")
 	public Collection<Question> getQuestions() {
 		return this.questions;
 	}
