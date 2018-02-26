@@ -67,7 +67,6 @@ public class Announcement extends DomainEntity {
 	private Rendezvous	rendezvous;
 
 
-	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
 	public Rendezvous getRendezvous() {

@@ -16,6 +16,8 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="moment" />
+	<form:hidden path = "rendezvous"/>
+		
 	
 	<form:label path="title">
 		<spring:message code="announcement.title" />:
@@ -23,7 +25,7 @@
 	<form:input path="title" />
 	<form:errors cssClass="error" path="title" />
 	<br /><br/>
-	
+		
 	<form:label path="description">
 		<spring:message code="announcement.description" />:
 	</form:label>

@@ -78,11 +78,10 @@ public class AnnouncementUserController extends AbstractController {
 			rendezvous = this.rendezvousService.findOne(rendezvousId);
 
 			announcement = this.announcementService.create();
-			this.rendezvousService.addAnnouncement(rendezvous, announcement);
-
+			announcement.setRendezvous(rendezvous);
 			result = this.createEditModelAndView(announcement);
 		} catch (final Throwable opps) {
-			result = this.newModelAndView("redirect=welcome/index.do");
+			result = this.newModelAndView("redirect=../../welcome/index.do");
 		}
 
 		return result;
@@ -97,7 +96,7 @@ public class AnnouncementUserController extends AbstractController {
 		else
 			try {
 				this.announcementService.save(announcement);
-				result = this.newModelAndView("redirect:list.do");
+				result = this.newModelAndView("redirect:../../rendezvous/list.do");
 			} catch (final Throwable opps) {
 				result = this.createEditModelAndView(announcement, "announcement.commit.error");
 			}

@@ -55,11 +55,15 @@ public class AnnouncementService {
 
 		Announcement result;
 		Date currentMoment;
+		Rendezvous rendezvous;
 
 		currentMoment = new Date();
-		Assert.isTrue(announcement.getMoment().after(currentMoment));
+		Assert.isTrue(announcement.getMoment().before(currentMoment));
 
 		result = this.announcementRepository.save(announcement);
+		rendezvous = result.getRendezvous();
+
+		this.rendezvousService.addAnnouncement(rendezvous, result);
 
 		return result;
 	}
