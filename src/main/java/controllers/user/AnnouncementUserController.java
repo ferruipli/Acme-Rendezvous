@@ -51,15 +51,17 @@ public class AnnouncementUserController extends AbstractController {
 		try {
 			User user;
 			Collection<Announcement> announcements;
+			Collection<Rendezvous> rendezvouses;
 
 			user = this.userService.findByPrincipal();
-			announcements = this.announcementService.getAnnouncementsByUserRsvps(user);
+			rendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
+			announcements = this.announcementService.getAnnocementsByRendezvouses(rendezvouses);
 
 			result = new ModelAndView("announcement/list");
 			result.addObject(announcements);
-			result.addObject("requestMapping", "rendezvous/list.do");
+			result.addObject("requestMapping", "announcement/list.do");
+
 		} catch (final Exception e) {
-			// TODO: handle exception
 			result = this.newModelAndView("redirect:index/welcome.do");
 		}
 
