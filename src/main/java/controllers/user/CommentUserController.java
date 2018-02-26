@@ -91,17 +91,19 @@ public class CommentUserController extends AbstractController {
 	@RequestMapping(value="/reply", method = RequestMethod.GET)
 	public ModelAndView reply(@RequestParam int commentId){
 		ModelAndView result;
+		try {
+
 		Comment comment;
 		Comment reply;
 		
-		result = new ModelAndView("redirect:/welcome/index.do");
+		comment = this.commentService.findOne(commentId);
 		
-		try{
-			comment = this.commentService.findOne(commentId);
-			reply = this.commentService.create();
-			this.commentService.addReply(comment, reply);
+		reply = this.commentService.create();
+		this.commentService.addReply(comment, reply);
+		
+		result = this.createEditModelAndView(reply);
 		} catch (Throwable oops) {
-			result.addObject("notice", "comment.commit.error");
+			result = this.newModelAndView("redirect:/welcome/index.do");
 		}
 		
 		return result;

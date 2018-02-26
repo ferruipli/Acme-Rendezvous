@@ -80,7 +80,15 @@
 				<spring:message code="rendezvous.edit" />
 			</a>
 		</display:column>
-		
+		<display:column>
+			<jstl:choose>
+				<jstl:when test="${isReserved==true }">
+					<a href="comment/user/create.do?rendezvousId=${row.id}"> <spring:message
+							code="rendezvous.comment" />
+					</a>
+				</jstl:when>
+			</jstl:choose>
+		</display:column>
 	</security:authorize>
 
 </display:table>
