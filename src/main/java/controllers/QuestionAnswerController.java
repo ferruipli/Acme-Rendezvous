@@ -7,13 +7,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AnswerService;
-import services.QuestionService;
 import services.RSVPService;
 import services.RendezvousService;
 import services.UserService;
@@ -39,9 +39,6 @@ public class QuestionAnswerController extends AbstractController {
 	private RendezvousService	rendezvousService;
 
 	@Autowired
-	private QuestionService		questionService;
-
-	@Autowired
 	private AnswerService		answerService;
 
 
@@ -56,7 +53,6 @@ public class QuestionAnswerController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final int rendezvousId) {
 		ModelAndView result;
-		RSVP aux;
 		Collection<User> users;
 		List<RSVP> rsvps;
 		List<Question> questions;
@@ -66,12 +62,12 @@ public class QuestionAnswerController extends AbstractController {
 		User principal;
 		Integer numberOfQuestions;
 
-		numberOfQuestions = null;
-		questions = new ArrayList<>();
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		questions = new ArrayList<>(this.rendezvousService.findOrderedQuestionsByRendezvousId(rendezvousId));
+		numberOfQuestions = questions.size();
 		rsvps = this.rsvpService.findOrderedRSVPByRendezvousId(rendezvousId);
 		answers = this.answerService.findOrderedAnswersByRendezvousId(rendezvousId);
-		users = rendezvous.getAttendants();
+		users = this.rendezvousService.findOne(rendezvousId).getAttendants();
 
 		try {
 			principal = this.userService.findByPrincipal();
@@ -80,11 +76,8 @@ public class QuestionAnswerController extends AbstractController {
 		}
 		editable = !rendezvous.getFinalMode() && rendezvous.getCreator().equals(principal);
 
-		if (rsvps.size() != 0) {
-			aux = rsvps.get(0);
-			questions = this.questionService.findOrderedQuestionsByRSVPId(aux.getId());
-			numberOfQuestions = questions.size();
-		}
+		// Solo se puede mostrar el listado de preguntas cuando el principal sea el creador o cuando el principal no sea creador y finalMode=true.
+		Assert.isTrue(rendezvous.getFinalMode() || rendezvous.getCreator().equals(principal));
 
 		result = new ModelAndView("questionAnswer/list");
 		result.addObject("requestURI", "question/list.do");
@@ -94,6 +87,7 @@ public class QuestionAnswerController extends AbstractController {
 		result.addObject("answers", answers);
 		result.addObject("editable", editable);
 		result.addObject("numberOfQuestions", numberOfQuestions);
+		result.addObject("rendezvousId", rendezvousId);
 
 		return result;
 	}

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Question;
 import domain.Rendezvous;
 
 @Repository
@@ -44,4 +45,6 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	@Query("select r from Rendezvous r join r.announcements a where a.id=? and a member of r.announcements")
 	Rendezvous findRendezvousByAnnouncement(int announcementId);
 
+	@Query("select q from Rendezvous r join r.questions q where r.id=?1 order by q.id asc")
+	Collection<Question> findOrderedQuestionsByRendezvousId(int rendezvousId);
 }

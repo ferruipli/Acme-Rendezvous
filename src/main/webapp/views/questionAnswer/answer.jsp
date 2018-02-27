@@ -11,24 +11,30 @@
 
 <p> <spring:message code="question.answer"/> </p>
 
-<form:form action="" modelAttribute="answer">
+<form:form action="question/user/questionnaire.do" modelAttribute="questionnaireForm">
+
+	<form:hidden path="questions"/>
+	<form:hidden path="answers"/>
+	<form:hidden path="currentQuestionNumber"/>
 
 	<form:label path="text">
- 		<h2> <spring:message code="question.title"/> <jstl:out value="${currentQuestionNumber}"/>/<jstl:out value="${numberOfQuestions}"/>: <jstl:out value="${question.statement}"/> </h2> <br>
+ 		<h2> <spring:message code="question.title"/> <jstl:out value="${questionnaireForm.currentQuestionNumber+1}"/>/<jstl:out value="${numberOfQuestions}"/>: <jstl:out value="${questionnaireForm.questions[questionnaireForm.currentQuestionNumber].statement}"/> </h2> <br>
 	</form:label>
 	<form:input path="text"/>	
 	<form:errors path="text" cssClass="error" />
+	<br>
 
 	<!-- Buttons -->
-
-	<acme:cancel code="question.cancel" url=""/>&nbsp;
+	
+	<br>
+	<acme:cancel code="question.cancel" url="welcome/index.do"/>&nbsp;
 	
 	<jstl:choose>
-		<jstl:when test="${currentQuestionNumber == numberOfQuestions}">
-			<input type="submit" name="finish" value="<spring:message code="question.finish" />" />
+		<jstl:when test="${questionnaireForm.currentQuestionNumber+1 == numberOfQuestions}">
+			<acme:submit name="finish" code="question.finish"/>
 		</jstl:when>
 		<jstl:otherwise>
-			<input type="submit" name="next" value="<spring:message code="question.next" />" />
+			<acme:submit name="next" code="question.next"/>
 		</jstl:otherwise>
 	</jstl:choose>
 	

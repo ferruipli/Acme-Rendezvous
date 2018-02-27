@@ -125,9 +125,10 @@ public class RendezvousService {
 
 
 	// Other business methods -----------------------------------------------
-	
+
 	@Autowired
 	private Validator	validator;
+
 
 	public Rendezvous reconstruct(final RendezvousForm rendezvousForm, final BindingResult binding) {
 		Rendezvous result;
@@ -140,11 +141,11 @@ public class RendezvousService {
 			result.setName(rendezvousForm.getName());
 			result.setDescription(rendezvousForm.getDescription());
 			result.setMoment(rendezvousForm.getMoment());
-			
+
 			gpsCoordinates = result.getGpsCoordinates();
 			gpsCoordinates.setLatitude(rendezvousForm.getGpsCoordinates().getLatitude());
 			gpsCoordinates.setLongitude(rendezvousForm.getGpsCoordinates().getLongitude());
-			
+
 			result.setFinalMode(rendezvousForm.isFinalMode());
 			result.setAdultOnly(rendezvousForm.isAdultOnly());
 			result.setUrlPicture(rendezvousForm.getUrlPicture());
@@ -245,7 +246,7 @@ public class RendezvousService {
 		rendezvous.setAttendants(aux);
 	}
 
-		public void addComment(final Rendezvous rendezvous, final Comment comment) {
+	public void addComment(final Rendezvous rendezvous, final Comment comment) {
 		User user;
 		user = (User) this.actorService.findByPrincipal();
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
@@ -256,7 +257,7 @@ public class RendezvousService {
 		rendezvous.setComments(aux);
 	}
 
-		public void removeComment(final Rendezvous rendezvous, final Comment comment) {
+	public void removeComment(final Rendezvous rendezvous, final Comment comment) {
 		Collection<Comment> aux;
 
 		aux = new HashSet<>(rendezvous.getComments());
@@ -294,6 +295,22 @@ public class RendezvousService {
 		aux = new HashSet<>(rendezvous.getAnnouncements());
 		aux.remove(announcement);
 		rendezvous.setAnnouncements(aux);
+	}
+
+	protected void addQuestion(final Rendezvous rendezvous, final Question question) {
+		Collection<Question> aux;
+
+		aux = new HashSet<>(rendezvous.getQuestions());
+		aux.add(question);
+		rendezvous.setQuestions(aux);
+	}
+
+	protected void removeQuestion(final Rendezvous rendezvous, final Question question) {
+		Collection<Question> aux;
+
+		aux = new HashSet<>(rendezvous.getQuestions());
+		aux.remove(question);
+		rendezvous.setQuestions(aux);
 	}
 
 	public Double[] avgSqrtRendezvousesPerUser() {
@@ -371,6 +388,15 @@ public class RendezvousService {
 		Rendezvous result;
 
 		result = this.rendezvousRepository.findRendezvousByAnnouncement(announcementId);
+
+		return result;
+	}
+
+	public Collection<Question> findOrderedQuestionsByRendezvousId(final int rendezvousId) {
+		Collection<Question> result;
+
+		result = this.rendezvousRepository.findOrderedQuestionsByRendezvousId(rendezvousId);
+		Assert.notNull(result);
 
 		return result;
 	}

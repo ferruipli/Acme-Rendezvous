@@ -34,6 +34,23 @@ public class RendezvousController extends AbstractController {
 
 	// CRUD methods ----------------------------------------
 
+	@RequestMapping(value = "/listReserved", method = RequestMethod.GET)
+	public ModelAndView listReserved(@RequestParam final int userId) {
+		ModelAndView result;
+		Collection<Rendezvous> rendezvouses;
+		boolean isReserved;
+
+		isReserved = true;
+		rendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(userId);
+
+		result = new ModelAndView("rendezvous/list");
+		result.addObject("rendezvouses", rendezvouses);
+		result.addObject("isReserved", isReserved);
+		result.addObject("requestURI", "rendezvous/listReserved.do");
+
+		return result;
+	}
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
@@ -42,7 +59,7 @@ public class RendezvousController extends AbstractController {
 
 		rendezvouses = this.rendezvousService.findAllAvailable();
 		isReserved = false;
-		
+
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("isReserved", isReserved);

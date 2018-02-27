@@ -397,7 +397,7 @@
 	</bean>
 	
 	<bean class="domain.Rendezvous" id="rendezvous3">
-		<property value="rendezvous2" name="name"/>
+		<property value="rendezvous3" name="name"/>
 		<property value="description_rendezvous3" name="description"/>
 		<property value="2018/10/17 10:00" name="moment"/>
 		<property name="gpsCoordinates" >
@@ -427,6 +427,45 @@
 			<list>
 				<ref bean = "question5"/>
 				<ref bean = "question6"/>
+			</list>
+		</property>
+		<property name="reserves">
+			<list>
+				<null></null>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="domain.Rendezvous" id="rendezvous4">
+		<property value="rendezvous4" name="name"/>
+		<property value="description_rendezvous4" name="description"/>
+		<property value="2018/11/02 10:00" name="moment"/>
+		<property name="gpsCoordinates" >
+			<null></null>
+		</property>
+		<property value="false" name="finalMode"/>
+		<property value="false" name="isFlagged"/>	
+		<property value="false" name="adultOnly"/>		
+		<property ref="user3" name="creator"/>	
+		<property value="http://www.googleDrive.com/picture24" name="urlPicture"/>
+		<property name="comments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="similarOnes">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="announcements">
+			<list>
+				<null></null>
+			</list>
+		</property>	
+		<property name="questions">
+			<list>
+				<null></null>
 			</list>
 		</property>
 		<property name="reserves">
