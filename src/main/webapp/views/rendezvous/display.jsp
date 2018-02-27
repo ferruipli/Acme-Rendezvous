@@ -114,10 +114,14 @@
 	
 	<jstl:choose>
 		<jstl:when test="${isReserved==false}">
-			<acme:submit name="rsvp" code="rendezvous.reserve" />	
+			<a href="rsvp/user/create.do?rendezvousId=${rendezvous.id}"	>
+				<spring:message code="rendezvous.rsvp.create"/>
+			</a>
 		</jstl:when>
 		<jstl:when test="${isReserved==true}">
-			<acme:submit name="cancelRSVP" code="rendezvous.cancelReserve" />
+			<a href="rsvp/user/cancel.do?rendezvousId=${rendezvous.id}"	>
+				<spring:message code="rendezvous.rsvp.create"/>
+			</a>
 		</jstl:when>
 	</jstl:choose>
 </security:authorize>
