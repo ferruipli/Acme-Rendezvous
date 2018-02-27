@@ -199,117 +199,7 @@
 		<property name="question" ref="question4"/>
 	</bean>
 		
-	<!-- Comment -->
-	
-	<bean class="domain.Comment" id="comment1">
-		<property value="2016/05/16 14:12" name="moment"/>
-		<property value="text_comment1" name="text"/>
-		<property ref="user1" name="user"/>	
-		<property value="http://www.googleDrive.com/picture2" name="urlPicture"/>
-		<property name="repliedComments">
-			<list>
-				<ref bean = "comment5"/>
-				<ref bean = "comment7"/>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Comment" id="comment2">
-		<property value="2017/10/17 10:25" name="moment"/>
-		<property value="text_comment2" name="text"/>
-		<property ref="user1" name="user"/>	
-		<property value="http://www.googleDrive.com/picture2" name="urlPicture"/>
-		<property name="repliedComments">
-			<list>
-				<ref bean = "comment8"/>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Comment" id="comment3">
-		<property value="2016/10/16 09:44" name="moment"/>
-		<property value="text_comment3" name="text"/>
-		<property ref="user2" name="user"/>	
-		<property value="http://www.googleDrive.com/picture3" name="urlPicture"/>
-		<property name="repliedComments">
-			<list>
-				<ref bean = "comment9"/>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Comment" id="comment4">
-		<property value="2017/01/17 09:12" name="moment"/>
-		<property value="text_comment4" name="text"/>
-		<property ref="user1" name="user"/>	
-		<property value="http://www.googleDrive.com/picture4" name="urlPicture"/>		
-		<property name="repliedComments">
-			<list>
-				<null></null>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Comment" id="comment5">
-		<property value="2016/05/16 14:12" name="moment"/>
-		<property value="text_comment5" name="text"/>
-		<property ref="user2" name="user"/>	
-		<property value="http://www.googleDrive.com/picture5" name="urlPicture"/>
-		<property name="repliedComments">
-			<list>
-				<ref bean = "comment6"/>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Comment" id="comment6">
-		<property value="2016/05/16 14:12" name="moment"/>
-		<property value="text_comment6" name="text"/>
-		<property ref="user1" name="user"/>	
-		<property value="http://www.googleDrive.com/picture6" name="urlPicture"/>
-		<property name="repliedComments">
-			<list>
-				<null></null>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Comment" id="comment7">
-		<property value="2016/05/16 14:12" name="moment"/>
-		<property value="text_comment7" name="text"/>
-		<property ref="user2" name="user"/>	
-		<property value="http://www.googleDrive.com/picture7" name="urlPicture"/>
-		<property name="repliedComments">
-			<list>
-				<null></null>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Comment" id="comment8">
-		<property value="2017/10/17 10:25" name="moment"/>
-		<property value="text_comment8" name="text"/>
-		<property ref="user2" name="user"/>	
-		<property value="http://www.googleDrive.com/picture8" name="urlPicture"/>		
-		<property name="repliedComments">
-			<list>
-				<null></null>
-			</list>
-		</property>
-	</bean>
-	
-	<bean class="domain.Comment" id="comment9">
-		<property value="2016/10/16 09:44" name="moment"/>
-		<property value="text_comment9" name="text"/>
-		<property ref="user1" name="user"/>	
-		<property value="http://www.googleDrive.com/picture9" name="urlPicture"/>
-		<property name="repliedComments">
-			<list>
-				<null></null>
-			</list>
-		</property>
-	</bean>	
-	
+		
 	<!-- Rendezvous -->
 	
 	<bean class="domain.Rendezvous" id="rendezvous1">
@@ -618,4 +508,125 @@
 		<property value="-74.0059413" name="longitude" />
 	</bean>
 	
-</beans>
+	
+	<!-- Comment -->
+	
+	<bean class="domain.Comment" id="comment1">
+		<property value="2016/05/16 14:12" name="moment"/>
+		<property value="text_comment1" name="text"/>
+		<property ref="user1" name="user"/>	
+		<property value="http://www.googleDrive.com/picture2" name="urlPicture"/>
+		<property name="repliedComments">
+			<list>
+				<ref bean = "comment5"/>
+				<ref bean = "comment7"/>
+			</list>
+		</property>
+		<property name = "rendezvous" ref = "rendezvous1"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment2">
+		<property value="2017/10/17 10:25" name="moment"/>
+		<property value="text_comment2" name="text"/>
+		<property ref="user1" name="user"/>	
+		<property value="http://www.googleDrive.com/picture2" name="urlPicture"/>
+		<property name="repliedComments">
+			<list>
+				<ref bean = "comment8"/>
+			</list>
+		</property>
+		<property name = "rendezvous" ref = "rendezvous2"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment3">
+		<property value="2016/10/16 09:44" name="moment"/>
+		<property value="text_comment3" name="text"/>
+		<property ref="user2" name="user"/>	
+		<property value="http://www.googleDrive.com/picture3" name="urlPicture"/>
+		<property name="repliedComments">
+			<list>
+				<ref bean = "comment9"/>
+			</list>
+		</property>
+		<property name = "rendezvous" ref = "rendezvous2"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment4">
+		<property value="2017/01/17 09:12" name="moment"/>
+		<property value="text_comment4" name="text"/>
+		<property ref="user1" name="user"/>	
+		<property value="http://www.googleDrive.com/picture4" name="urlPicture"/>		
+		<property name="repliedComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name = "rendezvous" ref = "rendezvous1"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment5">
+		<property value="2016/05/16 14:12" name="moment"/>
+		<property value="text_comment5" name="text"/>
+		<property ref="user2" name="user"/>	
+		<property value="http://www.googleDrive.com/picture5" name="urlPicture"/>
+		<property name="repliedComments">
+			<list>
+				<ref bean = "comment6"/>
+			</list>
+		</property>
+		<property name = "rendezvous" ref = "rendezvous1"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment6">
+		<property value="2016/05/16 14:12" name="moment"/>
+		<property value="text_comment6" name="text"/>
+		<property ref="user1" name="user"/>	
+		<property value="http://www.googleDrive.com/picture6" name="urlPicture"/>
+		<property name="repliedComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name = "rendezvous" ref = "rendezvous1"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment7">
+		<property value="2016/05/16 14:12" name="moment"/>
+		<property value="text_comment7" name="text"/>
+		<property ref="user2" name="user"/>	
+		<property value="http://www.googleDrive.com/picture7" name="urlPicture"/>
+		<property name="repliedComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name = "rendezvous" ref = "rendezvous1"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment8">
+		<property value="2017/10/17 10:25" name="moment"/>
+		<property value="text_comment8" name="text"/>
+		<property ref="user2" name="user"/>	
+		<property value="http://www.googleDrive.com/picture8" name="urlPicture"/>		
+		<property name="repliedComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name = "rendezvous" ref = "rendezvous2"/>
+	</bean>
+	
+	<bean class="domain.Comment" id="comment9">
+		<property value="2016/10/16 09:44" name="moment"/>
+		<property value="text_comment9" name="text"/>
+		<property ref="user1" name="user"/>	
+		<property value="http://www.googleDrive.com/picture9" name="urlPicture"/>
+		<property name="repliedComments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name = "rendezvous" ref = "rendezvous2"/>
+	</bean>	
+	
+</beans>	
