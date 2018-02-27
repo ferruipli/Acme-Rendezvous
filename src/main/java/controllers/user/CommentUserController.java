@@ -59,14 +59,14 @@ public class CommentUserController extends AbstractController {
 	public ModelAndView create(@RequestParam int rendezvousId){
 		ModelAndView result;
 		try {
-		Comment comment;
+		Comment comment;	
 		Rendezvous rendezvous;
 		
-		rendezvous = this.rendezvousService.findOne(rendezvousId);		
-		comment = this.commentService.create();
-		this.rendezvousService.addComment(rendezvous, comment);
+		rendezvous = this.rendezvousService.findOne(rendezvousId);
 		
-		result = this.createEditModelAndView(comment, rendezvousId);
+		comment = this.commentService.create();
+		comment.setRendezvous(rendezvous);
+		result = this.createEditModelAndView(comment);
 		} catch (Throwable oops) {
 			result = this.newModelAndView("redirect:/welcome/index.do");
 		}
@@ -74,18 +74,18 @@ public class CommentUserController extends AbstractController {
 		return result;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET, params = "save")
-	public ModelAndView save(@RequestParam("rendezvous") int rendezvousId, @Valid Comment comment, BindingResult binding){
+	@RequestMapping(value="/create", method = RequestMethod.GET, params = "save")
+	public ModelAndView save(@Valid Comment comment, BindingResult binding){
 		ModelAndView result;
 		
 		if(binding.hasErrors()){
-			result = this.createEditModelAndView(comment, rendezvousId, "comment.commit.error");
+			result = this.createEditModelAndView(comment);
 		} else {
 			try {
 				this.commentService.save(comment);
 				result = new ModelAndView("redirect:/rendezvous/user/list.do");	
 			} catch (Throwable oops) {
-				result = this.createEditModelAndView(comment, rendezvousId, "comment.commit.error");
+				result = this.createEditModelAndView(comment, "comment.commit.error");
 			}
 		}
 		
@@ -115,23 +115,29 @@ public class CommentUserController extends AbstractController {
 	
 	// Ancillary methods ------------------------------------------------------
 	
-	protected ModelAndView createEditModelAndView(Comment comment, int rendezvousId) {
+	protected ModelAndView createEditModelAndView(Comment comment) {
 		ModelAndView result;
 		
-		result = createEditModelAndView(comment,rendezvousId,null);
+		result = createEditModelAndView(comment);
 		
 		return result;
 	}
 	
-	protected ModelAndView createEditModelAndView(Comment comment, int rendezvousId, String messageCode) {
+	protected ModelAndView createEditModelAndView(Comment comment, String messageCode) {
 		ModelAndView result;
+		try {
+		Collection<Rendezvous> allRendezvous;
 		
-		result = new ModelAndView("comment/edit");
+		allRendezvous = this.rendezvousService.findAll();
+				
+		result = new ModelAndView("comment/create");
 		result.addObject("comment", comment);
-		result.addObject("rendezvous", rendezvousId);
+		result.addObject(allRendezvous);
 		result.addObject("message", messageCode);
 		
-		
+		} catch (Throwable oops) {
+			result = this.newModelAndView("redirect: index.do");
+		}
 		return result;
 	}
 
