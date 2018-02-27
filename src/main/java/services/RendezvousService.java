@@ -50,11 +50,12 @@ public class RendezvousService {
 	private RSVPService				rsvpService;
 
 	@Autowired
-	private AnnouncementService 	announcementService;
-	
+	private AnnouncementService		announcementService;
+
 	@Autowired
-	private QuestionService 		questionService;
-	
+	private QuestionService			questionService;
+
+
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
 		super();
@@ -106,7 +107,7 @@ public class RendezvousService {
 	public Rendezvous save(final Rendezvous rendezvous) {
 		this.checkByPrincipal(rendezvous);
 		this.checkMoment(rendezvous.getMoment());
-		
+
 		Rendezvous result;
 
 		if (rendezvous.getId() != 0)
@@ -133,9 +134,10 @@ public class RendezvousService {
 
 
 	// Other business methods -----------------------------------------------
-	
+
 	@Autowired
 	private Validator	validator;
+
 
 	public Rendezvous reconstruct(final RendezvousForm rendezvousForm, final BindingResult binding) {
 		Rendezvous result;
@@ -148,11 +150,11 @@ public class RendezvousService {
 			result.setName(rendezvousForm.getName());
 			result.setDescription(rendezvousForm.getDescription());
 			result.setMoment(rendezvousForm.getMoment());
-			
+
 			gpsCoordinates = result.getGpsCoordinates();
 			gpsCoordinates.setLatitude(rendezvousForm.getGpsCoordinates().getLatitude());
 			gpsCoordinates.setLongitude(rendezvousForm.getGpsCoordinates().getLongitude());
-			
+
 			result.setFinalMode(rendezvousForm.isFinalMode());
 			result.setAdultOnly(rendezvousForm.isAdultOnly());
 			result.setUrlPicture(rendezvousForm.getUrlPicture());
@@ -187,48 +189,40 @@ public class RendezvousService {
 
 	public void remove(final Rendezvous rendezvous) {
 		Assert.isTrue(rendezvous.getId() != 0);
-		
+
 		Collection<Rendezvous> rendezvouses;
 		Collection<RSVP> RSVPs;
 		Collection<Question> questions;
 		Collection<Announcement> announcements;
-		
+
 		rendezvouses = rendezvous.getSimilarOnes();
 		RSVPs = rendezvous.getReserves();
 		questions = rendezvous.getQuestions();
 		announcements = rendezvous.getAnnouncements();
-		
+
 		//Removing all the RSVP relates with this rendezvous
-		if (RSVPs != null && !RSVPs.isEmpty()) {
-			for (RSVP rs: RSVPs) {
+		if (RSVPs != null && !RSVPs.isEmpty())
+			for (final RSVP rs : RSVPs)
 				this.rsvpService.removeByAdmin(rs);
-			}
-		}
-		
+
 		// Removing all the announcements relates with this rendezvous
-		if (announcements != null && !announcements.isEmpty()) {
-			for (Announcement a: announcements) {
+		if (announcements != null && !announcements.isEmpty())
+			for (final Announcement a : announcements)
 				this.announcementService.removeByAdmin(a);
-			}
-		}
-		
+
 		// Removing all the questions relates with this rendezvous
-		if (questions != null && !questions.isEmpty()) {
-			for (Question q: questions) {
+		if (questions != null && !questions.isEmpty())
+			for (final Question q : questions)
 				this.questionService.delete(q);
-			}
-		}
-		
+
 		// Update User::createdRendezvouses
 		this.userService.removeRendezvous(rendezvous.getCreator(), rendezvous);
-		
+
 		// Update Rendezvous::similarOnes
-		if (rendezvouses != null && !rendezvouses.isEmpty()) {
-			for (Rendezvous r: rendezvouses) {
+		if (rendezvouses != null && !rendezvouses.isEmpty())
+			for (final Rendezvous r : rendezvouses)
 				this.removeSimilarOnes(r, rendezvous);
-			}
-		}
-		
+
 		if (rendezvous.getGpsCoordinates() != null)
 			this.gpsService.delete(rendezvous.getGpsCoordinates());
 
@@ -293,7 +287,7 @@ public class RendezvousService {
 		rendezvous.setAttendants(aux);
 	}
 
-		public void addComment(final Rendezvous rendezvous, final Comment comment) {
+	public void addComment(final Rendezvous rendezvous, final Comment comment) {
 		User user;
 		user = (User) this.actorService.findByPrincipal();
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
@@ -304,7 +298,7 @@ public class RendezvousService {
 		rendezvous.setComments(aux);
 	}
 
-		public void removeComment(final Rendezvous rendezvous, final Comment comment) {
+	public void removeComment(final Rendezvous rendezvous, final Comment comment) {
 		Collection<Comment> aux;
 
 		aux = new HashSet<>(rendezvous.getComments());
@@ -342,6 +336,22 @@ public class RendezvousService {
 		aux = new HashSet<>(rendezvous.getAnnouncements());
 		aux.remove(announcement);
 		rendezvous.setAnnouncements(aux);
+	}
+
+	protected void addQuestion(final Rendezvous rendezvous, final Question question) {
+		Collection<Question> aux;
+
+		aux = new HashSet<>(rendezvous.getQuestions());
+		aux.add(question);
+		rendezvous.setQuestions(aux);
+	}
+
+	protected void removeQuestion(final Rendezvous rendezvous, final Question question) {
+		Collection<Question> aux;
+
+		aux = new HashSet<>(rendezvous.getQuestions());
+		aux.remove(question);
+		rendezvous.setQuestions(aux);
 	}
 
 	public Double[] avgSqrtRendezvousesPerUser() {
@@ -421,6 +431,14 @@ public class RendezvousService {
 		result = this.rendezvousRepository.findRendezvousByAnnouncement(announcementId);
 
 		return result;
-	}	
-	
+	}
+
+	public Collection<Question> findOrderedQuestionsByRendezvousId(final int rendezvousId) {
+		Collection<Question> result;
+
+		result = this.rendezvousRepository.findOrderedQuestionsByRendezvousId(rendezvousId);
+		Assert.notNull(result);
+
+		return result;
+	}
 }

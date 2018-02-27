@@ -16,5 +16,5 @@
 	<li> <spring:message code="user.label.address"/>: <jstl:out value="${user.postalAddress}"/> </li>
 		 <spring:message code="user.format.date" var="formatDate"/>
 	<li> <spring:message code="user.label.birth"/>: <fmt:formatDate value="${user.birthdate}" pattern="${formatDate}"/> </li>
-	<li> <spring:message code="user.label.rsvpdRendezvouses"/>: <a href=""> <spring:message code="user.link.rsvpdRendezvouses"/> </a> </li>
+	<li> <spring:message code="user.label.rsvpdRendezvouses"/>: <a href="rendezvous/listReserved.do?userId=${user.id}"> <spring:message code="user.link.rsvpdRendezvouses"/> </a> </li>
 </ul>

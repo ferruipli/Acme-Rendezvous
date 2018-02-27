@@ -27,9 +27,11 @@
 	<display:column property="phoneNumber" title="${titlePhone}" sortable="true"/>
 </display:table>
 
+<hr>
+
 <jstl:if test="${editable}">
 	<br>
-	<a href="question/user/create.do"><spring:message code="question.label.add"/></a>
+	<a href="question/user/create.do?rendezvousId=${rendezvousId}"><spring:message code="question.label.add"/></a>
 	<br>
 </jstl:if>
 
@@ -46,3 +48,6 @@
 		</jstl:if>
 	</jstl:forEach>
 </jstl:if>
+
+<br><br>
+<acme:cancel url="rendezvous/display.do?rendezvousId=${rendezvousId}" code="question.back.rendezvous"/>
