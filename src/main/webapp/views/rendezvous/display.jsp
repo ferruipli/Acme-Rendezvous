@@ -114,10 +114,11 @@
 	
 	<jstl:choose>
 		<jstl:when test="${isReserved==false}">
-			<acme:submit name="rsvp" code="rendezvous.reserve" />
+			<input type="submit" name="save" value="<spring:message code="rendezvous.rsvp" />" />
 		</jstl:when>
 		<jstl:when test="${isReserved==true}">
-			<acme:submit name="cancelRSVP" code="rendezvous.cancelReserve" />
+			<input type="button" name="cancelRSVP"	value="<spring:message code="rendezvous.cancelReserve" />
+				"onclick="javascript: relativeRedir('rendezvous/user/display.do?rendezvousId=${rendezvous.id}');">
 		</jstl:when>
 	</jstl:choose>
 

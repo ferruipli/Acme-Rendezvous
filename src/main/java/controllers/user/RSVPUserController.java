@@ -45,9 +45,11 @@ public class RSVPUserController extends AbstractController {
 	
 	// CRUD methods ----------------------------------------------------
 	
-	@RequestMapping(value="/rsvp", method= RequestMethod.GET)
-	public ModelAndView rsvp(@RequestParam int  rendezvousId){
+	@RequestMapping(value="/create", method= RequestMethod.GET)
+	public ModelAndView create(@RequestParam int  rendezvousId){
 		ModelAndView result;
+		
+		try {
 		RSVP rsvp;
 		Rendezvous rendezvous;
 		
@@ -56,12 +58,14 @@ public class RSVPUserController extends AbstractController {
 		rsvp = this.rsvpService.create(rendezvous);
 		
 		result = this.createEditModelAndView(rsvp);
-		
+		} catch (Throwable oops) {
+			result = this.newModelAndView("redirect:/welcome/index.do");
+		}
 		return result;
 		
 	}
 	
-	@RequestMapping(value="/rsvp", method = RequestMethod.POST, params="rsvp")
+	@RequestMapping(value="/create", method = RequestMethod.POST, params="save")
 	public ModelAndView save (@Valid RSVP rsvp, BindingResult binding){
 		ModelAndView result;
 		
@@ -72,7 +76,7 @@ public class RSVPUserController extends AbstractController {
 				this.rsvpService.save(rsvp);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (Throwable oops) {
-				result = this.createEditModelAndView(rsvp, "rsvp.commit.error");
+				result = this.createEditModelAndView(rsvp, "rendezvous.commit.error");
 			}
 		}
 		
@@ -91,7 +95,7 @@ public class RSVPUserController extends AbstractController {
 				this.rsvpService.cancel(rsvp);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (Throwable oops) {
-				result = this.createEditModelAndView(rsvp, "rsvp.commit.error");
+				result = this.createEditModelAndView(rsvp, "rendezvous.commit.error");
 			}
 		}
 		
