@@ -14,8 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 
 import repositories.RendezvousRepository;
 import domain.Actor;
@@ -26,7 +24,6 @@ import domain.Question;
 import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
-import forms.RendezvousForm;
 
 @Service
 @Transactional
@@ -52,6 +49,8 @@ public class RendezvousService {
 	@Autowired
 	private QuestionService			questionService;
 
+	@Autowired
+	private CommentService 			commentService;
 
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
@@ -128,7 +127,6 @@ public class RendezvousService {
 		this.checkFinalMode(rendezvous);
 		
 		boolean res;
-		
 		res = true;
 
 		rendezvous.setFinalMode(res);
@@ -137,38 +135,6 @@ public class RendezvousService {
 
 
 	// Other business methods -----------------------------------------------
-
-	@Autowired
-	private Validator	validator;
-
-
-	public Rendezvous reconstruct(final RendezvousForm rendezvousForm, final BindingResult binding) {
-		Rendezvous result;
-		GPS gpsCoordinates;
-
-		if (rendezvousForm.getId() == 0)
-			result = this.create();
-		else {
-			result = this.rendezvousRepository.findOne(rendezvousForm.getId());
-			result.setName(rendezvousForm.getName());
-			result.setDescription(rendezvousForm.getDescription());
-			result.setMoment(rendezvousForm.getMoment());
-
-			gpsCoordinates = result.getGpsCoordinates();
-			gpsCoordinates.setLatitude(rendezvousForm.getGpsCoordinates().getLatitude());
-			gpsCoordinates.setLongitude(rendezvousForm.getGpsCoordinates().getLongitude());
-
-			result.setFinalMode(rendezvousForm.isFinalMode());
-			result.setAdultOnly(rendezvousForm.isAdultOnly());
-			result.setUrlPicture(rendezvousForm.getUrlPicture());
-			result.setSimilarOnes(rendezvousForm.getSimilarOnes());
-			result.setGpsCoordinates(gpsCoordinates);
-
-			this.validator.validate(result, binding);
-		}
-
-		return result;
-	}
 
 	public Collection<Rendezvous> findAllAvailable() {
 		Collection<Rendezvous> results;
@@ -197,12 +163,21 @@ public class RendezvousService {
 		Collection<RSVP> RSVPs;
 		Collection<Question> questions;
 		Collection<Announcement> announcements;
-
+		Collection<Comment> comments;
+		
 		rendezvouses = rendezvous.getSimilarOnes();
 		RSVPs = rendezvous.getReserves();
 		questions = rendezvous.getQuestions();
 		announcements = rendezvous.getAnnouncements();
-
+		comments = rendezvous.getComments();
+		
+		// Removing all the comments relates with this rendezvous
+		if (comments != null && !comments.isEmpty()) {
+			for (Comment c: comments) {
+				this.commentService.remove(c);
+			}
+		}
+		
 		//Removing all the RSVP relates with this rendezvous
 		if (RSVPs != null && !RSVPs.isEmpty())
 			for (final RSVP rs : RSVPs)

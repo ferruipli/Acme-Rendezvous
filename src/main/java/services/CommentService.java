@@ -84,6 +84,13 @@ public class CommentService {
 		
 	}
 	
+	public void remove(Comment comment) {
+		Assert.notNull(comment);
+		Assert.isTrue(comment.getId() != 0);
+		
+		this.commentRepository.delete(comment);
+	}
+	
 	public Comment save(Comment comment){
 		Assert.notNull(comment);
 		Comment result;
