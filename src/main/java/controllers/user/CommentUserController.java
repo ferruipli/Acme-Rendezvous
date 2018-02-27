@@ -126,10 +126,14 @@ public class CommentUserController extends AbstractController {
 	
 	protected ModelAndView createEditModelAndView(Comment comment, String messageCode) {
 		ModelAndView result;
+	
 		try {
 		
 		result = new ModelAndView("comment/create");
 		result.addObject("comment", comment);
+		result.addObject("rendezvous", comment.getRendezvous());
+		result.addObject("moment", comment.getMoment());
+		result.addObject("repliedComments", comment.getRepliedComments());
 		result.addObject("message", messageCode);
 		
 		} catch (Throwable oops) {
