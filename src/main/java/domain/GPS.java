@@ -2,11 +2,11 @@ package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 
-@Entity
+@Embeddable
 @Access(AccessType.PROPERTY)
-public class GPS extends DomainEntity {
+public class GPS {
 
 	// Constructors -----------------------------------------------------------
 
@@ -16,22 +16,22 @@ public class GPS extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	private double latitude;
-	private double longitude;
+	private Double latitude;
+	private Double longitude;
 
-	public double getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 

@@ -12,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -47,6 +45,7 @@ public class Rendezvous extends DomainEntity {
 	private boolean	finalMode;
 	private boolean	isFlagged;
 	private boolean	adultOnly;
+	private GPS		gpsCoordinates;
 	private String	urlPicture;
 
 
@@ -105,6 +104,15 @@ public class Rendezvous extends DomainEntity {
 		this.adultOnly = adultOnly;
 	}
 
+	@Valid
+	public GPS getGpsCoordinates() {
+		return this.gpsCoordinates;
+	}
+
+	public void setGpsCoordinates(final GPS gpsCoordinates) {
+		this.gpsCoordinates = gpsCoordinates;
+	}
+	
 	@URL
 	@SafeHtml
 	public String getUrlPicture() {
@@ -119,7 +127,6 @@ public class Rendezvous extends DomainEntity {
 	// Relationships ----------------------------------------------
 	private User						creator;
 	private Collection<User>			attendants;
-	private GPS							gpsCoordinates;
 	private Collection<RSVP>			reserves;
 	private Collection<Comment>			comments;
 	private Collection<Rendezvous>		similarOnes;
@@ -157,16 +164,6 @@ public class Rendezvous extends DomainEntity {
 
 	public void setAttendants(final Collection<User> attendants) {
 		this.attendants = attendants;
-	}
-
-	@Valid
-	@OneToOne(optional = true)
-	public GPS getGpsCoordinates() {
-		return this.gpsCoordinates;
-	}
-
-	public void setGpsCoordinates(final GPS gpsCoordinates) {
-		this.gpsCoordinates = gpsCoordinates;
 	}
 
 	@NotNull
