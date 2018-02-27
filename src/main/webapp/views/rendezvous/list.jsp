@@ -76,9 +76,11 @@
 			</a>
 		</display:column>
 		<display:column>
-			<a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
-				<spring:message code="rendezvous.edit" />
-			</a>
+			<jstl:if test="${row.finalMode==false}">
+				<a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
+					<spring:message code="rendezvous.edit" />
+				</a>
+			</jstl:if>
 		</display:column>
 		<display:column>
 			<jstl:choose>
