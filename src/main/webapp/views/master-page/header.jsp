@@ -77,6 +77,7 @@
 					<li class="arrow"></li>
 					<li><a href="rendezvous/user/create.do"><spring:message code="master.page.rendezvous.create"/></a></li>
 					<li><a href="rendezvous/list.do"><spring:message code="master.page.rendezvous.list"/></a></li>
+					<li><a href="rendezvous/user/createdRendezvouses.do"><spring:message code="master.page.rendezvous.list.createdRendezvouses"/></a></li>
 					<li><a href="rendezvous/user/list.do"><spring:message code="master.page.rendezvous.list.rsvp"/></a></li>
 					
 				</ul>

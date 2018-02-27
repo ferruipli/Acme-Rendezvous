@@ -36,5 +36,5 @@
 	<jstl:if test="${rendezvousForm.id != 0}">
 		<acme:submit name="delete" code="rendezvous.delete" />
 	</jstl:if>
-	<acme:cancel code="rendezvous.return" url="rendezvous/user/list.do" />
+	<acme:cancel code="rendezvous.return" url="rendezvous/user/createdRendezvouses" />
 </form:form>
