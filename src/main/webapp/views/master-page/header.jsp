@@ -57,6 +57,9 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
+					<security:authorize access="hasRole('USER')">
+						<li><a href="user/user/profile.do"><spring:message code="master.page.profile" /></a></li>
+					</security:authorize>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
