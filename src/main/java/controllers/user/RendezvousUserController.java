@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.RendezvousService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Announcement;
 import domain.Rendezvous;
@@ -31,6 +32,8 @@ public class RendezvousUserController extends AbstractController {
 	@Autowired
 	private ActorService		actorService;
 
+	@Autowired
+	private UserService			userService;
 
 	// Constructors -----------------------------------------------------
 	public RendezvousUserController() {
@@ -39,6 +42,23 @@ public class RendezvousUserController extends AbstractController {
 
 	// CRUD methods ----------------------------------------------------
 
+	@RequestMapping(value="/createdRendezvouses", method = RequestMethod.GET)
+	public ModelAndView listOfCreatedRendezvous() {
+		ModelAndView result;
+		Collection<Rendezvous> rendezvouses;
+		User user;
+		
+		user = this.userService.findByPrincipal();
+		rendezvouses = user.getCreatedRendezvouses();
+		
+		result = new ModelAndView("rendezvous/list");
+		result.addObject("rendezvouses", rendezvouses);
+		result.addObject("isReserved", true);
+		result.addObject("requestURI", "rendezvous/user/createdRendezvouses");
+		
+		return result;
+	}
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
@@ -54,7 +74,7 @@ public class RendezvousUserController extends AbstractController {
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("isReserved", isReserved);
-		result.addObject("requestMapping", "rendezvous/user/list.do");
+		result.addObject("requestURI", "rendezvous/user/list.do");
 
 		return result;
 	}

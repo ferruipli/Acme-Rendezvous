@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -49,6 +50,7 @@ public class CommentService {
 		
 		result.setMoment(moment);
 		result.setUser(user);
+		result.setRepliedComments(Collections.<Comment> emptySet());
 		
 		return result;
 	}
@@ -92,6 +94,9 @@ public class CommentService {
 		currentMoment = new Date();
 		Assert.isTrue(comment.getMoment().before(currentMoment));
 		user = (User) this.actorService.findByPrincipal();
+		comment.setRepliedComments(Collections.<Comment> emptySet());
+		comment.setUser(user);
+		comment.setMoment(currentMoment);
 		result = this.commentRepository.save(comment);
 		rendezvous = result.getRendezvous();
 		Assert.isTrue(rendezvous.getAttendants().contains(user));

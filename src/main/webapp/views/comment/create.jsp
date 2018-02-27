@@ -15,6 +15,8 @@
 	<form:hidden path="version" />
 	<form:hidden path="moment" />
 	<form:hidden path="rendezvous"/>
+	<form:hidden path="user"/>
+	<form:hidden path="repliedComments"/>
 	
 	<form:label path="text">
 		<spring:message code="comment.text" />:
