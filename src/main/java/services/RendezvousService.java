@@ -46,6 +46,15 @@ public class RendezvousService {
 	@Autowired
 	private GPSService				gpsService;
 
+	@Autowired
+	private RSVPService				rsvpService;
+
+	@Autowired
+	private AnnouncementService		announcementService;
+
+	@Autowired
+	private QuestionService			questionService;
+
 
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
@@ -79,7 +88,7 @@ public class RendezvousService {
 		User user;
 		GPS gpsCoordinates;
 
-		user = (User) this.actorService.findByPrincipal();
+		user = this.userService.findByPrincipal();
 		gpsCoordinates = this.gpsService.create();
 
 		result = new Rendezvous();
@@ -150,6 +159,7 @@ public class RendezvousService {
 			result.setAdultOnly(rendezvousForm.isAdultOnly());
 			result.setUrlPicture(rendezvousForm.getUrlPicture());
 			result.setSimilarOnes(rendezvousForm.getSimilarOnes());
+			result.setGpsCoordinates(gpsCoordinates);
 
 			this.validator.validate(result, binding);
 		}
@@ -180,13 +190,44 @@ public class RendezvousService {
 	public void remove(final Rendezvous rendezvous) {
 		Assert.isTrue(rendezvous.getId() != 0);
 
+		Collection<Rendezvous> rendezvouses;
+		Collection<RSVP> RSVPs;
+		Collection<Question> questions;
+		Collection<Announcement> announcements;
+
+		rendezvouses = rendezvous.getSimilarOnes();
+		RSVPs = rendezvous.getReserves();
+		questions = rendezvous.getQuestions();
+		announcements = rendezvous.getAnnouncements();
+
+		//Removing all the RSVP relates with this rendezvous
+		if (RSVPs != null && !RSVPs.isEmpty())
+			for (final RSVP rs : RSVPs)
+				this.rsvpService.removeByAdmin(rs);
+
+		// Removing all the announcements relates with this rendezvous
+		if (announcements != null && !announcements.isEmpty())
+			for (final Announcement a : announcements)
+				this.announcementService.removeByAdmin(a);
+
+		// Removing all the questions relates with this rendezvous
+		if (questions != null && !questions.isEmpty())
+			for (final Question q : questions)
+				this.questionService.delete(q);
+
+		// Update User::createdRendezvouses
+		this.userService.removeRendezvous(rendezvous.getCreator(), rendezvous);
+
+		// Update Rendezvous::similarOnes
+		if (rendezvouses != null && !rendezvouses.isEmpty())
+			for (final Rendezvous r : rendezvouses)
+				this.removeSimilarOnes(r, rendezvous);
+
 		if (rendezvous.getGpsCoordinates() != null)
 			this.gpsService.delete(rendezvous.getGpsCoordinates());
 
 		this.rendezvousRepository.delete(rendezvous);
 
-		// Update User::createdRendezvouses
-		this.userService.removeRendezvous(rendezvous.getCreator(), rendezvous);
 	}
 
 	public void cancel(final Rendezvous rendezvous) {
@@ -277,7 +318,7 @@ public class RendezvousService {
 		Collection<Rendezvous> aux;
 
 		aux = new HashSet<>(rendezvous.getSimilarOnes());
-		aux.remove(rendezvous);
+		aux.remove(similarOne);
 		rendezvous.setSimilarOnes(aux);
 	}
 
@@ -400,5 +441,4 @@ public class RendezvousService {
 
 		return result;
 	}
-
 }

@@ -96,7 +96,7 @@ public class QuestionAnswerUserController extends AbstractController {
 		ModelAndView result;
 
 		try {
-			this.questionService.delete(question);
+			this.questionService.deleteEditableQuestion(question);
 			result = new ModelAndView("redirect:/question/list.do?rendezvousId=" + question.getRendezvous().getId());
 		} catch (final Throwable oops) {
 			result = this.createEditQuestionModelAndView(question, "question.error.commit");

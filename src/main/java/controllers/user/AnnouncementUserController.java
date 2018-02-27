@@ -51,15 +51,17 @@ public class AnnouncementUserController extends AbstractController {
 		try {
 			User user;
 			Collection<Announcement> announcements;
+			Collection<Rendezvous> rendezvouses;
 
 			user = this.userService.findByPrincipal();
-			announcements = this.announcementService.getAnnouncementsByUserRsvps(user);
+			rendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
+			announcements = this.announcementService.getAnnocementsByRendezvouses(rendezvouses);
 
 			result = new ModelAndView("announcement/list");
 			result.addObject(announcements);
-			result.addObject("requestMapping", "rendezvous/list.do");
+			result.addObject("requestMapping", "announcement/list.do");
+
 		} catch (final Exception e) {
-			// TODO: handle exception
 			result = this.newModelAndView("redirect:index/welcome.do");
 		}
 
@@ -78,11 +80,10 @@ public class AnnouncementUserController extends AbstractController {
 			rendezvous = this.rendezvousService.findOne(rendezvousId);
 
 			announcement = this.announcementService.create();
-			this.rendezvousService.addAnnouncement(rendezvous, announcement);
-
+			announcement.setRendezvous(rendezvous);
 			result = this.createEditModelAndView(announcement);
 		} catch (final Throwable opps) {
-			result = this.newModelAndView("redirect=welcome/index.do");
+			result = this.newModelAndView("redirect=../../welcome/index.do");
 		}
 
 		return result;
@@ -97,7 +98,7 @@ public class AnnouncementUserController extends AbstractController {
 		else
 			try {
 				this.announcementService.save(announcement);
-				result = this.newModelAndView("redirect:list.do");
+				result = this.newModelAndView("redirect:../../rendezvous/list.do");
 			} catch (final Throwable opps) {
 				result = this.createEditModelAndView(announcement, "announcement.commit.error");
 			}

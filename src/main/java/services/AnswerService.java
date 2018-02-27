@@ -58,6 +58,13 @@ public class AnswerService {
 		this.answerRepository.save(answer);
 	}
 
+	public void delete(final Answer answer) {
+		Assert.notNull(answer);
+		Assert.isTrue(answer.getId() != 0);
+
+		this.answerRepository.delete(answer);
+	}
+
 	// Other business methods -----------------------------------------------
 
 	/** Crea el listado de Answer a partir de las respuestas guardadas en QuestionnaireForm **/

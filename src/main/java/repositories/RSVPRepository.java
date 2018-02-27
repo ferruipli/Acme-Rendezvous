@@ -14,4 +14,5 @@ public interface RSVPRepository extends JpaRepository<RSVP, Integer> {
 
 	@Query("select rsvp from Rendezvous r join r.reserves rsvp where r.id=?1 order by rsvp.id asc")
 	Collection<RSVP> findOrderedRSVPByRendezvousId(int rendezvousId);
+	
 }

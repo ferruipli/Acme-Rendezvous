@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Collection;
 import java.util.Collections;
 
 import javax.transaction.Transactional;
@@ -31,6 +32,9 @@ public class QuestionService {
 
 	@Autowired
 	private UserService			userService;
+
+	@Autowired
+	private AnswerService		answerService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -82,6 +86,25 @@ public class QuestionService {
 	}
 
 	public void delete(final Question question) {
+		Assert.notNull(question);
+		Assert.isTrue(question.getId() != 0);
+
+		Collection<Answer> answers;
+
+		answers = question.getAnswers();
+
+		// Deleting all answers involves with this question
+		if (answers != null && !answers.isEmpty())
+			for (final Answer a : answers)
+				this.answerService.delete(a);
+
+		this.questionRepository.delete(question);
+	}
+
+	public void deleteEditableQuestion(final Question question) {
+		Assert.notNull(question);
+		Assert.isTrue(question.getId() != 0);
+
 		Rendezvous rendezvous;
 		User user;
 
@@ -113,4 +136,5 @@ public class QuestionService {
 
 		return result;
 	}
+
 }

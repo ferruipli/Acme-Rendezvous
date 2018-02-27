@@ -65,7 +65,6 @@ public class RendezvousUserController extends AbstractController {
 		RendezvousForm rendezvousForm;
 
 		rendezvousForm = new RendezvousForm();
-
 		result = this.createEditModelAndView(rendezvousForm);
 
 		return result;
@@ -80,16 +79,18 @@ public class RendezvousUserController extends AbstractController {
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
 		rendezvousForm = new RendezvousForm();
-		gpsForm = new GPSForm();
 		
+		gpsForm = new GPSForm();
 		gpsForm.setLatitude(rendezvous.getGpsCoordinates().getLatitude());
 		gpsForm.setLongitude(rendezvous.getGpsCoordinates().getLongitude());
 		
+		rendezvousForm.setId(rendezvous.getId());
 		rendezvousForm.setName(rendezvous.getName());
 		rendezvousForm.setDescription(rendezvous.getDescription());
 		rendezvousForm.setMoment(rendezvous.getMoment());
 		rendezvousForm.setFinalMode(rendezvous.getFinalMode());
 		rendezvousForm.setAdultOnly(rendezvous.getAdultOnly());
+		rendezvousForm.setUrlPicture(rendezvous.getUrlPicture());
 		rendezvousForm.setGpsCoordinates(gpsForm);
 		rendezvousForm.setSimilarOnes(rendezvous.getSimilarOnes());
 		
@@ -133,6 +134,7 @@ public class RendezvousUserController extends AbstractController {
 
 		return result;
 	}
+	
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int rendezvousId) {
 		ModelAndView result;

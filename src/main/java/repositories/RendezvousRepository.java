@@ -47,4 +47,8 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 
 	@Query("select q from Rendezvous r join r.questions q where r.id=?1 order by q.id asc")
 	Collection<Question> findOrderedQuestionsByRendezvousId(int rendezvousId);
+
+	@Query("select r1 from Rendezvous r1 join r1.similarOnes r2 where r2.id=?1 and r2 member of r1.similarOnes")
+	Collection<Rendezvous> findSimilarOnes(int rendezvousId);
+
 }

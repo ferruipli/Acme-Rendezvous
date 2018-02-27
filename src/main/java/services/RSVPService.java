@@ -35,6 +35,9 @@ public class RSVPService {
 
 	@Autowired
 	private ActorService		actorService;
+	
+	@Autowired
+	private UserService			userService;
 
 
 	// Constructors ---------------------------------------------------------
@@ -112,6 +115,16 @@ public class RSVPService {
 
 	}
 
+	public void removeByAdmin(RSVP rsvp) {
+		Assert.notNull(rsvp);
+		Assert.isTrue(rsvp.getId() != 0);
+		
+		// Update User::reserves
+		this.userService.removeRSVP(rsvp.getUser(),rsvp);
+			
+		this.rsvpRepository.delete(rsvp);
+	}
+	
 	public List<RSVP> findOrderedRSVPByRendezvousId(final int rendezvousId) {
 		List<RSVP> result;
 

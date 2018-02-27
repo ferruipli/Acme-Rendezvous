@@ -13,9 +13,7 @@ import org.springframework.util.Assert;
 
 import repositories.AnnouncementRepository;
 import domain.Announcement;
-import domain.RSVP;
 import domain.Rendezvous;
-import domain.User;
 
 @Service
 @Transactional
@@ -55,11 +53,15 @@ public class AnnouncementService {
 
 		Announcement result;
 		Date currentMoment;
+		Rendezvous rendezvous;
 
 		currentMoment = new Date();
-		Assert.isTrue(announcement.getMoment().after(currentMoment));
+		Assert.isTrue(announcement.getMoment().before(currentMoment));
 
 		result = this.announcementRepository.save(announcement);
+		rendezvous = result.getRendezvous();
+
+		this.rendezvousService.addAnnouncement(rendezvous, result);
 
 		return result;
 	}
@@ -73,7 +75,7 @@ public class AnnouncementService {
 
 		this.announcementRepository.delete(announcement);
 	}
-
+	
 	public Announcement findOne(final int announcementId) {
 		Assert.isTrue(announcementId != 0);
 
@@ -89,6 +91,13 @@ public class AnnouncementService {
 	// Other business methods
 	// ------------------------------------------------------------
 
+	public void removeByAdmin(Announcement announcement) {
+		Assert.notNull(announcement);
+		Assert.isTrue(announcement.getId() != 0);
+		
+		this.announcementRepository.delete(announcement);
+	}
+	
 	public Double[] avgSqrtAnnouncementsPerRendezvous() {
 		Double[] result;
 
@@ -105,28 +114,18 @@ public class AnnouncementService {
 		return result;
 	}
 
-	public Collection<Announcement> getAnnouncementsByUserRsvps(final User user) {
-		Collection<RSVP> rsvps;
+	public Collection<Announcement> getAnnocementsByRendezvouses(final Collection<Rendezvous> rendezvouses) {
 		Collection<Announcement> announcements;
-		Collection<Announcement> res;
-		Rendezvous rendezvous;
 
-		rsvps = user.getReserves();
 		announcements = Collections.emptyList();
-		res = Collections.emptyList();
 
-		for (final RSVP r : rsvps) {
-			rendezvous = r.getRendezvous();
-			res = rendezvous.getAnnouncements();
-			if (res.isEmpty())
-				break;
-			else
-				for (final Announcement a : res)
-					announcements.add(a);
-
+		for (final Rendezvous r : rendezvouses) {
+			Collection<Announcement> res;
+			res = r.getAnnouncements();
+			announcements.addAll(res);
 		}
+
 		return announcements;
-
 	}
-
+	
 }

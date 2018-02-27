@@ -19,5 +19,5 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Inte
 
 	@Query("select r from Rendezvous r where r.announcements.size/(select avg(r1.announcements.size) from Rendezvous r1)>7.5")
 	Collection<Rendezvous> rendezvousesWhoseMoreThat75Announcements();
-
+	
 }
