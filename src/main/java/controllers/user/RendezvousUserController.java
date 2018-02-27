@@ -2,9 +2,11 @@
 package controllers.user;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,8 +20,6 @@ import controllers.AbstractController;
 import domain.Announcement;
 import domain.Rendezvous;
 import domain.User;
-import forms.GPSForm;
-import forms.RendezvousForm;
 
 @Controller
 @RequestMapping("/rendezvous/user")
@@ -82,10 +82,10 @@ public class RendezvousUserController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		RendezvousForm rendezvousForm;
+		Rendezvous rendezvous;
 
-		rendezvousForm = new RendezvousForm();
-		result = this.createEditModelAndView(rendezvousForm);
+		rendezvous = this.rendezvousService.create();
+		result = this.createEditModelAndView(rendezvous);
 
 		return result;
 	}
@@ -94,45 +94,30 @@ public class RendezvousUserController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int rendezvousId) {
 		ModelAndView result;
 		Rendezvous rendezvous;
-		RendezvousForm rendezvousForm;
-		GPSForm	gpsForm;
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
-		rendezvousForm = new RendezvousForm();
 		
-		gpsForm = new GPSForm();
-		gpsForm.setLatitude(rendezvous.getGpsCoordinates().getLatitude());
-		gpsForm.setLongitude(rendezvous.getGpsCoordinates().getLongitude());
-		
-		rendezvousForm.setId(rendezvous.getId());
-		rendezvousForm.setName(rendezvous.getName());
-		rendezvousForm.setDescription(rendezvous.getDescription());
-		rendezvousForm.setMoment(rendezvous.getMoment());
-		rendezvousForm.setFinalMode(rendezvous.getFinalMode());
-		rendezvousForm.setAdultOnly(rendezvous.getAdultOnly());
-		rendezvousForm.setUrlPicture(rendezvous.getUrlPicture());
-		rendezvousForm.setGpsCoordinates(gpsForm);
-		rendezvousForm.setSimilarOnes(rendezvous.getSimilarOnes());
-		
-		result = this.createEditModelAndView(rendezvousForm);
+		result = this.createEditModelAndView(rendezvous);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(RendezvousForm rendezvousForm, final BindingResult binding) {
+	public ModelAndView save(Rendezvous rendezvous, final BindingResult binding) {
 		ModelAndView result;
-		Rendezvous rendezvous;
-
-		rendezvous = this.rendezvousService.reconstruct(rendezvousForm, binding);
+		
+		if (rendezvous.getSimilarOnes()==null) {
+			rendezvous.setSimilarOnes(Collections.<Rendezvous>emptySet());
+		}
+		
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(rendezvousForm);
+			result = this.createEditModelAndView(rendezvous);
 		else
 			try {
 				this.rendezvousService.save(rendezvous);
-				result = new ModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:createdRendezvouses.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(rendezvousForm,
+				result = this.createEditModelAndView(rendezvous,
 						"rendezvous.commit.error");
 			}
 
@@ -140,16 +125,15 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final RendezvousForm rendezvousForm, final BindingResult binding) {
+	public ModelAndView delete(final Rendezvous rendezvous, final BindingResult binding) {
 		ModelAndView result;
-		Rendezvous rendezvous;
-
-		rendezvous = this.rendezvousService.reconstruct(rendezvousForm, binding);
+		
 		try {
 			this.rendezvousService.delete(rendezvous);
-			result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("redirect:createdRendezvouses.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(rendezvousForm, "rendezvous.commit.error");
+			result = this.createEditModelAndView(rendezvous,
+					"rendezvous.commit.error");
 		}
 
 		return result;
@@ -186,28 +170,25 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	// Arcillary methods ------------------------------------------------
-	protected ModelAndView createEditModelAndView(final RendezvousForm rendezvousForm) {
+	protected ModelAndView createEditModelAndView(final Rendezvous rendezvous) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(rendezvousForm, null);
+		result = this.createEditModelAndView(rendezvous, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final RendezvousForm rendezvousForm, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Rendezvous rendezvous, final String messageCode) {
 		ModelAndView result;
 		Collection<Rendezvous> similarOnes;
-		/*
-		if (rendezvous.getCreator().getCreatedRendezvouses().isEmpty())
-			similarOnes = Collections.<Rendezvous> emptySet();
-		else
-			similarOnes = rendezvous.getCreator().getCreatedRendezvouses();
-		 */
+		User user;
 		
-		similarOnes = rendezvousForm.getSimilarOnes();
+		user = this.userService.findByPrincipal();
+		similarOnes = user.getCreatedRendezvouses();
+		similarOnes.remove(rendezvous);
 		
 		result = new ModelAndView("rendezvous/edit");
-		result.addObject("rendezvousForm", rendezvousForm);
+		result.addObject("rendezvous", rendezvous);
 		result.addObject("similarRendezvouses", similarOnes);
 		result.addObject("message", messageCode);
 

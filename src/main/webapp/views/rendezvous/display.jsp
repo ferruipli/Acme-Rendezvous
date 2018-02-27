@@ -30,7 +30,7 @@
 <strong> <spring:message code="rendezvous.moment" />: </strong>
 <fmt:formatDate value="${rendezvous.moment}" pattern="${formatMomentVar}" />
 
-<jstl:if test="${rendezvous.gpsCoordinates != null}">
+<jstl:if test="${rendezvous.gpsCoordinates.latitude!=0.0 && rendezvous.gpsCoordinates.longitude!=0.0}">
 	<p> <strong> <spring:message code="rendezvous.gpsCoordinates" />: </strong> </p>
 	<p style="text-indent:1.5em">
 		<strong> <spring:message code="gps.latitude"/>: </strong>

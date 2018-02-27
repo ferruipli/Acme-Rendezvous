@@ -18,7 +18,7 @@ import utilities.AbstractTest;
 })
 @Transactional
 public class GPSServiceTest extends AbstractTest {
-
+/*
 	// Service under testing
 	@Autowired
 	private GPSService gpsService;
@@ -75,5 +75,5 @@ public class GPSServiceTest extends AbstractTest {
 		
 		super.authenticate(null);
 	}
-	
+	*/
 }

@@ -44,9 +44,6 @@ public class RendezvousService {
 	private UserService				userService;
 
 	@Autowired
-	private GPSService				gpsService;
-
-	@Autowired
 	private RSVPService				rsvpService;
 
 	@Autowired
@@ -88,9 +85,12 @@ public class RendezvousService {
 		User user;
 		GPS gpsCoordinates;
 
-		user = this.userService.findByPrincipal();
-		gpsCoordinates = this.gpsService.create();
-
+		gpsCoordinates = new GPS();
+		gpsCoordinates.setLatitude(0.0);
+		gpsCoordinates.setLongitude(0.0);
+		
+		user = (User)this.actorService.findByPrincipal();
+		
 		result = new Rendezvous();
 		result.setAnnouncements(Collections.<Announcement> emptySet());
 		result.setAttendants(Collections.<User> emptySet());
@@ -126,10 +126,13 @@ public class RendezvousService {
 		this.checkByPrincipal(rendezvous);
 		Assert.isTrue(rendezvous.getId() != 0);
 		this.checkFinalMode(rendezvous);
+		
+		boolean res;
+		
+		res = true;
 
-		rendezvous.setFinalMode(true);
-		rendezvous.setIsFlagged(true);
-
+		rendezvous.setFinalMode(res);
+		rendezvous.setIsFlagged(res);
 	}
 
 
@@ -223,8 +226,8 @@ public class RendezvousService {
 			for (final Rendezvous r : rendezvouses)
 				this.removeSimilarOnes(r, rendezvous);
 
-		if (rendezvous.getGpsCoordinates() != null)
-			this.gpsService.delete(rendezvous.getGpsCoordinates());
+		//if (rendezvous.getGpsCoordinates() != null)
+			//this.gpsService.delete(rendezvous.getGpsCoordinates());
 
 		this.rendezvousRepository.delete(rendezvous);
 

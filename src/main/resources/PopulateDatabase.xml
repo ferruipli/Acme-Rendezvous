@@ -206,7 +206,12 @@
 		<property value="rendezvous1" name="name"/>
 		<property value="description_rendezvous1" name="description"/>
 		<property value="2017/01/20 09:00" name="moment"/>
-		<property name="gpsCoordinates" ref="gps1" />
+		<property name="gpsCoordinates">
+			<bean class="domain.GPS">
+				<property name="latitude" value="25.54" />
+				<property name="longitude" value="45.54" />
+			</bean>
+		</property>
 		<property value="true" name="finalMode"/>
 		<property value="true" name="isFlagged"/>	
 		<property value="false" name="adultOnly"/>		
@@ -250,8 +255,11 @@
 		<property value="rendezvous2" name="name"/>
 		<property value="description_rendezvous2" name="description"/>
 		<property value="2017/02/17 10:00" name="moment"/>
-		<property name="gpsCoordinates" >
-			<null></null>
+		<property name="gpsCoordinates">
+			<bean class="domain.GPS">
+				<property name="latitude" value="0.0" />
+				<property name="longitude" value="0.0" />
+			</bean>
 		</property>
 		<property value="false" name="finalMode"/>
 		<property value="true" name="isFlagged"/>	
@@ -295,8 +303,11 @@
 		<property value="rendezvous3" name="name"/>
 		<property value="description_rendezvous3" name="description"/>
 		<property value="2018/10/17 10:00" name="moment"/>
-		<property name="gpsCoordinates" >
-			<null></null>
+		<property name="gpsCoordinates">
+			<bean class="domain.GPS">
+				<property name="latitude" value="100.98434" />
+				<property name="longitude" value="-13.94321" />
+			</bean>
 		</property>
 		<property value="false" name="finalMode"/>
 		<property value="false" name="isFlagged"/>	
@@ -335,7 +346,7 @@
 		<property value="rendezvous4" name="name"/>
 		<property value="description_rendezvous4" name="description"/>
 		<property value="2018/11/02 10:00" name="moment"/>
-		<property name="gpsCoordinates" >
+		<property name="gpsCoordinates">
 			<null></null>
 		</property>
 		<property value="false" name="finalMode"/>
@@ -540,13 +551,6 @@
 			</list>
 		</property>
 	</bean>
-	
-	<!-- GPS  -->
-	<bean class="domain.GPS" id="gps1">
-		<property value="40.7127837" name="latitude" />
-		<property value="-74.0059413" name="longitude" />
-	</bean>
-	
 	
 	<!-- Comment -->
 	

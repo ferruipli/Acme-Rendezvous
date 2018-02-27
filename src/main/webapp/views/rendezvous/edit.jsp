@@ -9,8 +9,16 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="rendezvous/user/edit.do" modelAttribute="rendezvousForm">	
+<form:form action="rendezvous/user/edit.do" modelAttribute="rendezvous">	
 	<form:hidden path="id" />
+	<form:hidden path="version" />
+	<form:hidden path="isFlagged" />
+	<form:hidden path="creator" />
+	<form:hidden path="attendants" />
+	<form:hidden path="reserves" />
+	<form:hidden path="comments" />
+	<form:hidden path="announcements" />
+	<form:hidden path="questions" />
 	
 	<acme:textbox code="rendezvous.name" path="name" />
 	<acme:textbox code="rendezvous.description" path="description" />
@@ -33,8 +41,8 @@
 		items="${similarRendezvouses}" itemLabel="name" />
 	
 	<acme:submit name="save" code="rendezvous.save" />
-	<jstl:if test="${rendezvousForm.id != 0}">
+	<jstl:if test="${rendezvous.id != 0}">
 		<acme:submit name="delete" code="rendezvous.delete" />
 	</jstl:if>
-	<acme:cancel code="rendezvous.return" url="rendezvous/user/createdRendezvouses" />
+	<acme:cancel code="rendezvous.return" url="rendezvous/user/createdRendezvouses.do" />
 </form:form>
