@@ -87,12 +87,16 @@ public class CommentService {
 		Comment result;
 		Rendezvous rendezvous;
 		User user;
+		Date currentMoment;
 		
+		currentMoment = new Date();
+		Assert.isTrue(comment.getMoment().before(currentMoment));
 		user = (User) this.actorService.findByPrincipal();
-		rendezvous = this.rendezvousService.finRendezvousFromAComment(comment.getId());
+		result = this.commentRepository.save(comment);
+		rendezvous = result.getRendezvous();
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
 		
-		result = this.commentRepository.save(comment);
+		this.rendezvousService.addComment(rendezvous, comment);
 		
 		return result;
 	}
