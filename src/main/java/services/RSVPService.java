@@ -87,10 +87,16 @@ public class RSVPService {
 		Date date;
 		User user;
 		long edad;
+		Rendezvous rendezvous;
 
 		user = (User) this.actorService.findByPrincipal();
 		edad = this.actorService.getEdad(user);
-
+		rendezvous = this.rendezvousService.findRendezvousByRSVPId(rsvp.getId());
+		
+		rsvp.setUser(user);
+		rsvp.setAnswers(Collections.<Answer> emptySet());
+		rsvp.setRendezvous(rendezvous);
+		
 		if(rsvp.getRendezvous().getAdultOnly()==true){
 			Assert.isTrue(edad>=18);
 		}

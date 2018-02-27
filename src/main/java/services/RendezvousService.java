@@ -449,4 +449,12 @@ public class RendezvousService {
 
 		return result;
 	}
+	
+	public Rendezvous findRendezvousByRSVPId(int rsvpId){
+		Rendezvous result;
+		
+		result = this.rendezvousRepository.findRendezvousByRSVPId(rsvpId);
+		
+		return result;
+	}
 }

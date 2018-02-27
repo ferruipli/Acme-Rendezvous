@@ -45,8 +45,8 @@ public class RSVPUserController extends AbstractController {
 	
 	// CRUD methods ----------------------------------------------------
 	
-	@RequestMapping(value="/create", method= RequestMethod.GET)
-	public ModelAndView create(@RequestParam int  rendezvousId){
+	@RequestMapping(value="/rsvp", method= RequestMethod.GET)
+	public ModelAndView rsvp(@RequestParam int  rendezvousId){
 		ModelAndView result;
 		RSVP rsvp;
 		Rendezvous rendezvous;
@@ -61,7 +61,7 @@ public class RSVPUserController extends AbstractController {
 		
 	}
 	
-	@RequestMapping(value="/create", method = RequestMethod.GET, params="save")
+	@RequestMapping(value="/rsvp", method = RequestMethod.POST, params="rsvp")
 	public ModelAndView save (@Valid RSVP rsvp, BindingResult binding){
 		ModelAndView result;
 		
@@ -80,8 +80,8 @@ public class RSVPUserController extends AbstractController {
 			
 	}
 	
-	@RequestMapping(value="/cancel", method = RequestMethod.POST, params = "cancel")
-	public ModelAndView cancel(@Valid RSVP rsvp, BindingResult binding){
+	@RequestMapping(value="/cancelRSVP", method = RequestMethod.POST, params = "cancelRSVP")
+	public ModelAndView cancelRSVP(@Valid RSVP rsvp, BindingResult binding){
 		ModelAndView result;
 		
 		if(binding.hasErrors()){

@@ -29,7 +29,6 @@
 		<value>/views/legalTexts/messages</value>
 		<value>/views/rendezvous/messages</value>
 		<value>/views/questionAnswer/messages</value>
-		<value>/views/rsvp/messages</value>
 		<value>/views/user/messages</value>
 	</util:list>
 
