@@ -34,7 +34,7 @@ public class Comment extends DomainEntity {
 
 	private Date	moment;
 	private String	text;
-	private String 	urlPicture;
+	private String	urlPicture;
 
 
 	@NotNull
@@ -57,27 +57,40 @@ public class Comment extends DomainEntity {
 	public void setText(final String text) {
 		this.text = text;
 	}
-	
+
 	@URL
 	public String getUrlPicture() {
-		return urlPicture;
+		return this.urlPicture;
 	}
 
-	public void setUrlPicture(String urlPicture) {
+	public void setUrlPicture(final String urlPicture) {
 		this.urlPicture = urlPicture;
 	}
 
+
 	// Relationships ------------------------------------------------
-	private User	user;
-	private Collection<Comment> repliedComments;
+	private User				user;
+	private Collection<Comment>	repliedComments;
+
+	private Rendezvous			rendezvous;
+
+
+	@Valid
+	@ManyToOne(optional = false)
+	public Rendezvous getRendezvous() {
+		return this.rendezvous;
+	}
+	public void setRendezvous(final Rendezvous rendezvous) {
+		this.rendezvous = rendezvous;
+	}
 
 	@NotNull
 	@OneToMany
 	public Collection<Comment> getRepliedComments() {
-		return repliedComments;
+		return this.repliedComments;
 	}
 
-	public void setRepliedComments(Collection<Comment> repliedComments) {
+	public void setRepliedComments(final Collection<Comment> repliedComments) {
 		this.repliedComments = repliedComments;
 	}
 

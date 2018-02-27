@@ -31,12 +31,12 @@ public class AnnouncementAdministratorController extends AbstractController {
 
 	// Delete---------------------------------------------
 	@RequestMapping(value = "/display", method = RequestMethod.POST, params = "delete")
-	public ModelAndView remove(@RequestParam final Announcement announcement, final BindingResult binding) {
+	public ModelAndView delete(final Announcement announcement, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
 			this.announcementService.delete(announcement);
-			result = this.newModelAndView("redirect:list.do");
+			result = this.newModelAndView("redirect:../../rendezvous/list.do");
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(announcement, "announcement.commit.error");
 		}
