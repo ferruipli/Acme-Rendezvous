@@ -10,17 +10,36 @@
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<form:form action="announcement/administrator/display.do" modelAttribute="announcement">
 
-	<strong> <spring:message code="announcement.title"/>: </strong>
-	<jstl:out value="${announcement.title}" />
-<br/>
-	<strong> <spring:message code="announcement.description"/>: </strong>
-	<jstl:out value="${announcement.description}" />
-<br/>
-
-<strong> <spring:message code="announcement.moment"/>: </strong>
-	<jstl:out value="${announcement.moment}" />
-<br/>
-
-<input type= "submit" name="delete" value = "<spring:message code="announcement.delete" />"
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	
+	<form:label path="rendezvous" >
+		<spring:message code="announcement.rendezvous"/>:
+	</form:label>
+		<jstl:out value="${announcement.rendezvous.name}" />
+	
+	<form:label path="title">
+		<spring:message code="announcement.title" />:
+	</form:label>
+		<jstl:out value="${announcement.title}" />
+	<br /><br/>
+	
+	<form:label path="description">
+		<spring:message code="announcement.description" />:
+	</form:label>
+		<jstl:out value="${announcement.description}" />
+	<br /><br />
+	
+	<form:label path="moment" >
+		<spring:message code="announcement.moment"/>:
+	</form:label>
+		<jstl:out value="${announcement.moment}" />
+	<br /><br />
+	
+	
+	<input type= "submit" name="delete" value = "<spring:message code="announcement.delete" />"
 			onclick="return confirm('<spring:message code="announcement.confirm.delete" />')" />
+	</form:form>
+	
