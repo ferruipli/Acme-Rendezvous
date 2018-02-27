@@ -49,7 +49,7 @@ public class CommentUserController extends AbstractController {
 		
 		result = new ModelAndView("comment/list");
 		result.addObject("comments", comments);
-		result.addObject("requestMapping", "comment/user/list.do");
+		result.addObject("requestURI", "comment/user/list.do");
 		
 		return result;
 		
@@ -74,7 +74,8 @@ public class CommentUserController extends AbstractController {
 		return result;
 	}
 	
-	@RequestMapping(value="/create", method = RequestMethod.GET, params = "save")
+	
+	@RequestMapping(value="/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Comment comment, BindingResult binding){
 		ModelAndView result;
 		
@@ -83,7 +84,7 @@ public class CommentUserController extends AbstractController {
 		} else {
 			try {
 				this.commentService.save(comment);
-				result = new ModelAndView("redirect:/rendezvous/user/list.do");	
+				result = this.newModelAndView("redirect:/rendezvous/user/list.do");	
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(comment, "comment.commit.error");
 			}
@@ -118,7 +119,7 @@ public class CommentUserController extends AbstractController {
 	protected ModelAndView createEditModelAndView(Comment comment) {
 		ModelAndView result;
 		
-		result = createEditModelAndView(comment);
+		result = createEditModelAndView(comment, null);
 		
 		return result;
 	}
@@ -126,17 +127,13 @@ public class CommentUserController extends AbstractController {
 	protected ModelAndView createEditModelAndView(Comment comment, String messageCode) {
 		ModelAndView result;
 		try {
-		Collection<Rendezvous> allRendezvous;
 		
-		allRendezvous = this.rendezvousService.findAll();
-				
 		result = new ModelAndView("comment/create");
 		result.addObject("comment", comment);
-		result.addObject(allRendezvous);
 		result.addObject("message", messageCode);
 		
 		} catch (Throwable oops) {
-			result = this.newModelAndView("redirect: index.do");
+			result = this.newModelAndView("redirect:/welcome/index.do");
 		}
 		return result;
 	}

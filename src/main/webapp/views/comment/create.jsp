@@ -14,7 +14,7 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="moment" />
-	<form:hidden path="rendezvous" />
+	<form:hidden path="rendezvous"/>
 	
 	<form:label path="text">
 		<spring:message code="comment.text" />:
@@ -25,7 +25,7 @@
 	
 	<input type="submit" name="save" value="<spring:message code="comment.save" />" />
 	<input type="button" name="cancel"	value="<spring:message code="comment.cancel" />
-			"onclick="javascript: relativeRedir('welcome/index.do');" />
+			"onclick="javascript: relativeRedir('rendezvous/user/list.do');" />
 	<br />
 	
 
