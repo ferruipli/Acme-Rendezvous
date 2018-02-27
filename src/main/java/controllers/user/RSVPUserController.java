@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
@@ -44,10 +45,13 @@ public class RSVPUserController extends AbstractController {
 	
 	// CRUD methods ----------------------------------------------------
 	
-	@RequestMapping(value="/create", method= RequestMethod.GET)
-	public ModelAndView create(@Valid Rendezvous rendezvous){
+	@RequestMapping(value="/rsvp", method= RequestMethod.GET)
+	public ModelAndView rsvp(@RequestParam int  rendezvousId){
 		ModelAndView result;
 		RSVP rsvp;
+		Rendezvous rendezvous;
+		
+		rendezvous = this.rendezvousService.findOne(rendezvousId);
 		
 		rsvp = this.rsvpService.create(rendezvous);
 		
@@ -57,7 +61,7 @@ public class RSVPUserController extends AbstractController {
 		
 	}
 	
-	@RequestMapping(value="/create", method = RequestMethod.GET, params="save")
+	@RequestMapping(value="/rsvp", method = RequestMethod.POST, params="rsvp")
 	public ModelAndView save (@Valid RSVP rsvp, BindingResult binding){
 		ModelAndView result;
 		
@@ -77,7 +81,7 @@ public class RSVPUserController extends AbstractController {
 	}
 	
 	@RequestMapping(value="/cancelRSVP", method = RequestMethod.POST, params = "cancelRSVP")
-	public ModelAndView cancel(@Valid RSVP rsvp, BindingResult binding){
+	public ModelAndView cancelRSVP(@Valid RSVP rsvp, BindingResult binding){
 		ModelAndView result;
 		
 		if(binding.hasErrors()){

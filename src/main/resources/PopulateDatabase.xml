@@ -309,7 +309,7 @@
 				<property name="longitude" value="-13.94321" />
 			</bean>
 		</property>
-		<property value="false" name="finalMode"/>
+		<property value="true" name="finalMode"/>
 		<property value="false" name="isFlagged"/>	
 		<property value="false" name="adultOnly"/>		
 		<property ref="user2" name="creator"/>	
@@ -354,6 +354,45 @@
 		<property value="false" name="adultOnly"/>		
 		<property ref="user3" name="creator"/>	
 		<property value="http://www.googleDrive.com/picture24" name="urlPicture"/>
+		<property name="comments">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="similarOnes">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="announcements">
+			<list>
+				<null></null>
+			</list>
+		</property>	
+		<property name="questions">
+			<list>
+				<null></null>
+			</list>
+		</property>
+		<property name="reserves">
+			<list>
+				<null></null>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="domain.Rendezvous" id="rendezvous5">
+		<property value="rendezvous5" name="name"/>
+		<property value="description_rendezvous5" name="description"/>
+		<property value="2018/10/17 10:00" name="moment"/>
+		<property name="gpsCoordinates" >
+			<null></null>
+		</property>
+		<property value="true" name="finalMode"/>
+		<property value="false" name="isFlagged"/>	
+		<property value="false" name="adultOnly"/>		
+		<property ref="user2" name="creator"/>	
+		<property value="http://www.googleDrive.com/picture13" name="urlPicture"/>
 		<property name="comments">
 			<list>
 				<null></null>

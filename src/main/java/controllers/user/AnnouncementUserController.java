@@ -51,11 +51,9 @@ public class AnnouncementUserController extends AbstractController {
 		try {
 			User user;
 			Collection<Announcement> announcements;
-			Collection<Rendezvous> rendezvouses;
 
 			user = this.userService.findByPrincipal();
-			rendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
-			announcements = this.announcementService.getAnnocementsByRendezvouses(rendezvouses);
+			announcements = this.announcementService.findAnnouncementByRSVPUser(user.getId());
 
 			result = new ModelAndView("announcement/list");
 			result.addObject(announcements);
@@ -67,7 +65,6 @@ public class AnnouncementUserController extends AbstractController {
 
 		return result;
 	}
-
 	// Creation---------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)

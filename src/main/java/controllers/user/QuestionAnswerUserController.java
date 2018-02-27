@@ -39,6 +39,11 @@ public class QuestionAnswerUserController extends AbstractController {
 	@Autowired
 	private RendezvousService	rendezvousService;
 
+	// Controllers ------------------------------------------------------------
+
+	@Autowired
+	private RSVPUserController	rsvpUserController;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -119,6 +124,8 @@ public class QuestionAnswerUserController extends AbstractController {
 		questions = new ArrayList<>(rendezvous.getQuestions());
 		answers = new ArrayList<>();
 
+		Assert.isTrue(questions.size() > 0);
+
 		questionnaireForm = new QuestionnaireForm();
 		questionnaireForm.setAnswers(answers);
 		questionnaireForm.setQuestions(questions);
@@ -135,18 +142,13 @@ public class QuestionAnswerUserController extends AbstractController {
 	public ModelAndView nextQuestion(final QuestionnaireForm questionnaireForm, final BindingResult binding) {
 		ModelAndView result;
 		String currentAnswerText;
-		int nextQuestionNumber;
 
 		currentAnswerText = this.answerService.getValidatedAnswerText(questionnaireForm, binding);
 		if (binding.hasErrors())
 			result = this.answerModelAndView(questionnaireForm);
 		else
 			try {
-				nextQuestionNumber = questionnaireForm.getCurrentQuestionNumber() + 1;
-				questionnaireForm.getAnswers().add(currentAnswerText);
-				questionnaireForm.setCurrentQuestionNumber(nextQuestionNumber);
-				questionnaireForm.setText("");
-
+				this.iterateQuestionnaireForm(questionnaireForm, currentAnswerText);
 				result = this.answerModelAndView(questionnaireForm);
 			} catch (final Throwable oops) {
 				result = this.answerModelAndView(questionnaireForm, "question.error.commit");
@@ -162,6 +164,7 @@ public class QuestionAnswerUserController extends AbstractController {
 		ModelAndView result;
 		String lastAnswerText;
 		List<Answer> answers;
+		int rendezvousId;
 
 		lastAnswerText = this.answerService.getValidatedAnswerText(questionnaireForm, binding);
 		if (binding.hasErrors())
@@ -170,9 +173,9 @@ public class QuestionAnswerUserController extends AbstractController {
 			try {
 				questionnaireForm.getAnswers().add(lastAnswerText);
 				Assert.isTrue(questionnaireForm.getAnswers().size() == questionnaireForm.getQuestions().size());
-				answers = this.answerService.reconstructAnswers(questionnaireForm, binding);
-				// TODO: Aquí ya el tema sería coger todas las answer sin guardar, enviarlo al controlador de RSVP y dentro de él, guardar todas las answer e inmediatamente despues, el rsvp.
-				result = new ModelAndView("redirect:/welcome/index.do");
+				answers = this.answerService.reconstructAndSaveAnswers(questionnaireForm, binding);
+				rendezvousId = this.rendezvousService.findRendezvousByAnswerId(answers.get(0).getId());
+				result = this.rsvpUserController.answers(answers, rendezvousId);
 			} catch (final Throwable oops) {
 				result = this.answerModelAndView(questionnaireForm, "question.error.commit");
 			}
@@ -181,6 +184,15 @@ public class QuestionAnswerUserController extends AbstractController {
 	}
 
 	// Ancillary methods ------------------------------------------------------
+
+	private void iterateQuestionnaireForm(final QuestionnaireForm questionnaireForm, final String currentAnswerText) {
+		int nextQuestionNumber;
+
+		nextQuestionNumber = questionnaireForm.getCurrentQuestionNumber() + 1;
+		questionnaireForm.getAnswers().add(currentAnswerText);
+		questionnaireForm.setCurrentQuestionNumber(nextQuestionNumber);
+		questionnaireForm.setText("");
+	}
 
 	protected ModelAndView answerModelAndView(final QuestionnaireForm questionnaireForm) {
 		ModelAndView result;

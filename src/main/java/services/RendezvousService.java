@@ -444,4 +444,20 @@ public class RendezvousService {
 
 		return result;
 	}
+
+	public Integer findRendezvousByAnswerId(final int answerId) {
+		Integer result;
+
+		result = this.rendezvousRepository.findRendezvousIdByAnswerId(answerId);
+
+		return result;
+	}
+	
+	public Rendezvous findRendezvousByRSVPId(int rsvpId){
+		Rendezvous result;
+		
+		result = this.rendezvousRepository.findRendezvousByRSVPId(rsvpId);
+		
+		return result;
+	}
 }

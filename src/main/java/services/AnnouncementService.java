@@ -2,7 +2,6 @@
 package services;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -75,7 +74,7 @@ public class AnnouncementService {
 
 		this.announcementRepository.delete(announcement);
 	}
-	
+
 	public Announcement findOne(final int announcementId) {
 		Assert.isTrue(announcementId != 0);
 
@@ -91,13 +90,13 @@ public class AnnouncementService {
 	// Other business methods
 	// ------------------------------------------------------------
 
-	public void removeByAdmin(Announcement announcement) {
+	public void removeByAdmin(final Announcement announcement) {
 		Assert.notNull(announcement);
 		Assert.isTrue(announcement.getId() != 0);
-		
+
 		this.announcementRepository.delete(announcement);
 	}
-	
+
 	public Double[] avgSqrtAnnouncementsPerRendezvous() {
 		Double[] result;
 
@@ -114,18 +113,12 @@ public class AnnouncementService {
 		return result;
 	}
 
-	public Collection<Announcement> getAnnocementsByRendezvouses(final Collection<Rendezvous> rendezvouses) {
-		Collection<Announcement> announcements;
+	public Collection<Announcement> findAnnouncementByRSVPUser(final int userId) {
+		Collection<Announcement> result;
 
-		announcements = Collections.emptyList();
+		result = this.announcementRepository.findAnnouncementByRSVPUser(userId);
 
-		for (final Rendezvous r : rendezvouses) {
-			Collection<Announcement> res;
-			res = r.getAnnouncements();
-			announcements.addAll(res);
-		}
-
-		return announcements;
+		return result;
 	}
-	
+
 }

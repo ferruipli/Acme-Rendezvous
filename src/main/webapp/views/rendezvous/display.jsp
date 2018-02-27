@@ -114,10 +114,11 @@
 	
 	<jstl:choose>
 		<jstl:when test="${isReserved==false}">
-			<acme:submit name="rsvp" code="rendezvous.reserve" />	
+			<acme:submit name="rsvp" code="rendezvous.reserve" />
 		</jstl:when>
 		<jstl:when test="${isReserved==true}">
 			<acme:submit name="cancelRSVP" code="rendezvous.cancelReserve" />
 		</jstl:when>
 	</jstl:choose>
+	
 </security:authorize>

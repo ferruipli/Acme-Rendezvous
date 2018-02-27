@@ -51,11 +51,15 @@ public class AnswerService {
 		return result;
 	}
 
-	public void save(final Answer answer) {
+	public Answer save(final Answer answer) {
 		Assert.isTrue(answer.getQuestion().getRendezvous().getFinalMode());
 		Assert.isTrue(!answer.getQuestion().getRendezvous().getIsFlagged());
 
-		this.answerRepository.save(answer);
+		Answer result;
+
+		result = this.answerRepository.save(answer);
+
+		return result;
 	}
 
 	public void delete(final Answer answer) {
@@ -67,10 +71,10 @@ public class AnswerService {
 
 	// Other business methods -----------------------------------------------
 
-	/** Crea el listado de Answer a partir de las respuestas guardadas en QuestionnaireForm **/
-	public List<Answer> reconstructAnswers(final QuestionnaireForm questionnaireForm, final BindingResult binding) {
+	/** Crea el listado de Answer a partir de las respuestas guardadas en QuestionnaireForm. Además guarda en la base de datos todas las Answer. **/
+	public List<Answer> reconstructAndSaveAnswers(final QuestionnaireForm questionnaireForm, final BindingResult binding) {
 		List<Answer> result;
-		Answer answer;
+		Answer answer, saved;
 		int questionId, numberOfQuestions, i;
 
 		result = new ArrayList<>();
@@ -80,7 +84,8 @@ public class AnswerService {
 			questionId = questionnaireForm.getQuestions().get(i).getId();
 			answer = this.create(questionId);
 			answer.setText(questionnaireForm.getAnswers().get(i));
-			result.add(answer);
+			saved = this.save(answer);
+			result.add(saved);
 		}
 
 		return result;
