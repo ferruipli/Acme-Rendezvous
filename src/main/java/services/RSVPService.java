@@ -91,7 +91,9 @@ public class RSVPService {
 		user = (User) this.actorService.findByPrincipal();
 		edad = this.actorService.getEdad(user);
 
-		Assert.isTrue(edad >= 18);
+		if(rsvp.getRendezvous().getAdultOnly()==true){
+			Assert.isTrue(edad>=18);
+		}
 		date = new Date(System.currentTimeMillis());
 
 		Assert.isTrue(rsvp.getRendezvous().getMoment().after(date));
