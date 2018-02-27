@@ -120,5 +120,5 @@
 			<acme:submit name="cancelRSVP" code="rendezvous.cancelReserve" />
 		</jstl:when>
 	</jstl:choose>
-	
+
 </security:authorize>

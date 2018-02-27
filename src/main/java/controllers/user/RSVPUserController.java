@@ -111,8 +111,11 @@ public class RSVPUserController extends AbstractController {
 	
 	protected ModelAndView createEditModelAndView(RSVP rsvp, String messageCode) {
 		ModelAndView result;
+		Rendezvous rendezvous;
 		
-		result = new ModelAndView("rsvp/create");
+		rendezvous = this.rendezvousService.findRendezvousByRSVPId(rsvp.getId());
+		
+		result = new ModelAndView("rendezvous/user/display.do?rendezvousId=" + rendezvous.getId());
 		result.addObject("rsvp", rsvp);
 		result.addObject("message", messageCode);
 		
