@@ -17,5 +17,13 @@
 		<put-attribute name="title" value="Create comment" />
 		<put-attribute name="body" value="/views/comment/create.jsp" />
 	</definition>
+	<definition name="comment/display" extends="master.page">
+		<put-attribute name="title" value="Display comment" />
+		<put-attribute name="body" value="/views/comment/display.jsp" />
+	</definition>
+	<definition name="comment/reply" extends="master.page">
+		<put-attribute name="title" value="Reply comment" />
+		<put-attribute name="body" value="/views/comment/reply.jsp" />
+	</definition>
 	
 </tiles-definitions>
