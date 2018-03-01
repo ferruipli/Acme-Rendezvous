@@ -75,43 +75,7 @@ public class CommentUserController extends AbstractController {
 		
 		return result;
 	}
-	
-	@RequestMapping(value="/create", method = RequestMethod.GET)
-	public ModelAndView createReply(@RequestParam int commentId){
-		ModelAndView result;
-		try {
-		Comment comment;	
-		Comment reply;
 		
-		comment = this.commentService.findOne(commentId);		
-		reply = this.commentService.create();
-		this.commentService.addReply(comment, reply);
-		result = this.createEditModelAndView(reply);
-		} catch (Throwable oops) {
-			result = this.newModelAndView("redirect:/welcome/index.do");
-		}
-		
-		return result;
-	}
-	
-	@RequestMapping(value="/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveReply(@Valid Comment reply, BindingResult binding){
-		ModelAndView result;
-		
-		if(binding.hasErrors()){
-			result = this.createEditModelAndView(reply);
-		} else {
-			try {
-				this.commentService.save(reply);
-				result = this.newModelAndView("redirect:/rendezvous/user/list.do");	
-			} catch (Throwable oops) {
-				result = this.createEditModelAndView(reply, "comment.commit.error");
-			}
-		}
-		
-		return result;
-	}
-	
 	
 	@RequestMapping(value="/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Comment comment, BindingResult binding){
