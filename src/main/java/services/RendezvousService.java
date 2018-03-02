@@ -127,11 +127,8 @@ public class RendezvousService {
 		Assert.isTrue(rendezvous.getId() != 0);
 		this.checkFinalMode(rendezvous);
 		
-		boolean res;
-		res = true;
-
-		rendezvous.setFinalMode(res);
-		rendezvous.setIsFlagged(res);
+		rendezvous.setFinalMode(true);
+		rendezvous.setIsFlagged(true);
 	}
 
 
