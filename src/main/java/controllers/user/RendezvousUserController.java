@@ -155,12 +155,16 @@ public class RendezvousUserController extends AbstractController {
 	public ModelAndView delete(final Rendezvous rendezvous, final BindingResult binding) {
 		ModelAndView result;
 		
-		try {
-			this.rendezvousService.delete(rendezvous);
-			result = new ModelAndView("redirect:createdRendezvouses.do");
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(rendezvous,
-					"rendezvous.commit.error");
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(rendezvous);
+		} else {
+			try {
+				this.rendezvousService.delete(rendezvous);
+				result = new ModelAndView("redirect:createdRendezvouses.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(rendezvous,
+						"rendezvous.commit.error");
+			}
 		}
 
 		return result;

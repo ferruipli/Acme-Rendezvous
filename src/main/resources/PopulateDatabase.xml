@@ -302,7 +302,7 @@
 	<bean class="domain.Rendezvous" id="rendezvous3">
 		<property value="rendezvous3" name="name"/>
 		<property value="description_rendezvous3" name="description"/>
-		<property value="2018/10/17 10:00" name="moment"/>
+		<property value="2016/10/17 10:00" name="moment"/>
 		<property name="gpsCoordinates">
 			<bean class="domain.GPS">
 				<property name="latitude" value="100.98434" />
