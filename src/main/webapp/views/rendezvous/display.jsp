@@ -114,7 +114,7 @@
 	
 	<jstl:choose>
 		<jstl:when test="${isReserved==false}">
-			<input type="submit" name="save" value="<spring:message code="rendezvous.rsvp" />" />
+			<input type="submit" name="rsvp" value="<spring:message code="rendezvous.rsvp" />" />
 		</jstl:when>
 		<jstl:when test="${isReserved==true}">
 			<input type="button" name="cancelRSVP"	value="<spring:message code="rendezvous.cancelReserve" />

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.RSVPService;
 import services.RendezvousService;
 import services.UserService;
 import controllers.AbstractController;
@@ -33,6 +34,9 @@ public class RendezvousUserController extends AbstractController {
 
 	@Autowired
 	private UserService			userService;
+	
+	@Autowired
+	private RSVPService			rsvpService;
 
 	// Constructors -----------------------------------------------------
 	public RendezvousUserController() {
@@ -89,6 +93,32 @@ public class RendezvousUserController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value="/display", method = RequestMethod.POST, params = "rsvp")
+	public ModelAndView doRSVP(@RequestParam int rendezvousId) {
+		ModelAndView result;
+		Rendezvous rendezvous;
+		String redirect;
+		
+		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		
+		if (rendezvous.getQuestions().size()>0) {
+			redirect = "redirect:question/user/questionnaire.do?rendezvousId=" + rendezvousId; 
+			result = new ModelAndView(redirect);
+		} else {
+			
+		}
+		
+		try {
+			this.rsvpService.save(rsvp);
+			result = new ModelAndView("redirect:createdRendezvouses.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(rendezvous,
+					"rendezvous.commit.error");
+		}
+
+		return result;
+	}
+	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int rendezvousId) {
 		ModelAndView result;
