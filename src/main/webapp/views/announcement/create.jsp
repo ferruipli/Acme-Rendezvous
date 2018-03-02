@@ -5,7 +5,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 
 <jsp:useBean id="now" class="java.util.Date" />
@@ -17,26 +17,16 @@
 	<form:hidden path="version" />
 	<form:hidden path="moment" />
 	<form:hidden path = "rendezvous"/>
-		
 	
-	<form:label path="title">
-		<spring:message code="announcement.title" />:
-	</form:label>
-	<form:input path="title" />
-	<form:errors cssClass="error" path="title" />
-	<br /><br/>
-		
-	<form:label path="description">
-		<spring:message code="announcement.description" />:
-	</form:label>
-	<form:textarea path="description" />
-	<form:errors cssClass="error" path="description" />
-	<br /><br />
-	
-	
-	<input type="submit" name="save" value="<spring:message code="announcement.save" />" />
-	<input type="button" name="cancel"	value="<spring:message code="announcement.cancel" />
-			"onclick="javascript: relativeRedir('welcome/index.do');" />
+	<acme:textbox code = "announcement.title" path="title"/>
+	<acme:textbox code = "announcement.description" path = "description"/>
+
+	<acme:submit name="save" code="announcement.save" />
+	<jstl:if test = "${rendezvous.id !=0 }">
+		<acme:submit name="delete" code="announcement.delete" />
+	</jstl:if>
+	<acme:cancel code="announcement.return" url="rendezvous/list.do" />
+
 	<br />
 	
 
