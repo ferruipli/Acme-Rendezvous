@@ -91,8 +91,8 @@
 		
 		<security:authorize access="hasRole('ADMINISTRATOR')">
 		<display:column>
-			<a href="announcement/administrator/display.do?announcementId=${row.id}">
-				<spring:message code="rendezvous.display" />
+			<a href="announcement/administrator/remove.do?announcementId=${row.id}">
+				<spring:message code="rendezvous.remove" />
 			</a>
 		</display:column>
 		
@@ -106,7 +106,7 @@
 	
 	<jstl:if test="${isCreator==true}">
 		<a href="announcement/user/create.do?rendezvousId=${rendezvous.id}">
-			<spring:message code="announcement.create" />
+			<spring:message code="announcement.createAnnouncement" />
 		</a>
 	</jstl:if>
 	

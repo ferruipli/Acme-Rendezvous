@@ -33,8 +33,8 @@
 	
 	<security:authorize access="hasRole('USER')">
 		<display:column>
-			<a href="comment/user/reply.do?commentId=${row.id}">
-				<spring:message code="comment.reply" /> 		
+			<a href="comment/user/display.do?commentId=${row.id}">
+				<spring:message code="comment.display" /> 		
 			</a>
 		</display:column>
 	</security:authorize>

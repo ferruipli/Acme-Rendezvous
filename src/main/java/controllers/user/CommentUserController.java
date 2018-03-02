@@ -1,6 +1,7 @@
 package controllers.user;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -17,6 +18,7 @@ import services.RendezvousService;
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Rendezvous;
+import domain.User;
 
 @Controller
 @RequestMapping("/comment/user")
@@ -73,7 +75,7 @@ public class CommentUserController extends AbstractController {
 		
 		return result;
 	}
-	
+		
 	
 	@RequestMapping(value="/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Comment comment, BindingResult binding){
@@ -93,22 +95,58 @@ public class CommentUserController extends AbstractController {
 		return result;
 	}
 	
-//	@RequestMapping(value="/reply", method = RequestMethod.GET)
-//	public ModelAndView reply(@RequestParam int commentId){
+	@RequestMapping(value="/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam int commentId){
+		ModelAndView result;
+		Date moment;
+		String	text, urlPicture;
+		User user;
+		Collection<Comment> repliedCommnets;
+		Rendezvous rendezvous;
+		Comment comment;
+		
+		comment = this.commentService.findOne(commentId);
+		
+		moment = comment.getMoment();
+		text = comment.getText();
+		urlPicture = comment.getUrlPicture();
+		user = comment.getUser();
+		repliedCommnets = comment.getRepliedComments();
+		rendezvous = comment.getRendezvous();
+		
+		result = new ModelAndView("comment/display");
+		result.addObject("moment", moment);
+		result.addObject("text", text);
+		result.addObject("urlPicture", urlPicture);
+		result.addObject("user", user);
+		result.addObject("repliedComments", repliedCommnets);
+		result.addObject("rendezvous", rendezvous);
+		result.addObject("comment", comment);
+		
+		return result;
+		
+		
+		
+	}
+	
+//	@RequestMapping(value="/reply", method = RequestMethod.POST, params="reply")
+//	public ModelAndView reply(@RequestParam int commentId, BindingResult binding){
 //		ModelAndView result;
-//		try {
-//
 //		Comment comment;
 //		Comment reply;
 //		
 //		comment = this.commentService.findOne(commentId);
-//		
 //		reply = this.commentService.create();
-//		this.commentService.addReply(comment, reply);
 //		
-//		result = this.createEditModelAndView(reply);
-//		} catch (Throwable oops) {
-//			result = this.newModelAndView("redirect:/welcome/index.do");
+//		if(binding.hasErrors()){
+//			result = this.createEditModelAndView(reply);
+//		} else {
+//			try {
+//				this.commentService.addReply(comment, reply);
+//				result = this.newModelAndView("redirect:/comment/user/display.do?commentId=" + commentId);
+//			} catch (Throwable oops) {
+//				result = this.createEditModelAndView(reply, "comment.commit.error");
+//			}
 //		}
 //		
 //		return result;
