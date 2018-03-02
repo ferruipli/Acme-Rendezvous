@@ -86,9 +86,11 @@
 	
 	<security:authorize access="hasRole('USER')">
 		<display:column class="${colorClass}">
-			<a href="rendezvous/user/display.do?rendezvousId=${row.id}">
-				<spring:message code="rendezvous.display" />
-			</a>
+			<jstl:if test="${canBeDisplayed==true}">
+				<a href="rendezvous/user/display.do?rendezvousId=${row.id}">
+					<spring:message code="rendezvous.display" />
+				</a>
+			</jstl:if>
 		</display:column>
 		<display:column class="${colorClass}">
 			<jstl:if test="${row.finalMode==false}">

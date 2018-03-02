@@ -136,10 +136,14 @@ public class RendezvousUserController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Rendezvous rendezvous, final BindingResult binding) {
 		ModelAndView result;
+			
+		if (rendezvous.getSimilarOnes() == null) {
+			rendezvous.setSimilarOnes(Collections.<Rendezvous>emptySet());
+		}
 		
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			result = this.createEditModelAndView(rendezvous);
-		else
+		} else {
 			try {
 				this.rendezvousService.save(rendezvous);
 				result = new ModelAndView("redirect:createdRendezvouses.do");
@@ -147,7 +151,7 @@ public class RendezvousUserController extends AbstractController {
 				result = this.createEditModelAndView(rendezvous,
 						"rendezvous.commit.error");
 			}
-
+		}
 		return result;
 	}
 
@@ -177,7 +181,7 @@ public class RendezvousUserController extends AbstractController {
 		Rendezvous rendezvous;
 		Collection<Rendezvous> similarOnes, reservedRendezvouses;
 		Collection<Announcement> announcements;
-		boolean isReserved, isCreator;
+		boolean isReserved, isCreator, canBeDisplayed;
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
 		user = (User) this.actorService.findByPrincipal();
@@ -189,13 +193,15 @@ public class RendezvousUserController extends AbstractController {
 
 		isReserved = reservedRendezvouses.contains(rendezvous);
 		isCreator = rendezvous.getCreator().equals(user);
-
+		canBeDisplayed = rendezvous.getAdultOnly()==false || (rendezvous.getAdultOnly()==true && this.actorService.getEdad(user)>=18);
+		
 		result = new ModelAndView("rendezvous/display");
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("similarOnes", similarOnes);
 		result.addObject("announcements", announcements);
 		result.addObject("isReserved", isReserved);
 		result.addObject("isCreator", isCreator);
+		result.addObject("canBeDisplayed",canBeDisplayed);
 
 		return result;
 	}

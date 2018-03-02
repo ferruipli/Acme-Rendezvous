@@ -66,6 +66,7 @@ public class RendezvousService {
 		result = this.rendezvousRepository.findOne(rendezvousId);
 
 		if (result.getAdultOnly() == true)
+			Assert.isTrue(this.actorService.findByPrincipal() != null);
 			this.checkAdult();
 
 		return result;
@@ -109,16 +110,18 @@ public class RendezvousService {
 
 		Rendezvous result,old=null;
 
-		if (rendezvous.getId() != 0)
+		if (rendezvous.getId() != 0) {
 			old = this.rendezvousRepository.findOne(rendezvous.getId());
 			this.checkFinalMode(old);
+		}
 		
 		result = this.rendezvousRepository.save(rendezvous);
 
-		if (rendezvous.getId() == 0)
+		if (rendezvous.getId() == 0) {
 			// Updates User::createdRendezvous of creator
 			this.userService.addRendezvous(rendezvous.getCreator(), result);
-
+		}
+		
 		return result;
 	}
 
