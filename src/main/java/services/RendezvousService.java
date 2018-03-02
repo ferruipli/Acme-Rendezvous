@@ -107,11 +107,12 @@ public class RendezvousService {
 		this.checkByPrincipal(rendezvous);
 		this.checkMoment(rendezvous.getMoment());
 
-		Rendezvous result;
+		Rendezvous result,old=null;
 
 		if (rendezvous.getId() != 0)
-			this.checkFinalMode(rendezvous);
-
+			old = this.rendezvousRepository.findOne(rendezvous.getId());
+			this.checkFinalMode(old);
+		
 		result = this.rendezvousRepository.save(rendezvous);
 
 		if (rendezvous.getId() == 0)
@@ -201,11 +202,7 @@ public class RendezvousService {
 			for (final Rendezvous r : rendezvouses)
 				this.removeSimilarOnes(r, rendezvous);
 
-		//if (rendezvous.getGpsCoordinates() != null)
-			//this.gpsService.delete(rendezvous.getGpsCoordinates());
-
 		this.rendezvousRepository.delete(rendezvous);
-
 	}
 
 	public void cancel(final Rendezvous rendezvous) {

@@ -4,6 +4,8 @@ package controllers.user;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -92,7 +94,7 @@ public class RendezvousUserController extends AbstractController {
 
 		return result;
 	}
-
+	/*
 	@RequestMapping(value="/display", method = RequestMethod.POST, params = "rsvp")
 	public ModelAndView doRSVP(@RequestParam int rendezvousId) {
 		ModelAndView result;
@@ -118,7 +120,7 @@ public class RendezvousUserController extends AbstractController {
 
 		return result;
 	}
-	
+	*/
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int rendezvousId) {
 		ModelAndView result;
@@ -132,12 +134,8 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Rendezvous rendezvous, final BindingResult binding) {
+	public ModelAndView save(@Valid Rendezvous rendezvous, final BindingResult binding) {
 		ModelAndView result;
-		
-		if (rendezvous.getSimilarOnes()==null) {
-			rendezvous.setSimilarOnes(Collections.<Rendezvous>emptySet());
-		}
 		
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(rendezvous);

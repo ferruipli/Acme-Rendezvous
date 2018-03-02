@@ -20,7 +20,8 @@
 	<display:column property="description" title="${descriptionHeader}" sortable="true"/>
 	
 	<spring:message code="rendezvous.moment" var="momentHeader" />
-	<display:column property="moment" title="${momentHeader}"/>
+	<spring:message code="rendezvous.formatMoment" var="formatHeader" />
+	<display:column property="moment" title="${momentHeader}" format="${formatHeader}" />
 
 	<spring:message code="rendezvous.creator" var="creatorHeader" />
 	<display:column title="${creatorHeader}">
