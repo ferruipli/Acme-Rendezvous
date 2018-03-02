@@ -87,7 +87,7 @@
 		
 		<spring:message code="rendezvous.formatMoment" var="formatMomentVar" />
 		<spring:message code="announcement.moment" var="momentHeader" />
-		<display:column property="title" title="${momentHeader}" format="${formatMomentVar}" sortable="true" />
+		<display:column property="moment" title="${momentHeader}" format="${formatMomentVar}" sortable="true" />
 		
 		<security:authorize access="hasRole('ADMINISTRATOR')">
 		<display:column>

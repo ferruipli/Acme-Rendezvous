@@ -1,6 +1,7 @@
 package controllers.user;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.validation.Valid;
@@ -75,7 +76,28 @@ public class CommentUserController extends AbstractController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value="/createReply", method = RequestMethod.GET)
+	public ModelAndView createReply(@RequestParam int commentId){
+		ModelAndView result;
+		Collection<Comment> repliedComments;
+		try {
+		Comment comment;	
+		Comment reply;
+		repliedComments = Collections.emptySet();
 		
+		comment = this.commentService.findOne(commentId);		
+		reply = this.commentService.create();
+		reply.setRendezvous(comment.getRendezvous());
+		repliedComments.add(reply);
+		comment.setRepliedComments(repliedComments);
+		result = this.createEditModelAndView(reply);
+		} catch (Throwable oops) {
+			result = this.newModelAndView("redirect:/welcome/index.do");
+		}
+		
+		return result;
+	}
 	
 	@RequestMapping(value="/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Comment comment, BindingResult binding){
@@ -129,28 +151,6 @@ public class CommentUserController extends AbstractController {
 		
 	}
 	
-//	@RequestMapping(value="/reply", method = RequestMethod.POST, params="reply")
-//	public ModelAndView reply(@RequestParam int commentId, BindingResult binding){
-//		ModelAndView result;
-//		Comment comment;
-//		Comment reply;
-//		
-//		comment = this.commentService.findOne(commentId);
-//		reply = this.commentService.create();
-//		
-//		if(binding.hasErrors()){
-//			result = this.createEditModelAndView(reply);
-//		} else {
-//			try {
-//				this.commentService.addReply(comment, reply);
-//				result = this.newModelAndView("redirect:/comment/user/display.do?commentId=" + commentId);
-//			} catch (Throwable oops) {
-//				result = this.createEditModelAndView(reply, "comment.commit.error");
-//			}
-//		}
-//		
-//		return result;
-//	}
 	
 	// Ancillary methods ------------------------------------------------------
 	
