@@ -75,7 +75,7 @@ public class RendezvousUserController extends AbstractController {
 
 		user = (User) this.actorService.findByPrincipal();
 		rendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
-
+	
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("isReserved", isReserved);
@@ -181,27 +181,29 @@ public class RendezvousUserController extends AbstractController {
 		Rendezvous rendezvous;
 		Collection<Rendezvous> similarOnes, reservedRendezvouses;
 		Collection<Announcement> announcements;
-		boolean isReserved, isCreator, canBeDisplayed;
+		boolean isReserved, isCreator;
 
-		rendezvous = this.rendezvousService.findOne(rendezvousId);
-		user = (User) this.actorService.findByPrincipal();
+		try {
+			rendezvous = this.rendezvousService.findOne(rendezvousId);
+			user = (User) this.actorService.findByPrincipal();
 
-		similarOnes = rendezvous.getSimilarOnes();
-		announcements = rendezvous.getAnnouncements();
+			similarOnes = rendezvous.getSimilarOnes();
+			announcements = rendezvous.getAnnouncements();
 
-		reservedRendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
+			reservedRendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
 
-		isReserved = reservedRendezvouses.contains(rendezvous);
-		isCreator = rendezvous.getCreator().equals(user);
-		canBeDisplayed = rendezvous.getAdultOnly()==false || (rendezvous.getAdultOnly()==true && this.actorService.getEdad(user)>=18);
-		
-		result = new ModelAndView("rendezvous/display");
-		result.addObject("rendezvous", rendezvous);
-		result.addObject("similarOnes", similarOnes);
-		result.addObject("announcements", announcements);
-		result.addObject("isReserved", isReserved);
-		result.addObject("isCreator", isCreator);
-		result.addObject("canBeDisplayed",canBeDisplayed);
+			isReserved = reservedRendezvouses.contains(rendezvous);
+			isCreator = rendezvous.getCreator().equals(user);
+					
+			result = new ModelAndView("rendezvous/display");
+			result.addObject("rendezvous", rendezvous);
+			result.addObject("similarOnes", similarOnes);
+			result.addObject("announcements", announcements);
+			result.addObject("isReserved", isReserved);
+			result.addObject("isCreator", isCreator);
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
 
 		return result;
 	}

@@ -69,28 +69,28 @@
 	</security:authorize>
 	
 	<security:authorize access="isAnonymous()">
-	<display:column class="${colorClass}">
-			<a href="rendezvous/display.do?rendezvousId=${row.id}">
-				<spring:message code="rendezvous.display" />
-			</a>
+		<display:column class="${colorClass}">
+			<jstl:if test="${row.adultOnly==true}">
+				<a href="rendezvous/display.do?rendezvousId=${row.id}">
+					<spring:message code="rendezvous.display" />
+				</a>
+			</jstl:if>
 		</display:column>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('ADMINISTRATOR')">
-	<display:column class="${colorClass}">
-			<a href="rendezvous/display.do?rendezvousId=${row.id}">
-				<spring:message code="rendezvous.display" />
-			</a>
-		</display:column>
+				<display:column class="${colorClass}">
+					<a href="rendezvous/display.do?rendezvousId=${row.id}">
+						<spring:message code="rendezvous.display" />
+					</a>
+				</display:column>
 		</security:authorize>
 	
 	<security:authorize access="hasRole('USER')">
 		<display:column class="${colorClass}">
-			<jstl:if test="${canBeDisplayed==true}">
-				<a href="rendezvous/user/display.do?rendezvousId=${row.id}">
-					<spring:message code="rendezvous.display" />
-				</a>
-			</jstl:if>
+			<a href="rendezvous/user/display.do?rendezvousId=${row.id}">
+				<spring:message code="rendezvous.display" />
+			</a>
 		</display:column>
 		<display:column class="${colorClass}">
 			<jstl:if test="${row.finalMode==false}">

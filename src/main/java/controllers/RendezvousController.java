@@ -70,15 +70,19 @@ public class RendezvousController extends AbstractController {
 		Collection<Rendezvous> similarOnes;
 		Collection<Announcement> announcements;
 
-		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		try {
+			rendezvous = this.rendezvousService.findOne(rendezvousId);
 
-		similarOnes = rendezvous.getSimilarOnes();
-		announcements = rendezvous.getAnnouncements();
-
-		result = new ModelAndView("rendezvous/display");
-		result.addObject("rendezvous", rendezvous);
-		result.addObject("similarOnes", similarOnes);
-		result.addObject("announcements", announcements);
+			similarOnes = rendezvous.getSimilarOnes();
+			announcements = rendezvous.getAnnouncements();
+			
+			result = new ModelAndView("rendezvous/display");
+			result.addObject("rendezvous", rendezvous);
+			result.addObject("similarOnes", similarOnes);
+			result.addObject("announcements", announcements);
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
 
 		return result;
 	}
