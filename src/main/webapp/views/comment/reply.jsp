@@ -13,7 +13,6 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="moment" />
-	<form:hidden path="comment"/>
 	<form:hidden path="rendezvous"/>
 	<form:hidden path="user"/>
 	
@@ -24,7 +23,7 @@
 	<form:errors cssClass="error" path="text" />
 	<br /><br/>	
 	
-	<input type="submit" name="save" value="<spring:message code="comment.save" />" />
+	<input type="submit" name="createReply" value="<spring:message code="comment.save" />" />
 	<input type="button" name="cancel"	value="<spring:message code="comment.cancel" />
 			"onclick="javascript:history.back();" />
 	<br />
