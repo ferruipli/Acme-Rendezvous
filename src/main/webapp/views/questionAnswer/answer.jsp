@@ -14,28 +14,24 @@
 <form:form action="question/user/questionnaire.do" modelAttribute="questionnaireForm">
 
 	<form:hidden path="questions"/>
-	<form:hidden path="answers"/>
-	<form:hidden path="currentQuestionNumber"/>
-
-	<form:label path="text">
- 		<h2> <spring:message code="question.title"/> <jstl:out value="${questionnaireForm.currentQuestionNumber+1}"/>/<jstl:out value="${numberOfQuestions}"/>: <jstl:out value="${questionnaireForm.questions[questionnaireForm.currentQuestionNumber].statement}"/> </h2> <br>
-	</form:label>
-	<form:input path="text"/>	
-	<form:errors path="text" cssClass="error" />
-	<br>
+	<form:hidden path="rendezvous"/>
+	
+	<jstl:if test="${not empty questionnaireForm.questions}">
+		<jstl:forEach var="question" items="${questionnaireForm.questions}" varStatus="i">
+			<form:label path="answers[${i.index}]">
+		 		<h2> <jstl:out value="${questionnaireForm.questions[i.index].statement}"/> </h2> <br>
+			</form:label>
+			<form:input path="answers[${i.index}]"/>	
+			<form:errors path="answers[${i.index}]" cssClass="error" />
+			<br>
+		</jstl:forEach>
+	</jstl:if>
 
 	<!-- Buttons -->
 	
 	<br>
-	<acme:cancel code="question.cancel" url="welcome/index.do"/>&nbsp;
-	
-	<jstl:choose>
-		<jstl:when test="${questionnaireForm.currentQuestionNumber+1 == numberOfQuestions}">
-			<acme:submit name="finish" code="question.finish"/>
-		</jstl:when>
-		<jstl:otherwise>
-			<acme:submit name="next" code="question.next"/>
-		</jstl:otherwise>
-	</jstl:choose>
+	<acme:cancel code="question.label.cancel" url="rendezvous/display.do?rendezvousId=${questionnaireForm.rendezvous.id}"/>
+	&nbsp;	
+	<acme:submit name="finish" code="question.finish"/>
 	
 </form:form>

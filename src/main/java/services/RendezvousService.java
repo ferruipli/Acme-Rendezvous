@@ -50,7 +50,8 @@ public class RendezvousService {
 	private QuestionService			questionService;
 
 	@Autowired
-	private CommentService 			commentService;
+	private CommentService			commentService;
+
 
 	// Constructors ---------------------------------------------------------
 	public RendezvousService() {
@@ -65,9 +66,10 @@ public class RendezvousService {
 
 		result = this.rendezvousRepository.findOne(rendezvousId);
 
-		if (result.getAdultOnly() == true)
+		if (result.getAdultOnly() == true) {
 			Assert.isTrue(this.actorService.findByPrincipal() != null);
 			this.checkAdult();
+		}
 
 		return result;
 	}
@@ -88,9 +90,9 @@ public class RendezvousService {
 		gpsCoordinates = new GPS();
 		gpsCoordinates.setLatitude(0.0);
 		gpsCoordinates.setLongitude(0.0);
-		
-		user = (User)this.actorService.findByPrincipal();
-		
+
+		user = (User) this.actorService.findByPrincipal();
+
 		result = new Rendezvous();
 		result.setAnnouncements(Collections.<Announcement> emptySet());
 		result.setAttendants(Collections.<User> emptySet());
@@ -108,20 +110,19 @@ public class RendezvousService {
 		this.checkByPrincipal(rendezvous);
 		this.checkMoment(rendezvous.getMoment());
 
-		Rendezvous result,old=null;
+		Rendezvous result, old = null;
 
 		if (rendezvous.getId() != 0) {
 			old = this.rendezvousRepository.findOne(rendezvous.getId());
 			this.checkFinalMode(old);
 		}
-		
+
 		result = this.rendezvousRepository.save(rendezvous);
 
-		if (rendezvous.getId() == 0) {
+		if (rendezvous.getId() == 0)
 			// Updates User::createdRendezvous of creator
 			this.userService.addRendezvous(rendezvous.getCreator(), result);
-		}
-		
+
 		return result;
 	}
 
@@ -129,11 +130,10 @@ public class RendezvousService {
 		this.checkByPrincipal(rendezvous);
 		Assert.isTrue(rendezvous.getId() != 0);
 		this.checkFinalMode(rendezvous);
-		
+
 		rendezvous.setFinalMode(true);
 		rendezvous.setIsFlagged(true);
 	}
-
 
 	// Other business methods -----------------------------------------------
 
@@ -165,20 +165,18 @@ public class RendezvousService {
 		Collection<Question> questions;
 		Collection<Announcement> announcements;
 		Collection<Comment> comments;
-		
+
 		rendezvouses = rendezvous.getSimilarOnes();
 		RSVPs = rendezvous.getReserves();
 		questions = rendezvous.getQuestions();
 		announcements = rendezvous.getAnnouncements();
 		comments = rendezvous.getComments();
-		
+
 		// Removing all the comments relates with this rendezvous
-		if (comments != null && !comments.isEmpty()) {
-			for (Comment c: comments) {
+		if (comments != null && !comments.isEmpty())
+			for (final Comment c : comments)
 				this.commentService.remove(c);
-			}
-		}
-		
+
 		//Removing all the RSVP relates with this rendezvous
 		if (RSVPs != null && !RSVPs.isEmpty())
 			for (final RSVP rs : RSVPs)
@@ -424,12 +422,12 @@ public class RendezvousService {
 
 		return result;
 	}
-	
-	public Rendezvous findRendezvousByRSVPId(int rsvpId){
+
+	public Rendezvous findRendezvousByRSVPId(final int rsvpId) {
 		Rendezvous result;
-		
+
 		result = this.rendezvousRepository.findRendezvousByRSVPId(rsvpId);
-		
+
 		return result;
 	}
 }

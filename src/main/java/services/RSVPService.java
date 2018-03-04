@@ -35,7 +35,7 @@ public class RSVPService {
 
 	@Autowired
 	private ActorService		actorService;
-	
+
 	@Autowired
 	private UserService			userService;
 
@@ -48,19 +48,28 @@ public class RSVPService {
 
 	// CRUD methods ---------------------------------------------------------
 
-	public RSVP create(final Rendezvous rendezvous) {
+	public RSVP create(final Rendezvous rendezvous, final Collection<Answer> answers) {
 		RSVP result;
 		User user;
 
 		result = new RSVP();
-		user = (User) this.actorService.findByPrincipal();
+		user = this.userService.findByPrincipal();
 
-		result.setAnswers(Collections.<Answer> emptySet());
+		result.setAnswers(answers);
 		result.setUser(user);
 		result.setRendezvous(rendezvous);
 
 		return result;
+	}
 
+	public RSVP create(final Rendezvous rendezvous) {
+		RSVP result;
+		Collection<Answer> answers;
+
+		answers = Collections.emptySet();
+		result = this.create(rendezvous, answers);
+
+		return result;
 	}
 
 	public RSVP findOne(final int rsvpId) {
@@ -87,24 +96,16 @@ public class RSVPService {
 		Date date;
 		User user;
 		long edad;
-		Rendezvous rendezvous;
 
-		user = (User) this.actorService.findByPrincipal();
+		user = this.userService.findByPrincipal();
 		edad = this.actorService.getEdad(user);
-		rendezvous = this.rendezvousService.findRendezvousByRSVPId(rsvp.getId());
-		
-		rsvp.setUser(user);
-		rsvp.setAnswers(Collections.<Answer> emptySet());
-		rsvp.setRendezvous(rendezvous);
-		
-		if(rsvp.getRendezvous().getAdultOnly()==true){
-			Assert.isTrue(edad>=18);
-		}
+
+		if (rsvp.getRendezvous().getAdultOnly() == true)
+			Assert.isTrue(edad >= 18);
 		date = new Date(System.currentTimeMillis());
 
 		Assert.isTrue(rsvp.getRendezvous().getMoment().after(date));
 
-		this.rendezvousService.addAttendant(rsvp.getRendezvous(), user);
 		result = this.rsvpRepository.save(rsvp);
 
 		return result;
@@ -123,16 +124,16 @@ public class RSVPService {
 
 	}
 
-	public void removeByAdmin(RSVP rsvp) {
+	public void removeByAdmin(final RSVP rsvp) {
 		Assert.notNull(rsvp);
 		Assert.isTrue(rsvp.getId() != 0);
-		
+
 		// Update User::reserves
-		this.userService.removeRSVP(rsvp.getUser(),rsvp);
-			
+		this.userService.removeRSVP(rsvp.getUser(), rsvp);
+
 		this.rsvpRepository.delete(rsvp);
 	}
-	
+
 	public List<RSVP> findOrderedRSVPByRendezvousId(final int rendezvousId) {
 		List<RSVP> result;
 

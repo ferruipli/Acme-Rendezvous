@@ -2,18 +2,23 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.AnswerRepository;
 import domain.Answer;
 import domain.Question;
+import domain.Rendezvous;
+import domain.User;
 import forms.QuestionnaireForm;
 
 @Service
@@ -29,6 +34,15 @@ public class AnswerService {
 
 	@Autowired
 	private QuestionService		questionService;
+
+	@Autowired
+	private Validator			validator;
+
+	@Autowired
+	private UserService			userService;
+
+	@Autowired
+	private ActorService		actorService;
 
 
 	// Constructors ---------------------------------------------------------
@@ -62,6 +76,14 @@ public class AnswerService {
 		return result;
 	}
 
+	public List<Answer> save(final List<Answer> answers) {
+		List<Answer> result;
+
+		result = this.answerRepository.save(answers);
+
+		return result;
+	}
+
 	public void delete(final Answer answer) {
 		Assert.notNull(answer);
 		Assert.isTrue(answer.getId() != 0);
@@ -72,34 +94,45 @@ public class AnswerService {
 	// Other business methods -----------------------------------------------
 
 	/** Crea el listado de Answer a partir de las respuestas guardadas en QuestionnaireForm. Además guarda en la base de datos todas las Answer. **/
-	public List<Answer> reconstructAndSaveAnswers(final QuestionnaireForm questionnaireForm, final BindingResult binding) {
+	public List<Answer> reconstruct(final QuestionnaireForm questionnaireForm, final BindingResult binding) {
 		List<Answer> result;
-		Answer answer, saved;
+		List<Question> questions;
+		Answer answer;
 		int questionId, numberOfQuestions, i;
 
+		this.validateQuestionnaire(questionnaireForm, binding);
+
 		result = new ArrayList<>();
-		numberOfQuestions = questionnaireForm.getQuestions().size();
+		questions = questionnaireForm.getQuestions();
+		numberOfQuestions = questions.size();
 
 		for (i = 0; i < numberOfQuestions; i++) {
-			questionId = questionnaireForm.getQuestions().get(i).getId();
+			questionId = questions.get(i).getId();
 			answer = this.create(questionId);
 			answer.setText(questionnaireForm.getAnswers().get(i));
-			saved = this.save(answer);
-			result.add(saved);
+			result.add(answer);
+
+			this.validator.validate(answer, binding);
 		}
 
 		return result;
 	}
 
-	/** Valida el texto de la última respuesta registrada **/
-	public String getValidatedAnswerText(final QuestionnaireForm questionnaireForm, final BindingResult binding) {
-		String result;
+	private void validateQuestionnaire(final QuestionnaireForm questionnaireForm, final BindingResult binding) {
+		Rendezvous rendezvous;
+		User principal;
+		Collection<Question> questionnaireQuestions, rendezvousQuestions;
 
-		result = questionnaireForm.getText();
-		if ("".equals(result))
-			binding.rejectValue("text", "question.error.blank", "Must not be blank");
+		rendezvous = questionnaireForm.getRendezvous();
+		principal = this.userService.findByPrincipal();
+		questionnaireQuestions = questionnaireForm.getQuestions();
+		rendezvousQuestions = rendezvous.getQuestions();
 
-		return result;
+		if (!rendezvous.getFinalMode() || rendezvous.getIsFlagged() || rendezvous.getMoment().before(LocalDate.now().toDate()) || rendezvous.getAdultOnly() && this.actorService.getEdad(principal) < 18)
+			binding.rejectValue(null, "", "Invalid rendezvous");
+
+		if (questionnaireQuestions.size() != rendezvousQuestions.size() || !questionnaireQuestions.containsAll(rendezvousQuestions))
+			binding.rejectValue(null, "", "Questionnaire questions does not match with rendezvous questions");
 	}
 
 	public List<Answer> findOrderedAnswersByRendezvousId(final int rendezvousId) {

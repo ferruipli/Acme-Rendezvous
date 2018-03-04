@@ -4,31 +4,23 @@ package forms;
 import java.util.List;
 
 import domain.Question;
+import domain.Rendezvous;
 
 public class QuestionnaireForm {
 
 	// Attributes -------------------------------------------------------------
 
-	private String			text;
-	private List<Question>	questions;
+	private Rendezvous		rendezvous;
 	private List<String>	answers;
-	private int				currentQuestionNumber;
+	private List<Question>	questions;
 
 
-	public String getText() {
-		return this.text;
+	public Rendezvous getRendezvous() {
+		return this.rendezvous;
 	}
 
-	public void setText(final String text) {
-		this.text = text;
-	}
-
-	public List<Question> getQuestions() {
-		return this.questions;
-	}
-
-	public void setQuestions(final List<Question> questions) {
-		this.questions = questions;
+	public void setRendezvous(final Rendezvous rendezvous) {
+		this.rendezvous = rendezvous;
 	}
 
 	public List<String> getAnswers() {
@@ -39,12 +31,12 @@ public class QuestionnaireForm {
 		this.answers = answers;
 	}
 
-	public int getCurrentQuestionNumber() {
-		return this.currentQuestionNumber;
+	public List<Question> getQuestions() {
+		return this.questions;
 	}
 
-	public void setCurrentQuestionNumber(final int currentQuestionNumber) {
-		this.currentQuestionNumber = currentQuestionNumber;
+	public void setQuestions(final List<Question> questions) {
+		this.questions = questions;
 	}
 
 }
