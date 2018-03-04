@@ -91,8 +91,7 @@ public class RSVPUserController extends AbstractController {
 		rsvp = this.rsvpService.findRSVPByUserAndRendezvous(user.getId(), rendezvousId);
 		this.rsvpService.cancel(rsvp);
 		result = new ModelAndView("redirect:../../rendezvous/user/list.do");
-		result.addObject("user", user);
-		result.addObject("rendezvous", rsvp.getRendezvous());
+		
 		return result;
 	}
 
