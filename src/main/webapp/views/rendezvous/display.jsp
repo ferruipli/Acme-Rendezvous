@@ -126,7 +126,13 @@
 				<acme:cancel url="rsvp/user/create.do?rendezvousId=${rendezvous.id}" code="rendezvous.reserve"/>
 			</jstl:when>
 			<jstl:when test="${isReserved==true}">
+<<<<<<< HEAD
 				<acme:cancel url="rendezvous/user/display.do?rendezvousId=${rendezvous.id}" code="rendezvous.cancelReserve"/>
+=======
+				<a href="rsvp/user/cancelRSVP.do?rendezvousId=${rendezvous.id}">
+				<spring:message code="rendezvous.cancelReserve" />
+			</a>
+>>>>>>> 7ab51175477bd7063e3bd569083b05310b52d1be
 			</jstl:when>
 		</jstl:choose>
 	</security:authorize>

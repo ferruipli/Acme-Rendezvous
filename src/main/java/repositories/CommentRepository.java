@@ -12,4 +12,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 	/** Level A **/
 	@Query("select avg(c.repliedComments.size), sqrt(sum(c.repliedComments.size*c.repliedComments.size)/count(c.repliedComments.size)-avg(c.repliedComments.size)*avg(c.repliedComments.size)) from Comment c")
 	Double[] avgSqrtRepliesPerComment();
+	
+	@Query("select c from Comment c join c.repliedComments re where re.id = ?1 and re member of c.repliedComments")
+	Comment findCommentByReplyCommentId(int replyId);
 }

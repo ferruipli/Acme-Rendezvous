@@ -1,7 +1,6 @@
 package controllers.user;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 
 import javax.validation.Valid;
@@ -77,37 +76,33 @@ public class CommentUserController extends AbstractController {
 		return result;
 	}
 	
-	@RequestMapping(value="/createReply", method = RequestMethod.GET)
-	public ModelAndView createReply(@RequestParam int commentId){
-		ModelAndView result;
-		Collection<Comment> repliedComments;
-		try {
-		Comment comment;	
-		Comment reply;
-		repliedComments = Collections.emptySet();
-		
-		comment = this.commentService.findOne(commentId);		
-		reply = this.commentService.create();
-		reply.setRendezvous(comment.getRendezvous());
-		repliedComments.add(reply);
-		comment.setRepliedComments(repliedComments);
-		result = this.createEditModelAndView(reply);
-		} catch (Throwable oops) {
-			result = this.newModelAndView("redirect:/welcome/index.do");
-		}
-		
-		return result;
-	}
+	@RequestMapping(value = "/createReply", method = RequestMethod.GET)
+    public ModelAndView createReply(@RequestParam int commentId) {
+        ModelAndView result;
+        Comment comment,reply;
+        
+        comment = this.commentService.findOne(commentId);
+
+        reply = this.commentService.create();
+        reply.setRendezvous(comment.getRendezvous());
+        
+        result = this.createEditModelAndView(reply);
+        
+        return result;
+    }
 	
 	@RequestMapping(value="/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Comment comment, BindingResult binding){
 		ModelAndView result;
+		Comment commenParent;
 		
 		if(binding.hasErrors()){
 			result = this.createEditModelAndView(comment);
 		} else {
 			try {
 				this.commentService.save(comment);
+				commenParent = this.commentService.findCommentByReplyId(comment.getId());
+				this.commentService.addReply(commenParent, comment);
 				result = this.newModelAndView("redirect:/rendezvous/user/list.do");	
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(comment, "comment.commit.error");

@@ -3,11 +3,8 @@ package controllers.user;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -84,20 +81,18 @@ public class RSVPUserController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/cancelRSVP", method = RequestMethod.POST, params = "cancelRSVP")
-	public ModelAndView cancelRSVP(@Valid final RSVP rsvp, final BindingResult binding) {
+	@RequestMapping(value = "/cancelRSVP", method = RequestMethod.GET)
+	public ModelAndView cancelRSVP(@RequestParam final int rendezvousId) {
 		ModelAndView result;
+		User user;
+		RSVP rsvp;
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(rsvp);
-		else
-			try {
-				this.rsvpService.cancel(rsvp);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(rsvp, "rendezvous.commit.error");
-			}
-
+		user = (User) this.actorService.findByPrincipal();
+		rsvp = this.rsvpService.findRSVPByUserAndRendezvous(user.getId(), rendezvousId);
+		this.rsvpService.cancel(rsvp);
+		result = new ModelAndView("redirect:../../rendezvous/user/list.do");
+		result.addObject("user", user);
+		result.addObject("rendezvous", rsvp.getRendezvous());
 		return result;
 	}
 

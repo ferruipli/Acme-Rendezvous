@@ -25,6 +25,13 @@
 	<form:errors cssClass="error" path="text" />
 	<br /><br/>	
 	
+	<form:label path="urlPicture">
+		<spring:message code="comment.urlPicture" />:
+	</form:label>
+	<form:input path="urlPicture" />
+	<form:errors cssClass="error" path="urlPicture" />
+	<br /><br/>	
+	
 	<input type="submit" name="save" value="<spring:message code="comment.save" />" />
 	<input type="button" name="cancel"	value="<spring:message code="comment.cancel" />
 			"onclick="javascript: relativeRedir('rendezvous/user/list.do');" />

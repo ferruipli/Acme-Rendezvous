@@ -1,9 +1,9 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -132,9 +132,18 @@ public class CommentService {
 	public void addReply(Comment comment, Comment reply){
 		Collection<Comment> aux;
 		
-		aux = new HashSet<>(comment.getRepliedComments());
+		aux = new ArrayList<>(comment.getRepliedComments());
 		aux.add(reply);
 		comment.setRepliedComments(aux);
+	}
+	
+	public Comment findCommentByReplyId(int replyId){
+		Comment result;
+		
+		result = this.commentRepository.findCommentByReplyCommentId(replyId);
+		
+		return result;
+		
 	}
 	
 }
