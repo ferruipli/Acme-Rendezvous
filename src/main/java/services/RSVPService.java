@@ -142,4 +142,11 @@ public class RSVPService {
 		return result;
 	}
 
+	public RSVP findRSVPByUserAndRendezvous(final int userId, final int rendezvousId){
+		RSVP result;
+		
+		result = this.rsvpRepository.findRSVPByUserAndRendezvous(userId, rendezvousId);
+		
+		return result;
+	}
 }

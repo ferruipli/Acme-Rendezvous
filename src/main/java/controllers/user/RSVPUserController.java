@@ -84,24 +84,20 @@ public class RSVPUserController extends AbstractController {
 			
 	}
 	
-	@RequestMapping(value="/cancelRSVP", method = RequestMethod.POST, params = "cancelRSVP")
-	public ModelAndView cancelRSVP(@Valid RSVP rsvp, BindingResult binding){
+	@RequestMapping(value="/cancelRSVP", method = RequestMethod.GET)
+	public ModelAndView cancelRSVP(@RequestParam int rendezvousId){
 		ModelAndView result;
+		User user;
+		RSVP rsvp;
 		
-		if(binding.hasErrors()){
-			result = this.createEditModelAndView(rsvp);
-		} else {
-			try {
-				this.rsvpService.cancel(rsvp);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (Throwable oops) {
-				result = this.createEditModelAndView(rsvp, "rendezvous.commit.error");
-			}
-		}
-		
+		user = (User) this.actorService.findByPrincipal();
+		rsvp = this.rsvpService.findRSVPByUserAndRendezvous(user.getId(), rendezvousId);
+		this.rsvpService.cancel(rsvp);
+		result = new ModelAndView("redirect:../../rendezvous/user/list.do");
+		result.addObject("user", user);
+		result.addObject("rendezvous", rsvp.getRendezvous());
 		return result;
 	}
-	
 	
 	// Arcillary methods ------------------------------------------------
 	
