@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -71,6 +72,7 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@SafeHtml
+	@Pattern(regexp = "(\\+[0-9]+)? ?([0-9 ]+)?")
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
