@@ -17,10 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AnswerService;
 import services.QuestionService;
+import services.RSVPService;
 import services.RendezvousService;
 import controllers.AbstractController;
 import domain.Answer;
 import domain.Question;
+import domain.RSVP;
 import domain.Rendezvous;
 import forms.QuestionnaireForm;
 
@@ -38,6 +40,9 @@ public class QuestionAnswerUserController extends AbstractController {
 
 	@Autowired
 	private RendezvousService	rendezvousService;
+
+	@Autowired
+	private RSVPService			rsvpService;
 
 	// Controllers ------------------------------------------------------------
 
@@ -129,30 +134,9 @@ public class QuestionAnswerUserController extends AbstractController {
 		questionnaireForm = new QuestionnaireForm();
 		questionnaireForm.setAnswers(answers);
 		questionnaireForm.setQuestions(questions);
-		questionnaireForm.setCurrentQuestionNumber(0);
+		questionnaireForm.setRendezvous(rendezvous);
 
 		result = this.answerModelAndView(questionnaireForm);
-
-		return result;
-	}
-
-	// Next question ----------------------------------------------------------
-
-	@RequestMapping(value = "/questionnaire", method = RequestMethod.POST, params = "next")
-	public ModelAndView nextQuestion(final QuestionnaireForm questionnaireForm, final BindingResult binding) {
-		ModelAndView result;
-		String currentAnswerText;
-
-		currentAnswerText = this.answerService.getValidatedAnswerText(questionnaireForm, binding);
-		if (binding.hasErrors())
-			result = this.answerModelAndView(questionnaireForm);
-		else
-			try {
-				this.iterateQuestionnaireForm(questionnaireForm, currentAnswerText);
-				result = this.answerModelAndView(questionnaireForm);
-			} catch (final Throwable oops) {
-				result = this.answerModelAndView(questionnaireForm, "question.error.commit");
-			}
 
 		return result;
 	}
@@ -162,20 +146,19 @@ public class QuestionAnswerUserController extends AbstractController {
 	@RequestMapping(value = "/questionnaire", method = RequestMethod.POST, params = "finish")
 	public ModelAndView finishQuestionnaire(final QuestionnaireForm questionnaireForm, final BindingResult binding) {
 		ModelAndView result;
-		String lastAnswerText;
+		Rendezvous rendezvous;
+		RSVP rsvp;
 		List<Answer> answers;
-		int rendezvousId;
 
-		lastAnswerText = this.answerService.getValidatedAnswerText(questionnaireForm, binding);
+		answers = this.answerService.reconstruct(questionnaireForm, binding);
 		if (binding.hasErrors())
-			result = this.answerModelAndView(questionnaireForm);
+			result = this.answerModelAndView(questionnaireForm, "question.error.answers");
 		else
 			try {
-				questionnaireForm.getAnswers().add(lastAnswerText);
-				Assert.isTrue(questionnaireForm.getAnswers().size() == questionnaireForm.getQuestions().size());
-				answers = this.answerService.reconstructAndSaveAnswers(questionnaireForm, binding);
-				rendezvousId = this.rendezvousService.findRendezvousByAnswerId(answers.get(0).getId());
-				result = this.rsvpUserController.answers(answers, rendezvousId);
+				answers = this.answerService.save(answers);
+				rendezvous = questionnaireForm.getRendezvous();
+				rsvp = this.rsvpService.create(rendezvous, answers);
+				result = this.rsvpUserController.save(rsvp);
 			} catch (final Throwable oops) {
 				result = this.answerModelAndView(questionnaireForm, "question.error.commit");
 			}
@@ -184,15 +167,6 @@ public class QuestionAnswerUserController extends AbstractController {
 	}
 
 	// Ancillary methods ------------------------------------------------------
-
-	private void iterateQuestionnaireForm(final QuestionnaireForm questionnaireForm, final String currentAnswerText) {
-		int nextQuestionNumber;
-
-		nextQuestionNumber = questionnaireForm.getCurrentQuestionNumber() + 1;
-		questionnaireForm.getAnswers().add(currentAnswerText);
-		questionnaireForm.setCurrentQuestionNumber(nextQuestionNumber);
-		questionnaireForm.setText("");
-	}
 
 	protected ModelAndView answerModelAndView(final QuestionnaireForm questionnaireForm) {
 		ModelAndView result;
@@ -208,7 +182,6 @@ public class QuestionAnswerUserController extends AbstractController {
 		result = new ModelAndView("questionAnswer/answer");
 		result.addObject("message", messageCode);
 		result.addObject("questionnaireForm", questionnaireForm);
-		result.addObject("numberOfQuestions", questionnaireForm.getQuestions().size());
 
 		return result;
 	}

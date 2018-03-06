@@ -65,7 +65,7 @@
 	</p>
 	<p>
 		<strong> <spring:message code="rendezvous.attendants"/>: </strong>
-		<a href="questions/list.do?rendezvousIs=${rendezvous.id}">
+		<a href="question/list.do?rendezvousId=${rendezvous.id}">
 	 		<spring:message code="rendezvous.link" />
 		</a>
 	</p>
@@ -94,18 +94,9 @@
 		<display:table name="announcements" id="row" class="displaytag">
 			<spring:message code="announcement.title" var="titleHeader" />
 			<display:column property="title" title="${titleHeader}" sortable="true" />
-	
-<<<<<<< HEAD
-		<spring:message code="announcement.description" var="descriptionHeader" />
-		<display:column property="description" title="${descriptionHeader}" sortable="true" />
-		
-		<spring:message code="rendezvous.formatMoment" var="formatMomentVar" />
-		<spring:message code="announcement.moment" var="momentHeader" />
-		<display:column property="moment" title="${momentHeader}" format="${formatMomentVar}" sortable="true" />
-=======
+
 			<spring:message code="announcement.description" var="descriptionHeader" />
 			<display:column property="description" title="${descriptionHeader}" sortable="true" />
->>>>>>> f025a0104014a411aff788c3c38dd8e81204a9a0
 		
 			<spring:message code="rendezvous.formatMoment" var="formatMomentVar" />
 			<spring:message code="announcement.moment" var="momentHeader" />
@@ -132,11 +123,13 @@
 	
 		<jstl:choose>
 			<jstl:when test="${isReserved==false}">
-				<input type="submit" name="rsvp" value="<spring:message code="rendezvous.rsvp" />" />
+				<acme:cancel url="rsvp/user/create.do?rendezvousId=${rendezvous.id}" code="rendezvous.reserve"/>
 			</jstl:when>
 			<jstl:when test="${isReserved==true}">
-				<input type="button" name="cancelRSVP"	value="<spring:message code="rendezvous.cancelReserve" />
-					"onclick="javascript: relativeRedir('rendezvous/user/display.do?rendezvousId=${rendezvous.id}');">
+				<acme:cancel url="rendezvous/user/display.do?rendezvousId=${rendezvous.id}" code="rendezvous.cancelReserve"/>
+				<a href="rsvp/user/cancelRSVP.do?rendezvousId=${rendezvous.id}">
+					<spring:message code="rendezvous.cancelReserve" />
+				</a>
 			</jstl:when>
 		</jstl:choose>
 	</security:authorize>
