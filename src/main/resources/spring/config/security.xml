@@ -50,7 +50,6 @@
 		
 		
 		<security:intercept-url pattern="/dashboard/administrator/**" access = "hasRole('ADMINISTRATOR')"/>
-		<security:intercept-url pattern="/rendezvous/administrator/**" access = "hasRole('ADMINISTRATOR')"/>
 		
 		<security:intercept-url pattern="/legalTexts/termsAndConditions.do" access="permitAll" />
 		<security:intercept-url pattern="/legalTexts/legalData.do" access="permitAll" />
@@ -63,6 +62,7 @@
 		<security:intercept-url pattern="/rendezvous/listReserved.do" access="permitAll" />
 		<security:intercept-url pattern="/rendezvous/display.do" access="permitAll" />
 		<security:intercept-url pattern="/rendezvous/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/rendezvous/administrator/**" access = "hasRole('ADMINISTRATOR')"/>
 		
 		<security:intercept-url pattern="/rsvp/user/**" access="hasRole('USER')"/>
 		

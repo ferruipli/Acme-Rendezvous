@@ -129,7 +129,11 @@ public class RendezvousService {
 	public void delete(final Rendezvous rendezvous) {
 		this.checkByPrincipal(rendezvous);
 		Assert.isTrue(rendezvous.getId() != 0);
-		this.checkFinalMode(rendezvous);
+		
+		Rendezvous old;
+		
+		old = this.rendezvousRepository.findOne(rendezvous.getId());
+		this.checkFinalMode(old);
 
 		rendezvous.setFinalMode(true);
 		rendezvous.setIsFlagged(true);
@@ -382,7 +386,7 @@ public class RendezvousService {
 
 	}
 
-	public Rendezvous finRendezvousFromAComment(final int commentId) {
+	public Rendezvous findRendezvousFromAComment(final int commentId) {
 		Rendezvous result;
 
 		result = this.rendezvousRepository.findRendezvousFromAComment(commentId);

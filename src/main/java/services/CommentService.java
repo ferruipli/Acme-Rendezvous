@@ -74,14 +74,17 @@ public class CommentService {
 	}
 	
 	public void delete(Comment comment){
+		Assert.notNull(comment);
 		Assert.isTrue(comment.getId() != 0);
+		
 		Rendezvous rendezvous;
 		
-		rendezvous = this.rendezvousService.finRendezvousFromAComment(comment.getId());
+		rendezvous = this.rendezvousService.findRendezvousFromAComment(comment.getId());
+		
+		// Updating the comments about a rendezvous
 		this.rendezvousService.removeComment(rendezvous, comment);
 		
 		this.commentRepository.delete(comment);
-		
 	}
 	
 	public void remove(Comment comment) {
@@ -93,6 +96,7 @@ public class CommentService {
 	
 	public Comment save(Comment comment){
 		Assert.notNull(comment);
+		
 		Comment result;
 		Rendezvous rendezvous;
 		User user;
