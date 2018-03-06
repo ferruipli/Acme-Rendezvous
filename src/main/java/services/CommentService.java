@@ -95,6 +95,7 @@ public class CommentService {
 	}
 	
 	public Comment save(Comment comment){
+		this.checkByPrincipal(comment);
 		Assert.notNull(comment);
 		
 		Comment result;
@@ -127,12 +128,6 @@ public class CommentService {
 		return result;
 	}
 	
-	public void remove(int commentId) {
-		Assert.isTrue(commentId != 0);
-
-		this.commentRepository.delete(commentId);
-	}
-	
 	public void addReply(Comment comment, Comment reply){
 		Collection<Comment> aux;
 		
@@ -148,6 +143,16 @@ public class CommentService {
 		
 		return result;
 		
+	}
+	
+	private void checkByPrincipal(Comment comment) {
+		Assert.notNull(comment);
+
+		User user;
+
+		user = (User) this.actorService.findByPrincipal();
+
+		Assert.isTrue(comment.getUser().equals(user));
 	}
 	
 }

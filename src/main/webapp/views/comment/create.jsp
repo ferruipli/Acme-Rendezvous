@@ -5,6 +5,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <!-- EDIT/CREATE  TRIP -->
 
@@ -18,23 +19,12 @@
 	<form:hidden path="user"/>
 	<form:hidden path="repliedComments"/>
 	
-	<form:label path="text">
-		<spring:message code="comment.text" />:
-	</form:label>
-	<form:input path="text" />
-	<form:errors cssClass="error" path="text" />
-	<br /><br/>	
+	<acme:textbox code="comment.text" path="text"/>
 	
-	<form:label path="urlPicture">
-		<spring:message code="comment.urlPicture" />:
-	</form:label>
-	<form:input path="urlPicture" />
-	<form:errors cssClass="error" path="urlPicture" />
-	<br /><br/>	
+	<acme:textbox code="comment.urlPicture" path="urlPicture"/>
 	
-	<input type="submit" name="save" value="<spring:message code="comment.save" />" />
-	<input type="button" name="cancel"	value="<spring:message code="comment.cancel" />
-			"onclick="javascript: relativeRedir('rendezvous/user/list.do');" />
+	<acme:submit name="save" code="comment.save" />
+	<acme:cancel url="rendezvous/user/list.do" code="comment.cancel"/>
 	<br />
 	
 

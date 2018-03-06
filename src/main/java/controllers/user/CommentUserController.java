@@ -94,15 +94,12 @@ public class CommentUserController extends AbstractController {
 	@RequestMapping(value="/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Comment comment, BindingResult binding){
 		ModelAndView result;
-		Comment commenParent;
 		
 		if(binding.hasErrors()){
 			result = this.createEditModelAndView(comment);
 		} else {
 			try {
 				this.commentService.save(comment);
-				commenParent = this.commentService.findCommentByReplyId(comment.getId());
-				this.commentService.addReply(commenParent, comment);
 				result = this.newModelAndView("redirect:/rendezvous/user/list.do");	
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(comment, "comment.commit.error");
@@ -174,5 +171,6 @@ public class CommentUserController extends AbstractController {
 		}
 		return result;
 	}
+	
 
 }
