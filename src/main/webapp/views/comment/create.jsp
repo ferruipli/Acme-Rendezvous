@@ -19,19 +19,9 @@
 	<form:hidden path="user"/>
 	<form:hidden path="repliedComments"/>
 	
-	<form:label path="text">
-		<spring:message code="comment.text" />:
-	</form:label>
-	<form:input path="text" />
-	<form:errors cssClass="error" path="text" />
-	<br /><br/>	
+	<acme:textbox code="comment.text" path="text"/>
 	
-	<form:label path="urlPicture">
-		<spring:message code="comment.urlPicture" />:
-	</form:label>
-	<form:input path="urlPicture" />
-	<form:errors cssClass="error" path="urlPicture" />
-	<br /><br/>	
+	<acme:textbox code="comment.urlPicture" path="urlPicture"/>
 	
 	<acme:submit name="save" code="comment.save" />
 	<acme:cancel url="rendezvous/user/list.do" code="comment.cancel"/>
