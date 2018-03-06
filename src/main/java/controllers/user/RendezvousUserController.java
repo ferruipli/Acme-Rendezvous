@@ -132,18 +132,16 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final Rendezvous rendezvous, final BindingResult binding) {
+	public ModelAndView delete(Rendezvous rendezvous, BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(rendezvous);
-		else
-			try {
-				this.rendezvousService.delete(rendezvous);
-				result = new ModelAndView("redirect:createdRendezvouses.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
-			}
+		try {
+			this.rendezvousService.delete(rendezvous);
+			result = new ModelAndView("redirect:createdRendezvouses.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(rendezvous,
+					"rendezvous.commit.error");
+		}
 
 		return result;
 	}

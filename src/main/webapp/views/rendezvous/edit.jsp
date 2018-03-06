@@ -22,7 +22,7 @@
 	
 	<acme:textbox code="rendezvous.name" path="name" />
 	<acme:textbox code="rendezvous.description" path="description" />
-	<acme:textbox code="rendezvous.moment" path="moment" />
+	<acme:textbox code="rendezvous.moment" path="moment" placeholder="dd/MM/yyyy HH:mm" />
 
 	<acme:radio code="rendezvous.finalMode" path="finalMode"
 		 message1="finalMode.true" message2="finalMode.false" />

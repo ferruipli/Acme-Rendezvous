@@ -71,7 +71,7 @@
 	</p>
 	<p>
 		<strong> <spring:message code="rendezvous.creator"/>: </strong>
-		<a href="actor/display.do?userId=${rendezvous.creator.id}">
+		<a href="user/profile.do?userId=${rendezvous.creator.id}">
 	 		<jstl:out value="${rendezvous.creator.name}" />
 		</a>
 	</p>
@@ -81,7 +81,7 @@
 		<ul>
 			<jstl:forEach items="${similarOnes}" var="similarOne">
 				<li>
-					<a href="rendezvous/user/display.do?rendezvousId=${similarOne.id}">
+					<a href="rendezvous/display.do?rendezvousId=${similarOne.id}">
 		 				<jstl:out value="${similarOne.name}" />
 		 			</a>
 				</li>

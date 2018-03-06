@@ -58,7 +58,7 @@ public class RendezvousController extends AbstractController {
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("isReserved", isReserved);
-		result.addObject("requestMapping", "rendezvous/list.do");
+		result.addObject("requestURI", "rendezvous/list.do");
 
 		return result;
 	}
@@ -72,14 +72,19 @@ public class RendezvousController extends AbstractController {
 
 		try {
 			rendezvous = this.rendezvousService.findOne(rendezvousId);
-
-			similarOnes = rendezvous.getSimilarOnes();
-			announcements = rendezvous.getAnnouncements();
 			
-			result = new ModelAndView("rendezvous/display");
-			result.addObject("rendezvous", rendezvous);
-			result.addObject("similarOnes", similarOnes);
-			result.addObject("announcements", announcements);
+			if (rendezvous.getFinalMode()) {
+				similarOnes = rendezvous.getSimilarOnes();
+				announcements = rendezvous.getAnnouncements();
+				
+				result = new ModelAndView("rendezvous/display");
+				result.addObject("rendezvous", rendezvous);
+				result.addObject("similarOnes", similarOnes);
+				result.addObject("announcements", announcements);
+			} else {
+				result = new ModelAndView("redirect:list.do");
+			}
+			
 		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:list.do");
 		}

@@ -70,7 +70,7 @@
 	
 	<security:authorize access="isAnonymous()">
 		<display:column class="${colorClass}">
-			<jstl:if test="${row.adultOnly==true}">
+			<jstl:if test="${row.adultOnly==false}">
 				<a href="rendezvous/display.do?rendezvousId=${row.id}">
 					<spring:message code="rendezvous.display" />
 				</a>
@@ -111,6 +111,13 @@
 	</security:authorize>
 
 </display:table>
+
+<div id="message">
+	<p> 
+		<spring:message code="rendezvous.notice" var="varNotice" />
+		<jstl:out value="${varNotice}" />
+	</p>
+</div>
 
 <security:authorize access="hasRole('USER')">
 	<p>
