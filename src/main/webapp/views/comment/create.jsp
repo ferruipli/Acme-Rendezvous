@@ -5,6 +5,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <!-- EDIT/CREATE  TRIP -->
 
@@ -32,9 +33,8 @@
 	<form:errors cssClass="error" path="urlPicture" />
 	<br /><br/>	
 	
-	<input type="submit" name="save" value="<spring:message code="comment.save" />" />
-	<input type="button" name="cancel"	value="<spring:message code="comment.cancel" />
-			"onclick="javascript: relativeRedir('rendezvous/user/list.do');" />
+	<acme:submit name="save" code="comment.save" />
+	<acme:cancel url="rendezvous/user/list.do" code="comment.cancel"/>
 	<br />
 	
 

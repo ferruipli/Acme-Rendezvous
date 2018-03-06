@@ -15,6 +15,7 @@
 	<form:hidden path="moment" />
 	<form:hidden path="rendezvous"/>
 	<form:hidden path="user"/>
+	<form:hidden path="repliedComments"/>
 	
 	<form:label path="text">
 		<spring:message code="reply.text" />:
@@ -23,9 +24,15 @@
 	<form:errors cssClass="error" path="text" />
 	<br /><br/>	
 	
-	<input type="submit" name="createReply" value="<spring:message code="comment.save" />" />
-	<input type="button" name="cancel"	value="<spring:message code="comment.cancel" />
-			"onclick="javascript:history.back();" />
+	<form:label path="urlPicture">
+		<spring:message code="comment.urlPicture" />:
+	</form:label>
+	<form:input path="urlPicture" />
+	<form:errors cssClass="error" path="urlPicture" />
+	<br /><br/>	
+	
+	<acme:submit name="save" code="comment.save"/>
+	<acme:cancel url="javascript:history.back();" code="comment.cancel"/>
 	<br />
 	
 	
