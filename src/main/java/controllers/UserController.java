@@ -60,11 +60,14 @@ public class UserController extends AbstractController {
 	// Profile ----------------------------------------------------------------
 
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public ModelAndView profile(@RequestParam final int userId) {
+	public ModelAndView profile(@RequestParam(required = false) final Integer userId) {
 		ModelAndView result;
 		User user;
 
-		user = this.userService.findOne(userId);
+		if (userId != null)
+			user = this.userService.findOne(userId);
+		else
+			user = this.userService.findByPrincipal();
 
 		result = new ModelAndView("user/profile");
 		result.addObject("user", user);

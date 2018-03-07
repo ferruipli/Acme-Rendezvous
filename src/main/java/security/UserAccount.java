@@ -67,6 +67,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	}
 
 	@Size(min = 5, max = 32)
+	@SafeHtml
 	@Override
 	public String getPassword() {
 		return this.password;

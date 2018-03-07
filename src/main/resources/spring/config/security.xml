@@ -48,7 +48,6 @@
 		<security:intercept-url pattern="/comment/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/comment/administrator/**" access="hasRole('ADMINISTRATOR')" />
 		
-		
 		<security:intercept-url pattern="/dashboard/administrator/**" access = "hasRole('ADMINISTRATOR')"/>
 		
 		<security:intercept-url pattern="/legalTexts/termsAndConditions.do" access="permitAll" />
@@ -66,12 +65,11 @@
 		
 		<security:intercept-url pattern="/rsvp/user/**" access="hasRole('USER')"/>
 		
-		<security:intercept-url pattern="/user/**" access="permitAll" />
-		<security:intercept-url pattern="/user/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/user/register.do" access="isAnonymous()" />
-		
-		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
+		<security:intercept-url pattern="/user/**" access="permitAll" />
 
+		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
+		
 		<security:form-login 
 			login-page="/security/login.do"
 			password-parameter="password" 
