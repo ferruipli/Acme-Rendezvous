@@ -52,7 +52,12 @@ public class RendezvousController extends AbstractController {
 		Collection<Rendezvous> rendezvouses;
 		boolean isReserved;
 
-		rendezvouses = this.rendezvousService.findAllAvailable();
+		try {
+			rendezvouses = this.rendezvousService.findAllAvailable();
+		} catch (Throwable oops) {
+			rendezvouses = this.rendezvousService.findAllAvailable2();
+		}
+		
 		isReserved = false;
 
 		result = new ModelAndView("rendezvous/list");

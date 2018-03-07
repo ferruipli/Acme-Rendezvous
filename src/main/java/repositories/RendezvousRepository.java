@@ -41,6 +41,9 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 
 	@Query("select r from Rendezvous r where r.finalMode=true")
 	Collection<Rendezvous> findAllAvailable();
+	
+	@Query("select r from Rendezvous r where r.finalMode=true and r.adultOnly=false")
+	Collection<Rendezvous> findAllAvailable2();
 
 	@Query("select r from Rendezvous r join r.announcements a where a.id=? and a member of r.announcements")
 	Rendezvous findRendezvousByAnnouncement(int announcementId);

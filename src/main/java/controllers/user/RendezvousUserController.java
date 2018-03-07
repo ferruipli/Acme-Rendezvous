@@ -193,11 +193,14 @@ public class RendezvousUserController extends AbstractController {
 		ModelAndView result;
 		Collection<Rendezvous> similarOnes;
 		User user;
-
+		/*
 		user = this.userService.findByPrincipal();
 		similarOnes = user.getCreatedRendezvouses();
 		similarOnes.remove(rendezvous);
-
+		*/
+		
+		similarOnes = this.rendezvousService.findAll();
+		
 		result = new ModelAndView("rendezvous/edit");
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("similarRendezvouses", similarOnes);
