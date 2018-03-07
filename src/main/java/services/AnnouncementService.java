@@ -26,6 +26,9 @@ public class AnnouncementService {
 	@Autowired
 	private RendezvousService		rendezvousService;
 
+	@Autowired
+	private ActorService			actorService;
+
 
 	// Supporting services
 	// ------------------------------------------------------------------
@@ -62,6 +65,8 @@ public class AnnouncementService {
 
 		this.rendezvousService.addAnnouncement(rendezvous, result);
 
+		Assert.isTrue(this.actorService.findByPrincipal() == rendezvous.getCreator());
+
 		return result;
 	}
 
@@ -71,6 +76,8 @@ public class AnnouncementService {
 
 		rendezvous = this.rendezvousService.findRendezvousByAnnouncement(announcement.getId());
 		this.rendezvousService.removeAnnouncement(rendezvous, announcement);
+
+		Assert.isTrue(this.actorService.findByPrincipal() == rendezvous.getCreator());
 
 		this.announcementRepository.delete(announcement);
 	}
