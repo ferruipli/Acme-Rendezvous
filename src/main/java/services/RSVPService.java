@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -29,10 +30,7 @@ public class RSVPService {
 	private RSVPRepository		rsvpRepository;
 
 	// Supporting services ------------------------------------------------------------------
-
-	@Autowired
-	private RendezvousService	rendezvousService;
-
+	
 	@Autowired
 	private ActorService		actorService;
 
@@ -119,7 +117,7 @@ public class RSVPService {
 
 		user = (User) this.actorService.findByPrincipal();
 
-		this.rendezvousService.removeAttendant(rsvp.getRendezvous(), user);
+		this.removeAttendant(rsvp.getRendezvous(), user);
 		this.rsvpRepository.delete(rsvp);
 
 	}
@@ -149,5 +147,13 @@ public class RSVPService {
 		result = this.rsvpRepository.findRSVPByUserAndRendezvous(userId, rendezvousId);
 		
 		return result;
+	}
+	
+	protected void removeAttendant(final Rendezvous rendezvous, final User attendant) {
+		Collection<User> aux;
+
+		aux = new HashSet<>(rendezvous.getAttendants());
+		aux.remove(attendant);
+		rendezvous.setAttendants(aux);
 	}
 }

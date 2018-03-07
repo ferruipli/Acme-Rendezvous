@@ -143,24 +143,27 @@ public class RendezvousService {
 
 	public Collection<Rendezvous> findAllAvailable() {
 		Collection<Rendezvous> results;
-
-		results = this.rendezvousRepository.findAllAvailable();
-
+		User user;
+		
+		user = this.userService.findByPrincipal();
+		
+		if (!user.equals(null) && this.actorService.getEdad(user)>=18) {
+			results = this.rendezvousRepository.findAllAvailable();
+		} else {
+			results = this.findAllAvailable2();
+		}
+		
 		return results;
 	}
 
-	public void reserve(final int rendezvousId) {
-		Assert.isTrue(rendezvousId != 0);
-
-		User user;
-		Rendezvous rendezvous;
-
-		user = (User) this.actorService.findByPrincipal();
-		rendezvous = this.rendezvousRepository.findOne(rendezvousId);
-
-		this.addAttendant(rendezvous, user);
+	public Collection<Rendezvous> findAllAvailable2() {
+		Collection<Rendezvous> results;
+		
+		results = this.rendezvousRepository.findAllAvailable2();
+		
+		return results;
 	}
-
+	
 	public void remove(final Rendezvous rendezvous) {
 		Assert.isTrue(rendezvous.getId() != 0);
 
@@ -207,15 +210,6 @@ public class RendezvousService {
 		this.rendezvousRepository.delete(rendezvous);
 	}
 
-	public void cancel(final Rendezvous rendezvous) {
-		Assert.notNull(rendezvous);
-		User user;
-
-		user = (User) this.actorService.findByPrincipal();
-
-		this.removeAttendant(rendezvous, user);
-	}
-
 	private void checkMoment(final Date date) {
 		Date currentMoment;
 
@@ -246,22 +240,6 @@ public class RendezvousService {
 
 	private void checkFinalMode(final Rendezvous rendezvous) {
 		Assert.isTrue(rendezvous.getFinalMode() == false);
-	}
-
-	protected void addAttendant(final Rendezvous rendezvous, final User attendant) {
-		Collection<User> aux;
-
-		aux = new HashSet<>(rendezvous.getAttendants());
-		aux.add(attendant);
-		rendezvous.setAttendants(aux);
-	}
-
-	protected void removeAttendant(final Rendezvous rendezvous, final User attendant) {
-		Collection<User> aux;
-
-		aux = new HashSet<>(rendezvous.getAttendants());
-		aux.remove(attendant);
-		rendezvous.setAttendants(aux);
 	}
 
 	public void addComment(final Rendezvous rendezvous, final Comment comment) {
@@ -299,7 +277,7 @@ public class RendezvousService {
 		rendezvous.setSimilarOnes(aux);
 	}
 
-	public void addAnnouncement(final Rendezvous rendezvous, final Announcement announcement) {
+	protected void addAnnouncement(final Rendezvous rendezvous, final Announcement announcement) {
 		Collection<Announcement> aux;
 
 		aux = new HashSet<>(rendezvous.getAnnouncements());
