@@ -76,16 +76,16 @@ public class CommentUserController extends AbstractController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/createReply", method = RequestMethod.GET)
-    public ModelAndView createReply(@RequestParam int commentId) {
+	@RequestMapping(value = "/reply", method = RequestMethod.GET)
+    public ModelAndView reply(@RequestParam int commentId) {
         ModelAndView result;
-        Comment comment,reply;
+        Comment parentComment,reply;
         
-        comment = this.commentService.findOne(commentId);
+        parentComment = this.commentService.findOne(commentId);
 
         reply = this.commentService.create();
-        reply.setRendezvous(comment.getRendezvous());
-        
+        reply.setRendezvous(parentComment.getRendezvous());
+        reply.setParentComment(parentComment);
         result = this.createEditModelAndView(reply);
         
         return result;
@@ -115,9 +115,9 @@ public class CommentUserController extends AbstractController {
 		Date moment;
 		String	text, urlPicture;
 		User user;
-		Collection<Comment> repliedCommnets;
+		Collection<Comment> descendantComments;
 		Rendezvous rendezvous;
-		Comment comment;
+		Comment comment, parentComment;
 		
 		comment = this.commentService.findOne(commentId);
 		
@@ -125,7 +125,8 @@ public class CommentUserController extends AbstractController {
 		text = comment.getText();
 		urlPicture = comment.getUrlPicture();
 		user = comment.getUser();
-		repliedCommnets = comment.getRepliedComments();
+		parentComment = comment.getParentComment();
+		descendantComments = comment.getDescendantComments();
 		rendezvous = comment.getRendezvous();
 		
 		result = new ModelAndView("comment/display");
@@ -133,7 +134,8 @@ public class CommentUserController extends AbstractController {
 		result.addObject("text", text);
 		result.addObject("urlPicture", urlPicture);
 		result.addObject("user", user);
-		result.addObject("repliedComments", repliedCommnets);
+		result.addObject("parentComment", parentComment);
+		result.addObject("descendantComments", descendantComments);
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("comment", comment);
 		
@@ -163,7 +165,7 @@ public class CommentUserController extends AbstractController {
 		result.addObject("comment", comment);
 		result.addObject("rendezvous", comment.getRendezvous());
 		result.addObject("moment", comment.getMoment());
-		result.addObject("repliedComments", comment.getRepliedComments());
+		result.addObject("descendantComments", comment.getDescendantComments());
 		result.addObject("message", messageCode);
 		
 		} catch (Throwable oops) {

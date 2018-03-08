@@ -17,7 +17,8 @@
 	<form:hidden path="moment" />
 	<form:hidden path="rendezvous"/>
 	<form:hidden path="user"/>
-	<form:hidden path="repliedComments"/>
+	<form:hidden path="descendantComments"/>
+	<form:hidden path="parentComment"/>
 	
 	<acme:textbox code="comment.text" path="text"/>
 	
