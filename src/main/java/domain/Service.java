@@ -3,8 +3,6 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
@@ -60,15 +58,5 @@ public class Service extends DomainEntity {
 	}
 	
 	// Relationships ----------------------------------------
-	private Manager manager;
 	
-	@NotNull
-	@ManyToOne(optional = false)
-	public Manager getManager(){
-		return this.manager;
-	}
-	
-	public void setManager(Manager manager){
-		this.manager = manager;
-	}
 }
