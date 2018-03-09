@@ -37,22 +37,27 @@
 	<jstl:out value="${comment.rendezvous.name}" />
 </p>
 
+<p>
+	<strong> <spring:message code="comment.parentComment"/>: </strong>
+	<jstl:out value="${comment.parentComment.text}" />
+</p>
 
-<jstl:if test="${repliedComments.size() > 0}">
-	<p> <strong> <spring:message code="comment.repliedComments" /> </strong> </p>
-	<display:table name="repliedComments" id="row" class="displaytag">
-		<spring:message code="repliedComment.text" var="textHeader" />
+
+<jstl:if test="${descendantComments.size() > 0}">
+	<p> <strong> <spring:message code="comment.descendantComments" /> </strong> </p>
+	<display:table name="descendantComments" id="row" class="displaytag">
+		<spring:message code="descendantComments.text" var="textHeader" />
 		<display:column property="text" title="${textHeader}" sortable="true" />
 		
-		<spring:message code="repliedComment.formatMoment" var="formatMomentVar" />
-		<spring:message code="repliedComment.moment" var="momentHeader" />
+		<spring:message code="descendantComments.formatMoment" var="formatMomentVar" />
+		<spring:message code="descendantComments.moment" var="momentHeader" />
 		<display:column property="moment" title="${momentHeader}" format="${formatMomentVar}" sortable="true" />	
 		
 	</display:table>
 </jstl:if>
 
 <security:authorize access="hasRole('USER')">
-	<a href="comment/user/createReply.do?commentId=${row.id}">
+	<a href="comment/user/reply.do?commentId=${row.id}">
 				<spring:message code="comment.replyComment" /> 		
 	</a>	
 

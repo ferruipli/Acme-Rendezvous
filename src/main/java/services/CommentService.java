@@ -1,9 +1,9 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -43,14 +43,16 @@ public class CommentService {
 		Comment result;
 		Date moment;
 		User user;
+		Collection<Comment> descendantComments;
 		
 		user = (User) this.actorService.findByPrincipal();
 		moment = new Date(System.currentTimeMillis()-1);
 		result = new Comment();
+		descendantComments = Collections.emptySet();
 		
 		result.setMoment(moment);
 		result.setUser(user);
-		result.setRepliedComments(Collections.<Comment> emptySet());
+		result.setDescendantComments(descendantComments);
 		
 		return result;
 	}
@@ -97,18 +99,33 @@ public class CommentService {
 	public Comment save(Comment comment){
 		this.checkByPrincipal(comment);
 		Assert.notNull(comment);
+		Assert.isTrue(comment.getDescendantComments().isEmpty());
 		
-		Comment result;
+		Comment result, parentComment;
 		Rendezvous rendezvous;
 		User user;
 		Date currentMoment;
 		
 		currentMoment = new Date();
 		Assert.isTrue(comment.getMoment().before(currentMoment));
-		user = (User) this.actorService.findByPrincipal();
-		comment.setRepliedComments(Collections.<Comment> emptySet());
-		comment.setUser(user);
 		comment.setMoment(currentMoment);
+		
+		user = (User) this.actorService.findByPrincipal();
+		comment.setUser(user);
+		
+		parentComment = comment.getParentComment();
+		
+		if(comment.getId()==0){
+			this.commentRepository.save(comment);
+		} else {
+			if(comment.getParentComment()!=null){
+				this.addDescendantComment(parentComment, comment);
+				this.commentRepository.save(parentComment);
+				this.commentRepository.save(comment);
+			} else {
+				this.commentRepository.save(comment);
+			}
+		}
 		result = this.commentRepository.save(comment);
 		rendezvous = result.getRendezvous();
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
@@ -120,6 +137,30 @@ public class CommentService {
 
 	// Other business methods ------------------------------------------------------------
 	
+	public void setParentComent(final Comment comment, final int parentCommentId) {
+		Assert.isTrue(comment.getId() == 0);
+
+		final Comment parentComment = this.findOne(parentCommentId);
+
+		comment.setParentComment(parentComment);
+	}
+
+	protected void addDescendantComment(final Comment comment, final Comment descendant) {
+		Collection<Comment> aux;
+
+		aux = new HashSet<>(comment.getDescendantComments());
+		aux.add(descendant);
+		comment.setDescendantComments(aux);
+	}
+
+	protected void removeDescendantComment(final Comment comment, final Comment descendant) {
+		Collection<Comment> aux;
+
+		aux = new HashSet<>(comment.getDescendantComments());
+		aux.remove(descendant);
+		comment.setDescendantComments(aux);
+	}
+	
 	public Double[] avgSqrtRepliesPerComment(){
 		Double[] result;
 		
@@ -128,13 +169,6 @@ public class CommentService {
 		return result;
 	}
 	
-	public void addReply(Comment comment, Comment reply){
-		Collection<Comment> aux;
-		
-		aux = new ArrayList<>(comment.getRepliedComments());
-		aux.add(reply);
-		comment.setRepliedComments(aux);
-	}
 	
 	public Comment findCommentByReplyId(int replyId){
 		Comment result;

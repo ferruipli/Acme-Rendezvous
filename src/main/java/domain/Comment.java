@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -30,13 +29,11 @@ public class Comment extends DomainEntity {
 		super();
 	}
 
-
 	// Attributes -------------------------------------------------------------
 
-	private Date	moment;
-	private String	text;
-	private String	urlPicture;
-
+	private Date moment;
+	private String text;
+	private String urlPicture;
 
 	@NotNull
 	@Past
@@ -70,31 +67,20 @@ public class Comment extends DomainEntity {
 		this.urlPicture = urlPicture;
 	}
 
-
 	// Relationships ------------------------------------------------
-	private User				user;
-	private Collection<Comment>	repliedComments;
-
-	private Rendezvous			rendezvous;
-
+	private User user;
+	private Rendezvous rendezvous;
+	private Collection<Comment> descendantComments;
+	private Comment parentComment;
 
 	@Valid
 	@ManyToOne(optional = false)
 	public Rendezvous getRendezvous() {
 		return this.rendezvous;
 	}
+
 	public void setRendezvous(final Rendezvous rendezvous) {
 		this.rendezvous = rendezvous;
-	}
-
-	@NotNull
-	@OneToMany
-	public Collection<Comment> getRepliedComments() {
-		return this.repliedComments;
-	}
-
-	public void setRepliedComments(final Collection<Comment> repliedComments) {
-		this.repliedComments = repliedComments;
 	}
 
 	@NotNull
@@ -108,4 +94,24 @@ public class Comment extends DomainEntity {
 		this.user = user;
 	}
 
+	@NotNull
+	@OneToMany(mappedBy = "parentComment")
+	public Collection<Comment> getDescendantComments() {
+		return this.descendantComments;
+	}
+
+	public void setDescendantComments(
+			final Collection<Comment> descendantComments) {
+		this.descendantComments = descendantComments;
+	}
+
+	@Valid
+	@ManyToOne(optional = true)
+	public Comment getParentComment() {
+		return this.parentComment;
+	}
+
+	public void setParentComment(final Comment parentComment) {
+		this.parentComment = parentComment;
+	}
 }

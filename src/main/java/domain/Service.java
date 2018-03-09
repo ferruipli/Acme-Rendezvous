@@ -57,4 +57,6 @@ public class Service extends DomainEntity {
 		this.isCancelled = isCancelled;
 	}
 	
+	// Relationships ----------------------------------------
+	
 }

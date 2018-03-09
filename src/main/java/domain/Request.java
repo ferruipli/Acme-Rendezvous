@@ -3,6 +3,7 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -38,4 +39,28 @@ public class Request extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 	
+	//Relationships
+	
+	private Service service;
+	private Rendezvous rendezvous;
+	
+	@NotNull
+	@ManyToOne(optional=false)
+	public Service getService(){
+		return this.service;
+	}
+	
+	public void setService(Service service){
+		this.service = service;
+	}
+	
+	@NotNull
+	@ManyToOne(optional=false)
+	public Rendezvous getRendezvous(){
+		return this.rendezvous;
+	}
+	
+	public void setRendezvous(Rendezvous rendezvous){
+		this.rendezvous = rendezvous;
+	}
 }
