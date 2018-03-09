@@ -49,6 +49,15 @@
 		<bean class="converters.UserToStringConverter" />
 		<bean class="converters.StringToUserConverter" />
 		
+		<bean class="converters.ServiceToStringConverter" />
+		<bean class="converters.StringToServiceConverter" />
+		
+		<bean class="converters.ManagerToStringConverter" />
+		<bean class="converters.StringToManagerConverter" />
+		
+		<bean class="converters.RequestToStringConverter" />
+		<bean class="converters.StringToRequestConverter" />
+		
 	</util:list>
 	
 </beans>
