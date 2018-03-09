@@ -41,20 +41,22 @@ public class Request extends DomainEntity {
 	
 	//Relationships
 	
-	private Service service;
+	private Services service;
 	private Rendezvous rendezvous;
 	
 	@NotNull
+	@Valid
 	@ManyToOne(optional=false)
-	public Service getService(){
+	public Services getService(){
 		return this.service;
 	}
 	
-	public void setService(Service service){
+	public void setService(Services service){
 		this.service = service;
 	}
 	
 	@NotNull
+	@Valid
 	@ManyToOne(optional=false)
 	public Rendezvous getRendezvous(){
 		return this.rendezvous;

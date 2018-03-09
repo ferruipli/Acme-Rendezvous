@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Service extends DomainEntity {
+public class Services extends DomainEntity {
 
 	// Attributes ---------------------------
 	private String name;
@@ -18,7 +18,7 @@ public class Service extends DomainEntity {
 	private boolean isCancelled;
 	
 	// Constructors ------------------------
-	public Service() {
+	public Services() {
 		super();
 	}
 
