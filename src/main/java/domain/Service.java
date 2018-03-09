@@ -49,11 +49,11 @@ public class Service extends DomainEntity {
 		this.urlPicture = urlPicture;
 	}
 
-	public boolean isCancelled() {
+	public boolean getIsCancelled() {
 		return isCancelled;
 	}
 
-	public void setCancelled(boolean isCancelled) {
+	public void setIsCancelled(boolean isCancelled) {
 		this.isCancelled = isCancelled;
 	}
 	
