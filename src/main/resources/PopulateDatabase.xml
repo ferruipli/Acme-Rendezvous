@@ -149,6 +149,14 @@
 		<property value = "1987/11/22" name="birthdate"/>
 		<property name="userAccount" ref="userAccount2"/>
 		<property value="abc123" name="VAT" />
+		<property name="services">
+			<list>
+				<ref bean="service1" />
+				<ref bean="service2" />
+				<ref bean="service3" />
+				<ref bean="service4" />
+			</list>
+		</property>
 	</bean>
 	
 	<bean class="domain.Manager" id="manager2">
@@ -160,6 +168,13 @@
 		<property value = "1991/01/15" name="birthdate"/>
 		<property name="userAccount" ref="userAccount3"/>
 		<property value="def456-" name="VAT" />
+		<property name="services">
+			<list>
+				<ref bean="service5" />
+				<ref bean="service6" />
+				<ref bean="service7" />
+			</list>
+		</property>
 	</bean>
 	
 	<bean class="domain.Manager" id="manager3">
@@ -171,6 +186,12 @@
 		<property value = "1979/07/18" name="birthdate"/>
 		<property name="userAccount" ref="userAccount4"/>
 		<property value="ghi789--" name="VAT" />
+		<property name="services">
+			<list>
+				<ref bean="service8" />
+				<ref bean="service9" />
+			</list>
+		</property>
 	</bean>
 	
 	<bean class="domain.Manager" id="manager4">
@@ -182,6 +203,11 @@
 		<property value = "1996/06/02" name="birthdate"/>
 		<property name="userAccount" ref="userAccount5"/>
 		<property value="jkl034---" name="VAT" />
+		<property name="services">
+			<list>
+				<ref bean="service10" />
+			</list>
+		</property>
 	</bean>
 	
 	<bean class="domain.Manager" id="manager5">
@@ -193,6 +219,10 @@
 		<property value = "1995/02/24" name="birthdate"/>
 		<property name="userAccount" ref="userAccount6"/>
 		<property value="TTYU003----" name="VAT" />
+		<property name="services">
+			<list>
+			</list>
+		</property>
 	</bean>
 	
 	<!-- Announcement -->
@@ -851,6 +881,8 @@
 				<property name="cvvCode" value="321" />
 			</bean>
 		</property>
+		<property name="service" ref="service1" />
+		<property name="rendezvous" ref="rendezvous1" />
 	</bean>
 	
 	<bean class="domain.Request" id="request2">
@@ -865,6 +897,8 @@
 				<property name="cvvCode" value="487" />
 			</bean>
 		</property>
+		<property name="service" ref="service1" />
+		<property name="rendezvous" ref="rendezvous2" />
 	</bean>
 	
 	<bean class="domain.Request" id="request3">
@@ -879,6 +913,8 @@
 				<property name="cvvCode" value="484" />
 			</bean>
 		</property>
+		<property name="service" ref="service1" />
+		<property name="rendezvous" ref="rendezvous3" />
 	</bean>
 	
 	<bean class="domain.Request" id="request4">
@@ -893,6 +929,8 @@
 				<property name="cvvCode" value="485" />
 			</bean>
 		</property>
+		<property name="service" ref="service2" />
+		<property name="rendezvous" ref="rendezvous1" />
 	</bean>
 	
 	<bean class="domain.Request" id="request5">
@@ -907,6 +945,8 @@
 				<property name="cvvCode" value="349" />
 			</bean>
 		</property>
+		<property name="service" ref="service2" />
+		<property name="rendezvous" ref="rendezvous3" />
 	</bean>
 	
 	<bean class="domain.Request" id="request6">
@@ -921,6 +961,8 @@
 				<property name="cvvCode" value="123" />
 			</bean>
 		</property>
+		<property name="service" ref="service4" />
+		<property name="rendezvous" ref="rendezvous2" />
 	</bean>
 	
 	<bean class="domain.Request" id="request7">
@@ -935,6 +977,8 @@
 				<property name="cvvCode" value="485" />
 			</bean>
 		</property>
+		<property name="service" ref="service10" />
+		<property name="rendezvous" ref="rendezvous2" />
 	</bean>
  
 	<bean class="domain.Request" id="request8">
@@ -949,6 +993,8 @@
 				<property name="cvvCode" value="123" />
 			</bean>
 		</property>
+		<property name="service" ref="service6" />
+		<property name="rendezvous" ref="rendezvous1" />
 	</bean>
 	
 </beans>	
