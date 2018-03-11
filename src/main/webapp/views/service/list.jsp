@@ -27,8 +27,8 @@
 		<jstl:if test="${isOwn}">
 			<display:column>
 			
-				<a href="service/manager/delete.do?applicationId=${row.id}"> <spring:message
-						code="application.label.delete" />
+				<a href="service/manager/delete.do?serviceId=${row.id}"> <spring:message
+						code="service.label.delete" />
 				</a>
 			</display:column>
 		</jstl:if>
@@ -43,21 +43,21 @@
 		</security:authorize>
 
 		<spring:message code="service.label.name" var="nameHeader" />
-		<display:column property="service.name"
+		<display:column property="services.name"
 			title="${nameHeader}" sortable="true" />
 
 
 		<spring:message code="service.label.description" var="descriptionHeader" />
-		<display:column property="service.description"
+		<display:column property="services.description"
 			title="${descriptionHeader}" sortable="true" />
 			
 		<spring:message code="service.label.status" var="statusHeader" />
-		<display:column property="service.status"
+		<display:column property="services.status"
 			title="${statusHeader}" sortable="true" />
 		
 		<spring:message code="service.label.urlPicture" var="urlPictureHeader" />
 		<display:column title="${urlPictureHeader}">
-			<img src="service.urlPicture" alt="Picture"/>
+			<img src="services.urlPicture" alt="Picture"/>
 		</display:column>
 
 </display:table>
