@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -8,43 +9,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.Request;
-
 import repositories.RequestRepository;
+import domain.Request;
 
 @Service
 @Transactional
 public class RequestService {
-	
+
 	// Managed repository
 	@Autowired
-	private RequestRepository requestRepository;
-	
+	private RequestRepository	requestRepository;
+
+
 	// Supporting services ------------------------
-	
-	
+
 	// Constructors -------------------------------
 	public RequestService() {
 		super();
 	}
-	
-	// CRUD methods -------------------------------
-	 public Collection<Request> findAll() {
-		 Collection<Request> requests;
-		 
-		 requests = this.requestRepository.findAll();
-		 
-		 return requests;
-	 }
-	
-	 public void delete(Request request) {
-		 Assert.notNull(request);
-		 Assert.isTrue(request.getId() != 0);
-		 
-		 this.requestRepository.delete(request);
-	 }
-	
-	// Other business methods ---------------------
-	
 
+	// CRUD methods -------------------------------
+	public Collection<Request> findAll() {
+		Collection<Request> requests;
+
+		requests = this.requestRepository.findAll();
+
+		return requests;
+	}
+
+	public void delete(final Request request) {
+		Assert.notNull(request);
+		Assert.isTrue(request.getId() != 0);
+
+		this.requestRepository.delete(request);
+	}
+
+	// Other business methods ---------------------
+
+	public Collection<Request> findByServiceId(final int serviceId) {
+		Collection<Request> result;
+
+		result = this.requestRepository.findByServiceId(serviceId);
+		Assert.notNull(result);
+
+		return result;
+	}
 }
