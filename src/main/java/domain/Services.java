@@ -1,3 +1,4 @@
+
 package domain;
 
 import javax.persistence.Access;
@@ -12,11 +13,13 @@ import org.hibernate.validator.constraints.URL;
 public class Services extends DomainEntity {
 
 	// Attributes ---------------------------
-	private String name;
-	private String description;
-	private String urlPicture;
-	private boolean isCancelled;
-	
+	private String	name;
+	private String	description;
+	private String	urlPicture;
+	private boolean	isCancelled;
+	private boolean	isRequested;
+
+
 	// Constructors ------------------------
 	public Services() {
 		super();
@@ -24,39 +27,47 @@ public class Services extends DomainEntity {
 
 	@NotBlank
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
 	@NotBlank
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
 	@URL
 	public String getUrlPicture() {
-		return urlPicture;
+		return this.urlPicture;
 	}
 
-	public void setUrlPicture(String urlPicture) {
+	public void setUrlPicture(final String urlPicture) {
 		this.urlPicture = urlPicture;
 	}
 
 	public boolean getIsCancelled() {
-		return isCancelled;
+		return this.isCancelled;
 	}
 
-	public void setIsCancelled(boolean isCancelled) {
+	public void setIsCancelled(final boolean isCancelled) {
 		this.isCancelled = isCancelled;
 	}
-	
+
+	public boolean getIsRequested() {
+		return this.isRequested;
+	}
+
+	public void setIsRequested(final boolean isRequested) {
+		this.isRequested = isRequested;
+	}
+
 	// Relationships ----------------------------------------
-	
+
 }

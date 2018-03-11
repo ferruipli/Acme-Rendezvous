@@ -51,21 +51,20 @@ public class ServiceManagerController extends AbstractController {
 
 	// Listing ----------------------------------------------------------------
 
-	// TODO: la vista service list tiene pinta de que va a necesitar mas variables
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		Manager principal;
 		Collection<Services> services;
-		boolean isOwn;
+		boolean editable;
 
 		principal = this.managerService.findByPrincipal();
 		services = principal.getServices();
-		isOwn = true;
+		editable = true;
 
 		result = new ModelAndView("service/list");
 		result.addObject("requestURI", "service/manager/list.do");
-		result.addObject("isOwn",isOwn);
+		result.addObject("editable", editable);
 		result.addObject("services", services);
 
 		return result;

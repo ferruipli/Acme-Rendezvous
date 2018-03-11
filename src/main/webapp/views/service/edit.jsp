@@ -12,6 +12,7 @@
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	<form:hidden path="isCancelled"/>
+	<form:hidden path="isRequested"/>
 	
 	<acme:textbox code="name" path="service.label.name"/>
 	<acme:textbox code="description" path="service.label.description"/>
