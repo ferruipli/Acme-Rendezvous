@@ -76,6 +76,14 @@ public class ServicesService {
 		this.serviceRepository.delete(service);
 	}
 
+	public Services findOne(final int serviceId) {
+		Services result;
+
+		result = this.serviceRepository.findOne(serviceId);
+
+		return result;
+	}
+
 	// Other business methods ------------------------
 
 	public void cancel(final Services services) {
