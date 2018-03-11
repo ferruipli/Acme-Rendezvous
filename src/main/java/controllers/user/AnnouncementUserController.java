@@ -60,7 +60,7 @@ public class AnnouncementUserController extends AbstractController {
 			result.addObject("requestMapping", "announcement/list.do");
 
 		} catch (final Exception e) {
-			result = this.newModelAndView("redirect:index/welcome.do");
+			result = new ModelAndView("redirect:index/welcome.do");
 		}
 
 		return result;
@@ -80,7 +80,7 @@ public class AnnouncementUserController extends AbstractController {
 			announcement.setRendezvous(rendezvous);
 			result = this.createEditModelAndView(announcement);
 		} catch (final Throwable opps) {
-			result = this.newModelAndView("redirect=../../welcome/index.do");
+			result = new ModelAndView("redirect=../../welcome/index.do");
 		}
 
 		return result;
@@ -95,7 +95,7 @@ public class AnnouncementUserController extends AbstractController {
 		else
 			try {
 				this.announcementService.save(announcement);
-				result = this.newModelAndView("redirect:../../rendezvous/list.do");
+				result = new ModelAndView("redirect:../../rendezvous/list.do");
 			} catch (final Throwable opps) {
 				result = this.createEditModelAndView(announcement, "announcement.commit.error");
 			}
@@ -121,14 +121,14 @@ public class AnnouncementUserController extends AbstractController {
 
 			allRendezvous = this.rendezvousService.findAll();
 
-			result = this.newModelAndView("announcement/create");
+			result = new ModelAndView("announcement/create");
 			result.addObject("announcement", announcement);
 			result.addObject(allRendezvous);
 
 			result.addObject("message", messageCode);
 
 		} catch (final Throwable oops) {
-			result = this.newModelAndView("redirect: index.do");
+			result = new ModelAndView("redirect: index.do");
 		}
 
 		return result;

@@ -53,7 +53,7 @@ public class AnnouncementController extends AbstractController {
 		else
 			try {
 				this.announcementService.save(announcement);
-				result = this.newModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable opps) {
 				result = this.createEditModelAndView(announcement, "announcement.commit.error");
 			}
@@ -75,7 +75,7 @@ public class AnnouncementController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Announcement announcement, final String messageCode) {
 		ModelAndView result;
 
-		result = this.newModelAndView("announcement/create");
+		result = new ModelAndView("announcement/create");
 		result.addObject("announcement", announcement);
 
 		result.addObject("message", messageCode);

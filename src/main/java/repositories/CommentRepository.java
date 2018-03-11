@@ -10,9 +10,9 @@ import domain.Comment;
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
 	/** Level A **/
-	@Query("select avg(c.repliedComments.size), sqrt(sum(c.repliedComments.size*c.repliedComments.size)/count(c.repliedComments.size)-avg(c.repliedComments.size)*avg(c.repliedComments.size)) from Comment c")
+	@Query("select avg(c.descendantComments.size), sqrt(sum(c.descendantComments.size*c.descendantComments.size)/count(c.descendantComments.size)-avg(c.descendantComments.size)*avg(c.descendantComments.size)) from Comment c")
 	Double[] avgSqrtRepliesPerComment();
 	
-	@Query("select c from Comment c join c.repliedComments re where re.id = ?1 and re member of c.repliedComments")
+	@Query("select c from Comment c join c.descendantComments re where re.id = ?1 and re member of c.descendantComments")
 	Comment findCommentByReplyCommentId(int replyId);
 }

@@ -57,12 +57,15 @@ public class ServiceManagerController extends AbstractController {
 		ModelAndView result;
 		Manager principal;
 		Collection<Services> services;
+		boolean isOwn;
 
 		principal = this.managerService.findByPrincipal();
 		services = principal.getServices();
+		isOwn = true;
 
 		result = new ModelAndView("service/list");
 		result.addObject("requestURI", "service/manager/list.do");
+		result.addObject("isOwn",isOwn);
 		result.addObject("services", services);
 
 		return result;

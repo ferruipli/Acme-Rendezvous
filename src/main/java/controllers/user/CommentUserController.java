@@ -70,7 +70,7 @@ public class CommentUserController extends AbstractController {
 		comment.setRendezvous(rendezvous);
 		result = this.createEditModelAndView(comment);
 		} catch (Throwable oops) {
-			result = this.newModelAndView("redirect:/welcome/index.do");
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		
 		return result;
@@ -100,7 +100,7 @@ public class CommentUserController extends AbstractController {
 		} else {
 			try {
 				this.commentService.save(comment);
-				result = this.newModelAndView("redirect:/rendezvous/user/list.do");	
+				result = new ModelAndView("redirect:/rendezvous/user/list.do");	
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(comment, "comment.commit.error");
 			}
@@ -169,7 +169,7 @@ public class CommentUserController extends AbstractController {
 		result.addObject("message", messageCode);
 		
 		} catch (Throwable oops) {
-			result = this.newModelAndView("redirect:/welcome/index.do");
+			result = new ModelAndView("redirect:/welcome/index.do");
 		}
 		return result;
 	}
