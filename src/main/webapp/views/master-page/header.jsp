@@ -63,6 +63,18 @@
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
+			<li>
+				<a class="fNiv"> 
+					<spring:message code="master.page.service" />
+				</a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="service/list.do"><spring:message code="master.page.availableService" /></a></li>
+					<security:authorize access="hasRole('MANAGER')">
+						<li><a href="service/manager/list.do"><spring:message code="master.page.ownService" /></a></li>
+					</security:authorize>
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">

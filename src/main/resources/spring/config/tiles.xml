@@ -24,12 +24,13 @@
 		<value>/views/welcome/tiles.xml</value>
 		
 		<value>/views/announcement/tiles.xml</value>
+		<value>/views/comment/tiles.xml</value>
 		<value>/views/dashboard/tiles.xml</value>
 		<value>/views/legalTexts/tiles.xml</value>
-		<value>/views/rendezvous/tiles.xml</value>
 		<value>/views/questionAnswer/tiles.xml</value>
+		<value>/views/rendezvous/tiles.xml</value>
+		<value>/views/service/tiles.xml</value>
 		<value>/views/user/tiles.xml</value>
-		<value>/views/comment/tiles.xml</value>
 	</util:list>
 
 </beans>
