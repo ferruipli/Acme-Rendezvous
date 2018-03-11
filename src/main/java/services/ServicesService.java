@@ -83,6 +83,14 @@ public class ServicesService {
 
 		return result;
 	}
+	
+	public Collection<Services> findAll(){
+		Collection<Services> result;
+		
+		result = this.serviceRepository.findAll();
+		
+		return result;
+	}
 
 	// Other business methods ------------------------
 

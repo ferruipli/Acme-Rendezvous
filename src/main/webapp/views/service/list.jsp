@@ -43,21 +43,27 @@
 		</security:authorize>
 
 		<spring:message code="service.label.name" var="nameHeader" />
-		<display:column property="services.name"
+		<display:column property="name"
 			title="${nameHeader}" sortable="true" />
 
 
 		<spring:message code="service.label.description" var="descriptionHeader" />
-		<display:column property="services.description"
+		<display:column property="description"
 			title="${descriptionHeader}" sortable="true" />
 			
 		<spring:message code="service.label.status" var="statusHeader" />
-		<display:column property="services.status"
-			title="${statusHeader}" sortable="true" />
+		<display:column title="${statusHeader}" sortable="true">
+			<jstl:if test="${row.isCancelled}">
+				<spring:message code="service.label.cancelled"/>
+			</jstl:if>
+			<jstl:if test="${!row.isCancelled}">
+				<spring:message code="service.label.available"/>
+			</jstl:if>
+		</display:column>-->
 		
 		<spring:message code="service.label.urlPicture" var="urlPictureHeader" />
 		<display:column title="${urlPictureHeader}">
-			<img src="services.urlPicture" alt="Picture"/>
+			<img src="urlPicture" alt="Picture"/>
 		</display:column>
 
 </display:table>
