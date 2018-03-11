@@ -120,4 +120,19 @@ public class ServicesService {
 		return result;
 	}
 
+	public Collection<Services> availableServices(){
+		Collection<Services> result;
+		
+		result = this.serviceRepository.getAvailableServices();
+		
+		return result;
+	}
+	
+	public Collection<Services> cancelledServices(){
+		Collection<Services> result;
+		
+		result = this.serviceRepository.getCancelledServices();
+		
+		return result;
+	}
 }
