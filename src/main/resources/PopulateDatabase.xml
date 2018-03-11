@@ -682,7 +682,7 @@
 		<property value="text_comment1" name="text"/>
 		<property ref="user1" name="user"/>	
 		<property value="http://www.googleDrive.com/picture2" name="urlPicture"/>
-		<property name="repliedComments">
+		<property name="descendantComments">
 			<list>
 				<ref bean = "comment5"/>
 				<ref bean = "comment7"/>
@@ -696,7 +696,7 @@
 		<property value="text_comment2" name="text"/>
 		<property ref="user1" name="user"/>	
 		<property value="http://www.googleDrive.com/picture2" name="urlPicture"/>
-		<property name="repliedComments">
+		<property name="descendantComments">
 			<list>
 				<ref bean = "comment8"/>
 			</list>
@@ -709,7 +709,7 @@
 		<property value="text_comment3" name="text"/>
 		<property ref="user2" name="user"/>	
 		<property value="http://www.googleDrive.com/picture3" name="urlPicture"/>
-		<property name="repliedComments">
+		<property name="descendantComments">
 			<list>
 				<ref bean = "comment9"/>
 			</list>
@@ -722,7 +722,7 @@
 		<property value="text_comment4" name="text"/>
 		<property ref="user1" name="user"/>	
 		<property value="http://www.googleDrive.com/picture4" name="urlPicture"/>		
-		<property name="repliedComments">
+		<property name="descendantComments">
 			<list>
 				<null></null>
 			</list>
@@ -735,7 +735,7 @@
 		<property value="text_comment5" name="text"/>
 		<property ref="user2" name="user"/>	
 		<property value="http://www.googleDrive.com/picture5" name="urlPicture"/>
-		<property name="repliedComments">
+		<property name="descendantComments">
 			<list>
 				<ref bean = "comment6"/>
 			</list>
@@ -748,7 +748,7 @@
 		<property value="text_comment6" name="text"/>
 		<property ref="user1" name="user"/>	
 		<property value="http://www.googleDrive.com/picture6" name="urlPicture"/>
-		<property name="repliedComments">
+		<property name="descendantComments">
 			<list>
 				<null></null>
 			</list>
@@ -761,7 +761,7 @@
 		<property value="text_comment7" name="text"/>
 		<property ref="user2" name="user"/>	
 		<property value="http://www.googleDrive.com/picture7" name="urlPicture"/>
-		<property name="repliedComments">
+		<property name="descendantComments">
 			<list>
 				<null></null>
 			</list>
@@ -774,7 +774,7 @@
 		<property value="text_comment8" name="text"/>
 		<property ref="user2" name="user"/>	
 		<property value="http://www.googleDrive.com/picture8" name="urlPicture"/>		
-		<property name="repliedComments">
+		<property name="descendantComments">
 			<list>
 				<null></null>
 			</list>
@@ -787,7 +787,7 @@
 		<property value="text_comment9" name="text"/>
 		<property ref="user1" name="user"/>	
 		<property value="http://www.googleDrive.com/picture9" name="urlPicture"/>
-		<property name="repliedComments">
+		<property name="descendantComments">
 			<list>
 				<null></null>
 			</list>
@@ -797,70 +797,70 @@
 	
 	<!-- Services -->
 	
-	<bean class="domain.Service" id="service1">
+	<bean class="domain.Services" id="service1">
 		<property value="name 1" name="name" />
 		<property value="description 1" name="description" />
 		<property value="http://www.googleDrive.com/picture1.png" name="urlPicture" />
 		<property value="true" name="isCancelled" />
 	</bean>
 	
-	<bean class="domain.Service" id="service2">
+	<bean class="domain.Services" id="service2">
 		<property value="name 2" name="name" />
 		<property value="description 2" name="description" />
 		<property value="http://www.dropbox.com/picture2.png" name="urlPicture" />
 		<property value="false" name="isCancelled" />
 	</bean>
 	
-	<bean class="domain.Service" id="service3">
+	<bean class="domain.Services" id="service3">
 		<property value="name 3" name="name" />
 		<property value="description 3" name="description" />
 		<property value="http://www.flickr.com/picture3.png" name="urlPicture" />
 		<property value="true" name="isCancelled" />
 	</bean>
 	
-	<bean class="domain.Service" id="service4">
+	<bean class="domain.Services" id="service4">
 		<property value="name 4" name="name" />
 		<property value="description 4" name="description" />
 		<property value="http://www.googleDrive.com/picture4.jpg" name="urlPicture" />
 		<property value="false" name="isCancelled" />
 	</bean>
 	
-	<bean class="domain.Service" id="service5">
+	<bean class="domain.Services" id="service5">
 		<property value="name 5" name="name" />
 		<property value="description 5" name="description" />
 		<property value="http://www.googleDrive.com/picture5.png" name="urlPicture" />
 		<property value="true" name="isCancelled" />
 	</bean>
 	
-	<bean class="domain.Service" id="service6">
+	<bean class="domain.Services" id="service6">
 		<property value="name 6" name="name" />
 		<property value="description 6" name="description" />
 		<property value="http://www.googleDrive.com/picture6.png" name="urlPicture" />
 		<property value="false" name="isCancelled" />
 	</bean>
 	
-	<bean class="domain.Service" id="service7">
+	<bean class="domain.Services" id="service7">
 		<property value="name 7" name="name" />
 		<property value="description 7" name="description" />
 		<property value="" name="urlPicture" />
 		<property value="true" name="isCancelled" />
 	</bean>
 	
-	<bean class="domain.Service" id="service8">
+	<bean class="domain.Services" id="service8">
 		<property value="name 8" name="name" />
 		<property value="description 8" name="description" />
 		<property value="http://www.googleDrive.com/picture8.jpg" name="urlPicture" />
 		<property value="false" name="isCancelled" />
 	</bean>
 	
-	<bean class="domain.Service" id="service9">
+	<bean class="domain.Services" id="service9">
 		<property value="name 9" name="name" />
 		<property value="description 9" name="description" />
 		<property value="" name="urlPicture" />
 		<property value="true" name="isCancelled" />
 	</bean>
 	
-	<bean class="domain.Service" id="service10">
+	<bean class="domain.Services" id="service10">
 		<property value="name 10" name="name" />
 		<property value="description 10" name="description" />
 		<property value="http://www.flickr.com/picture10.png" name="urlPicture" />
