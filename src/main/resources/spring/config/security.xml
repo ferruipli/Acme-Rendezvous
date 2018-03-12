@@ -54,6 +54,9 @@
 		<security:intercept-url pattern="/legalTexts/legalData.do" access="permitAll" />
 		<security:intercept-url pattern="/legalTexts/cookies.do" access="permitAll" />
 		
+		<security:intercept-url pattern="/manager/register.do" access="isAnonymous()" />
+		<security:intercept-url pattern="/manager/**" access="permitAll" />
+		
 		<security:intercept-url pattern="/question/list.do" access="permitAll" />
 		<security:intercept-url pattern="/question/user/**" access="hasRole('USER')" />
 		

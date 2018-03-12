@@ -27,6 +27,7 @@
 		<value>/views/comment/messages</value>
 		<value>/views/dashboard/messages</value>
 		<value>/views/legalTexts/messages</value>
+		<value>/views/manager/messages</value>
 		<value>/views/questionAnswer/messages</value>
 		<value>/views/rendezvous/messages</value>
 		<value>/views/service/messages</value>
