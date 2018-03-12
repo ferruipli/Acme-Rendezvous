@@ -96,7 +96,8 @@ public class ServicesService {
 
 	public void cancel(final Services services) {
 		Assert.notNull(services);
-		Assert.notNull(services.getId() != 0);
+		Assert.isTrue(services.getIsCancelled()==false);
+		Assert.isTrue(services.getId() != 0);
 
 		Collection<Request> requests;
 
