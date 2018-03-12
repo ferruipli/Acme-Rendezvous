@@ -46,12 +46,4 @@ public class RequestService {
 
 	// Other business methods ---------------------
 
-	public Collection<Request> findByServiceId(final int serviceId) {
-		Collection<Request> result;
-
-		result = this.requestRepository.findByServiceId(serviceId);
-		Assert.notNull(result);
-
-		return result;
-	}
 }

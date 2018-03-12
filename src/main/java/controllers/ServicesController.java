@@ -45,8 +45,8 @@ public class ServicesController extends AbstractController {
 		ModelAndView result;
 		Collection<Services> services;
 
-		services = this.servicesService.findAll();
-
+		services = this.servicesService.availableServices();
+			
 		result = new ModelAndView("service/list");
 		result.addObject("requestURI", "service/list.do");
 		result.addObject("services", services);

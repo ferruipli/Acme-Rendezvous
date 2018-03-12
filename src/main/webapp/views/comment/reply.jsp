@@ -10,7 +10,7 @@
 <!-- EDIT/CREATE  TRIP -->
 
 
-<form:form action="comment/user/create.do" modelAttribute="comment">
+<form:form action="comment/user/reply.do" modelAttribute="comment">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -18,7 +18,7 @@
 	<form:hidden path="rendezvous"/>
 	<form:hidden path="user"/>
 	<form:hidden path="descendantComments"/>
-	
+	<form:hidden path="parentComment"/>
 	
 	<acme:textbox code="comment.text" path="text"/>
 	

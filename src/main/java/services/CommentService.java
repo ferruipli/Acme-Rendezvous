@@ -116,17 +116,17 @@ public class CommentService {
 		parentComment = comment.getParentComment();
 		
 		if(comment.getId()==0){
-			this.commentRepository.save(comment);
+			result = this.commentRepository.save(comment);
 		} else {
 			if(comment.getParentComment()!=null){
 				this.addDescendantComment(parentComment, comment);
 				this.commentRepository.save(parentComment);
-				this.commentRepository.save(comment);
+				result = this.commentRepository.save(comment);
 			} else {
-				this.commentRepository.save(comment);
+				result = this.commentRepository.save(comment);
 			}
 		}
-		result = this.commentRepository.save(comment);
+
 		rendezvous = result.getRendezvous();
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
 		
@@ -145,7 +145,7 @@ public class CommentService {
 		comment.setParentComment(parentComment);
 	}
 
-	protected void addDescendantComment(final Comment comment, final Comment descendant) {
+	public void addDescendantComment(final Comment comment, final Comment descendant) {
 		Collection<Comment> aux;
 
 		aux = new HashSet<>(comment.getDescendantComments());

@@ -57,7 +57,7 @@
 </jstl:if>
 
 <security:authorize access="hasRole('USER')">
-	<a href="comment/user/reply.do?commentId=${row.id}">
+	<a href="comment/user/reply.do?commentId=${comment.id}">
 				<spring:message code="comment.replyComment" /> 		
 	</a>	
 
