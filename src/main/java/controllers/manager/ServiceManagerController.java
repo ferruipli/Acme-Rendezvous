@@ -32,8 +32,6 @@ import domain.Services;
 @RequestMapping("/service/manager")
 public class ServiceManagerController extends AbstractController {
 
-	// TODO: tema hacking y factorizar
-
 	// Services ---------------------------------------------------------------
 
 	@Autowired
@@ -152,7 +150,7 @@ public class ServiceManagerController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("service/edit");
-		result.addObject("service", service);
+		result.addObject("services", service);
 		result.addObject("message", messageCode);
 
 		return result;

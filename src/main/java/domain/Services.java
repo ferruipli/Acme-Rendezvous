@@ -6,6 +6,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
 @Entity
@@ -26,6 +27,7 @@ public class Services extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getName() {
 		return this.name;
 	}
@@ -35,6 +37,7 @@ public class Services extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getDescription() {
 		return this.description;
 	}
@@ -44,6 +47,7 @@ public class Services extends DomainEntity {
 	}
 
 	@URL
+	@SafeHtml
 	public String getUrlPicture() {
 		return this.urlPicture;
 	}

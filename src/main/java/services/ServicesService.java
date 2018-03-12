@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.Validator;
 
 import repositories.ServicesRepository;
 import domain.Manager;
@@ -30,6 +31,9 @@ public class ServicesService {
 
 	@Autowired
 	private ManagerService		managerService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	// Constructors ----------------------------------
@@ -56,7 +60,7 @@ public class ServicesService {
 		principal = this.managerService.findByPrincipal();
 		if (serviceId != 0) {
 			Assert.isTrue(principal.getServices().contains(service));
-			Assert.isTrue(!this.isServiceRequested(serviceId));
+			Assert.isTrue(!service.getIsRequested());
 		}
 
 		saved = this.serviceRepository.save(service);
@@ -70,9 +74,10 @@ public class ServicesService {
 
 		principal = this.managerService.findByPrincipal();
 
-		Assert.isTrue(!this.isServiceRequested(service.getId()));
+		Assert.isTrue(!service.getIsRequested());
 		Assert.isTrue(principal.getServices().contains(service));
 
+		this.managerService.removeService(principal, service);
 		this.serviceRepository.delete(service);
 	}
 
@@ -83,12 +88,12 @@ public class ServicesService {
 
 		return result;
 	}
-	
-	public Collection<Services> findAll(){
+
+	public Collection<Services> findAll() {
 		Collection<Services> result;
-		
+
 		result = this.serviceRepository.findAll();
-		
+
 		return result;
 	}
 
@@ -108,16 +113,6 @@ public class ServicesService {
 				this.requestService.delete(r);
 
 		services.setIsCancelled(true);
-	}
-
-	public boolean isServiceRequested(final int serviceId) {
-		boolean result;
-		Collection<Request> requests;
-
-		requests = this.requestService.findByServiceId(serviceId);
-		result = requests.size() != 0;
-
-		return result;
 	}
 
 }
