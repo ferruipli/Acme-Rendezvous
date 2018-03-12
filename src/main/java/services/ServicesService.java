@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ServicesRepository;
@@ -98,6 +99,30 @@ public class ServicesService {
 	}
 
 	// Other business methods ------------------------
+
+	public Services reconstruct(final Services service, final BindingResult binding) {
+		Services result, stored;
+
+		if (service.getId() == 0)
+			result = service;
+		else {
+			stored = this.findOne(service.getId());
+			result = this.create();
+
+			result.setId(stored.getId());
+			result.setVersion(stored.getVersion());
+			result.setIsCancelled(stored.getIsCancelled());
+			result.setIsRequested(stored.getIsRequested());
+
+			result.setName(service.getName());
+			result.setDescription(service.getDescription());
+			result.setUrlPicture(service.getUrlPicture());
+
+			this.validator.validate(result, binding);
+		}
+
+		return result;
+	}
 
 	public void cancel(final Services services) {
 		Assert.notNull(services);
