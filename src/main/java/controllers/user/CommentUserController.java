@@ -86,13 +86,31 @@ public class CommentUserController extends AbstractController {
         reply = this.commentService.create();
         reply.setRendezvous(parentComment.getRendezvous());
         reply.setParentComment(parentComment);
-        result = this.createEditModelAndView(reply);
+        result = this.replyModelAndView(reply);
         
         return result;
     }
 	
 	@RequestMapping(value="/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Comment comment, BindingResult binding){
+		ModelAndView result;
+		
+		if(binding.hasErrors()){
+			result = this.createEditModelAndView(comment);
+		} else {
+			try {
+				this.commentService.save(comment);
+				result = new ModelAndView("redirect:/rendezvous/user/list.do");	
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(comment, "comment.commit.error");
+			}
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/reply", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveReply(@Valid Comment comment, BindingResult binding){
 		ModelAndView result;
 		
 		if(binding.hasErrors()){
@@ -165,6 +183,33 @@ public class CommentUserController extends AbstractController {
 		result.addObject("comment", comment);
 		result.addObject("rendezvous", comment.getRendezvous());
 		result.addObject("moment", comment.getMoment());
+		result.addObject("descendantComments", comment.getDescendantComments());
+		result.addObject("message", messageCode);
+		
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+		}
+		return result;
+	}
+	
+	protected ModelAndView replyModelAndView(Comment comment) {
+		ModelAndView result;
+		
+		result = replyModelAndView(comment, null);
+		
+		return result;
+	}
+	
+	protected ModelAndView replyModelAndView(Comment comment, String messageCode) {
+		ModelAndView result;
+	
+		try {
+		
+		result = new ModelAndView("comment/reply");
+		result.addObject("comment", comment);
+		result.addObject("rendezvous", comment.getRendezvous());
+		result.addObject("moment", comment.getMoment());
+		result.addObject("parentComment", comment.getParentComment());
 		result.addObject("descendantComments", comment.getDescendantComments());
 		result.addObject("message", messageCode);
 		

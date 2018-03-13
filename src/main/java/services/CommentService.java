@@ -101,7 +101,7 @@ public class CommentService {
 		Assert.notNull(comment);
 		Assert.isTrue(comment.getDescendantComments().isEmpty());
 		
-		Comment result, parentComment;
+		Comment result,parentComment;
 		Rendezvous rendezvous;
 		User user;
 		Date currentMoment;
