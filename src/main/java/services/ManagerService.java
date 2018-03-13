@@ -30,18 +30,18 @@ public class ManagerService {
 
 	@Autowired
 	private ManagerRepository	managerRepository;
-	
+
 	@Autowired
 	private Md5PasswordEncoder	encoder;
-	
+
 	@Autowired
 	private Validator			validator;
 
-
 	// Supporting services ----------------------------------------------------
-	
+
 	@Autowired
-	private UtilityService utilityService;
+	private UtilityService		utilityService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -50,7 +50,7 @@ public class ManagerService {
 	}
 
 	// CRUD Services ----------------------------------------------------------
-	
+
 	public Manager create() {
 		Manager result;
 		UserAccount userAccount;
@@ -101,7 +101,7 @@ public class ManagerService {
 	}
 
 	// Other business methods -------------------------------------------------
-	
+
 	public Manager reconstruct(final RegistrationForm registrationForm, final BindingResult binding) {
 		Manager result;
 		UserAccount userAccount;
@@ -113,7 +113,6 @@ public class ManagerService {
 		result.setPhoneNumber(registrationForm.getPhoneNumber());
 		result.setPostalAddress(registrationForm.getPostalAddress());
 		result.setBirthdate(registrationForm.getBirthdate());
-		
 
 		userAccount = result.getUserAccount();
 		userAccount.setUsername(registrationForm.getUserAccount().getUsername());
@@ -164,13 +163,28 @@ public class ManagerService {
 
 		return result;
 	}
-	
-	public Collection<String> findAllVATs(){
+
+	public Collection<String> findAllVATs() {
 		Collection<String> result;
-		
+
 		result = this.managerRepository.findAllVATs();
-		
+
 		return result;
 	}
+	public Collection<Manager> findManagerMoreServiceThanAvg() {
+		Collection<Manager> result;
 
+		result = this.managerRepository.findManagerMoreServiceThanAvg();
+
+		return result;
+	}
+	/*
+	 * public Collection<Manager> findManagerMoreServiceCancelled() {
+	 * Collection<Manager> result;
+	 * 
+	 * result = this.managerRepository.findManagerMoreServiceCancelled();
+	 * 
+	 * return result;
+	 * }
+	 */
 }
