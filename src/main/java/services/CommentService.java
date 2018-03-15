@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -22,15 +23,16 @@ public class CommentService {
 
 	// Managed repository --------------------------------------------------------------------
 	@Autowired
-	private CommentRepository commentRepository;
+	private CommentRepository	commentRepository;
 
 	// Supporting services ------------------------------------------------------------------
-	
+
 	@Autowired
-	private ActorService actorService;
-	
+	private ActorService		actorService;
+
 	@Autowired
-	private RendezvousService rendezvousService;
+	private RendezvousService	rendezvousService;
+
 
 	// Constructors ---------------------------------------------------------
 	public CommentService() {
@@ -38,35 +40,35 @@ public class CommentService {
 	}
 
 	// CRUD methods ---------------------------------------------------------
-	
-	public Comment create(){
+
+	public Comment create() {
 		Comment result;
 		Date moment;
 		User user;
 		Collection<Comment> descendantComments;
-		
+
 		user = (User) this.actorService.findByPrincipal();
-		moment = new Date(System.currentTimeMillis()-1);
+		moment = new Date(System.currentTimeMillis() - 1);
 		result = new Comment();
 		descendantComments = Collections.emptySet();
-		
+
 		result.setMoment(moment);
 		result.setUser(user);
 		result.setDescendantComments(descendantComments);
-		
+
 		return result;
 	}
-	
-	public Comment findOne(int commentId){
+
+	public Comment findOne(final int commentId) {
 		Assert.notNull(commentId != 0);
-		
+
 		Comment result;
-		
+
 		result = this.commentRepository.findOne(commentId);
-		
+
 		return result;
 	}
-	
+
 	public Collection<Comment> findAll() {
 		Collection<Comment> results;
 
@@ -74,69 +76,66 @@ public class CommentService {
 
 		return results;
 	}
-	
-	public void delete(Comment comment){
+
+	public void delete(final Comment comment) {
 		Assert.notNull(comment);
 		Assert.isTrue(comment.getId() != 0);
-		
+
 		Rendezvous rendezvous;
-		
+
 		rendezvous = this.rendezvousService.findRendezvousFromAComment(comment.getId());
-		
+
 		// Updating the comments about a rendezvous
 		this.rendezvousService.removeComment(rendezvous, comment);
-		
+
 		this.commentRepository.delete(comment);
 	}
-	
-	public void remove(Comment comment) {
+
+	public void remove(final Comment comment) {
 		Assert.notNull(comment);
 		Assert.isTrue(comment.getId() != 0);
-		
+
 		this.commentRepository.delete(comment);
 	}
-	
-	public Comment save(Comment comment){
+
+	public Comment save(final Comment comment) {
 		this.checkByPrincipal(comment);
 		Assert.notNull(comment);
 		Assert.isTrue(comment.getDescendantComments().isEmpty());
-		
-		Comment result,parentComment;
+
+		Comment result, parentComment;
 		Rendezvous rendezvous;
 		User user;
 		Date currentMoment;
-		
+
 		currentMoment = new Date();
 		Assert.isTrue(comment.getMoment().before(currentMoment));
 		comment.setMoment(currentMoment);
-		
+
 		user = (User) this.actorService.findByPrincipal();
 		comment.setUser(user);
-		
+
 		parentComment = comment.getParentComment();
-		
-		if(comment.getId()==0){
+
+		if (comment.getId() == 0)
 			result = this.commentRepository.save(comment);
-		} else {
-			if(comment.getParentComment()!=null){
-				this.addDescendantComment(parentComment, comment);
-				this.commentRepository.save(parentComment);
-				result = this.commentRepository.save(comment);
-			} else {
-				result = this.commentRepository.save(comment);
-			}
-		}
+		else if (comment.getParentComment() != null) {
+			this.addDescendantComment(parentComment, comment);
+			this.commentRepository.save(parentComment);
+			result = this.commentRepository.save(comment);
+		} else
+			result = this.commentRepository.save(comment);
 
 		rendezvous = result.getRendezvous();
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
-		
+
 		this.rendezvousService.addComment(rendezvous, comment);
-		
+
 		return result;
 	}
 
 	// Other business methods ------------------------------------------------------------
-	
+
 	public void setParentComent(final Comment comment, final int parentCommentId) {
 		Assert.isTrue(comment.getId() == 0);
 
@@ -160,26 +159,25 @@ public class CommentService {
 		aux.remove(descendant);
 		comment.setDescendantComments(aux);
 	}
-	
-	public Double[] avgSqrtRepliesPerComment(){
+
+	public Double[] avgSqrtRepliesPerComment() {
 		Double[] result;
-		
+
 		result = this.commentRepository.avgSqrtRepliesPerComment();
-		
+
 		return result;
 	}
-	
-	
-	public Comment findCommentByReplyId(int replyId){
+
+	public Comment findCommentByReplyId(final int replyId) {
 		Comment result;
-		
+
 		result = this.commentRepository.findCommentByReplyCommentId(replyId);
-		
+
 		return result;
-		
+
 	}
-	
-	private void checkByPrincipal(Comment comment) {
+
+	private void checkByPrincipal(final Comment comment) {
 		Assert.notNull(comment);
 
 		User user;
@@ -188,5 +186,9 @@ public class CommentService {
 
 		Assert.isTrue(comment.getUser().equals(user));
 	}
-	
+
+	public void flush() {
+		this.commentRepository.flush();
+	}
+
 }
