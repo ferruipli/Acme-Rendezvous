@@ -129,9 +129,9 @@ public class RendezvousService {
 	public void delete(final Rendezvous rendezvous) {
 		this.checkByPrincipal(rendezvous);
 		Assert.isTrue(rendezvous.getId() != 0);
-		
+
 		Rendezvous old;
-		
+
 		old = this.rendezvousRepository.findOne(rendezvous.getId());
 		this.checkFinalMode(old);
 
@@ -144,26 +144,25 @@ public class RendezvousService {
 	public Collection<Rendezvous> findAllAvailable() {
 		Collection<Rendezvous> results;
 		User user;
-		
+
 		user = this.userService.findByPrincipal();
-		
-		if (!user.equals(null) && this.actorService.getEdad(user)>=18) {
+
+		if (!user.equals(null) && this.actorService.getEdad(user) >= 18)
 			results = this.rendezvousRepository.findAllAvailable();
-		} else {
+		else
 			results = this.findAllAvailable2();
-		}
-		
+
 		return results;
 	}
 
 	public Collection<Rendezvous> findAllAvailable2() {
 		Collection<Rendezvous> results;
-		
+
 		results = this.rendezvousRepository.findAllAvailable2();
-		
+
 		return results;
 	}
-	
+
 	public void remove(final Rendezvous rendezvous) {
 		Assert.isTrue(rendezvous.getId() != 0);
 
