@@ -129,3 +129,62 @@
 		<li><spring:message code="dashboard.sqrt"/>: <jstl:out value="${avgSqrtRepliesPerComment2}"/></li>
 	</ul>
 </fieldset>
+	
+<h2><spring:message code="dashboard.findManagerMoreServiceThanAvg"/></h2>
+<fieldset>
+
+<display:table name="findManagerMoreServiceThanAvg" id="findManagerMoreServiceThanAvg" requestURI="${requestURI}" pagesize="5" class="displaytag">
+	
+	<spring:message code="dashboard.manager.name" var="managerName"/>
+	<display:column property="name" title="${managerName}" sortable="true"/>
+	
+	<spring:message code="dashboard.manager.surname" var="managerSurname"/>
+	<display:column property="surname" title="${managerSurname}" sortable="true"/>
+	
+	<spring:message code="dashboard.manager.phone" var="managerPhone"/>
+	<display:column property="phoneNumber" title="${managerPhone}" sortable="true"/>
+	
+	
+<spring:message code="dashboard.manager.email" var="managerEmail"/>
+	<display:column property="email" title="${managerEmail}" sortable="true"/>
+	
+</display:table>
+</fieldset>
+	
+<h2><spring:message code="dashboard.findBestSellingService"/></h2>
+<fieldset>
+<display:table name="findBestSellingService" id="findBestSellingService" requestURI="${requestURI}" pagesize="5" class="displaytag">
+	
+	<spring:message code="dashboard.service.name" var="serviceName"/>
+	<display:column property="name" title="${serviceName}" sortable="true"/>
+	
+	<spring:message code="dashboard.service.description" var="serviceDescription"/>
+	<display:column property="description" title="${serviceDescription}" sortable="true"/>
+	
+
+</display:table>
+</fieldset>
+<!-- 
+<h2><spring:message code="dashboard.findManagerMoreServiceCancelled"/></h2>
+
+
+<fieldset>
+<display:table name="findManagerMoreServiceCancelled" id="findManagerMoreServiceCancelled" requestURI="${requestURI}" pagesize="5" class="displaytag">
+	
+	<spring:message code="dashboard.manager.name" var="managerName"/>
+	<display:column property="name" title="${managerName}" sortable="true"/>
+	
+	<spring:message code="dashboard.manager.surname" var="managerSurname"/>
+	<display:column property="surname" title="${managerSurname}" sortable="true"/>
+	
+	<spring:message code="dashboard.manager.phone" var="managerPhone"/>
+	<display:column property="phoneNumber" title="${managerPhone}" sortable="true"/>
+	
+	
+<spring:message code="dashboard.manager.email" var="managerEmail"/>
+	<display:column property="email" title="${managerEmail}" sortable="true"/>
+	
+</display:table>
+	
+</fieldset>
+ -->

@@ -1,3 +1,4 @@
+
 package controllers.administrator;
 
 import java.util.Collection;
@@ -9,10 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AnnouncementService;
 import services.CommentService;
+import services.ManagerService;
 import services.QuestionService;
 import services.RendezvousService;
+import services.ServicesService;
 import controllers.AbstractController;
+import domain.Manager;
 import domain.Rendezvous;
+import domain.Services;
 
 @Controller
 @RequestMapping("/dashboard/administrator")
@@ -20,16 +25,23 @@ public class DashboardAdministratorController extends AbstractController {
 
 	// Services ---------------------------------------------------------------
 	@Autowired
-	private RendezvousService rendezvousService;
-	
+	private RendezvousService	rendezvousService;
+
 	@Autowired
-	private CommentService commentService;
-	
+	private CommentService		commentService;
+
 	@Autowired
-	private QuestionService questionService;
-	
+	private QuestionService		questionService;
+
 	@Autowired
-	private AnnouncementService announcementService;
+	private AnnouncementService	announcementService;
+
+	@Autowired
+	private ManagerService		managerService;
+
+	@Autowired
+	private ServicesService		servicesService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -41,7 +53,7 @@ public class DashboardAdministratorController extends AbstractController {
 	@RequestMapping("/display")
 	public ModelAndView display() {
 		ModelAndView result;
-		
+
 		Double[] avgSqrtRendezvousesPerUser;
 		Double ratioOfUsersWithRendezvousVsUsersWithoutRendezvous;
 		Double[] avgSqrtUsersPerRendezvous;
@@ -53,9 +65,11 @@ public class DashboardAdministratorController extends AbstractController {
 		Double[] avgSqrtQuestionsPerRendezvous;
 		Double[] avgSqrtAnswersToQuestionsPerRendezvous;
 		Double[] avgSqrtRepliesPerComment;
-		
+		Collection<Manager> findManagerMoreServiceThanAvg;
+		Services findBestSellingService;
+
 		String requestURI;
-		
+
 		avgSqrtRendezvousesPerUser = this.rendezvousService.avgSqrtRendezvousesPerUser();
 		ratioOfUsersWithRendezvousVsUsersWithoutRendezvous = this.rendezvousService.ratioOfUsersWithRendezvousVsUsersWithoutRendezvous();
 		avgSqrtUsersPerRendezvous = this.rendezvousService.avgSqrtUsersPerRendezvous();
@@ -67,30 +81,33 @@ public class DashboardAdministratorController extends AbstractController {
 		avgSqrtQuestionsPerRendezvous = this.questionService.avgSqrtQuestionsPerRendezvous();
 		avgSqrtAnswersToQuestionsPerRendezvous = this.questionService.avgSqrtAnswersToQuestionsPerRendezvous();
 		avgSqrtRepliesPerComment = this.commentService.avgSqrtRepliesPerComment();
+		findManagerMoreServiceThanAvg = this.managerService.findManagerMoreServiceThanAvg();
+		findBestSellingService = this.servicesService.findBestSellingService();
 		requestURI = "dashboard/administrator/display.do";
 		result = new ModelAndView("dashboard/display");
 
-		result.addObject("avgSqrtRendezvousesPerUser1",avgSqrtRendezvousesPerUser[0]);
-		result.addObject("avgSqrtRendezvousesPerUser2",avgSqrtRendezvousesPerUser[1]);
-		result.addObject("ratioOfUsersWithRendezvousVsUsersWithoutRendezvous",ratioOfUsersWithRendezvousVsUsersWithoutRendezvous);
-		result.addObject("avgSqrtUsersPerRendezvous1",avgSqrtUsersPerRendezvous[0]);
-		result.addObject("avgSqrtUsersPerRendezvous2",avgSqrtUsersPerRendezvous[1]);
-		result.addObject("avgSqrtRendezvousesRSVPdPerUser1",avgSqrtRendezvousesRSVPdPerUser[0]);
-		result.addObject("avgSqrtRendezvousesRSVPdPerUser2",avgSqrtRendezvousesRSVPdPerUser[1]);
-		result.addObject("top10RendezvousesRSVPd",top10RendezvousesRSVPd);
-		result.addObject("rendezvousesLinkedPlus10",rendezvousesLinkedPlus10);
-		result.addObject("avgSqrtAnnouncementsPerRendezvous1",avgSqrtAnnouncementsPerRendezvous[0]);
-		result.addObject("avgSqrtAnnouncementsPerRendezvous2",avgSqrtAnnouncementsPerRendezvous[1]);
-		result.addObject("rendezvousesWhoseMoreThat75Announcements",rendezvousesWhoseMoreThat75Announcements);
-		result.addObject("avgSqrtQuestionsPerRendezvous1",avgSqrtQuestionsPerRendezvous[0]);
-		result.addObject("avgSqrtQuestionsPerRendezvous2",avgSqrtQuestionsPerRendezvous[1]);
-		result.addObject("avgSqrtAnswersToQuestionsPerRendezvous1",avgSqrtAnswersToQuestionsPerRendezvous[0]);
-		result.addObject("avgSqrtAnswersToQuestionsPerRendezvous2",avgSqrtAnswersToQuestionsPerRendezvous[1]);
+		result.addObject("avgSqrtRendezvousesPerUser1", avgSqrtRendezvousesPerUser[0]);
+		result.addObject("avgSqrtRendezvousesPerUser2", avgSqrtRendezvousesPerUser[1]);
+		result.addObject("ratioOfUsersWithRendezvousVsUsersWithoutRendezvous", ratioOfUsersWithRendezvousVsUsersWithoutRendezvous);
+		result.addObject("avgSqrtUsersPerRendezvous1", avgSqrtUsersPerRendezvous[0]);
+		result.addObject("avgSqrtUsersPerRendezvous2", avgSqrtUsersPerRendezvous[1]);
+		result.addObject("avgSqrtRendezvousesRSVPdPerUser1", avgSqrtRendezvousesRSVPdPerUser[0]);
+		result.addObject("avgSqrtRendezvousesRSVPdPerUser2", avgSqrtRendezvousesRSVPdPerUser[1]);
+		result.addObject("top10RendezvousesRSVPd", top10RendezvousesRSVPd);
+		result.addObject("rendezvousesLinkedPlus10", rendezvousesLinkedPlus10);
+		result.addObject("avgSqrtAnnouncementsPerRendezvous1", avgSqrtAnnouncementsPerRendezvous[0]);
+		result.addObject("avgSqrtAnnouncementsPerRendezvous2", avgSqrtAnnouncementsPerRendezvous[1]);
+		result.addObject("rendezvousesWhoseMoreThat75Announcements", rendezvousesWhoseMoreThat75Announcements);
+		result.addObject("avgSqrtQuestionsPerRendezvous1", avgSqrtQuestionsPerRendezvous[0]);
+		result.addObject("avgSqrtQuestionsPerRendezvous2", avgSqrtQuestionsPerRendezvous[1]);
+		result.addObject("avgSqrtAnswersToQuestionsPerRendezvous1", avgSqrtAnswersToQuestionsPerRendezvous[0]);
+		result.addObject("avgSqrtAnswersToQuestionsPerRendezvous2", avgSqrtAnswersToQuestionsPerRendezvous[1]);
 		result.addObject("avgSqrtRepliesPerComment1", avgSqrtRepliesPerComment[0]);
 		result.addObject("avgSqrtRepliesPerComment2", avgSqrtRepliesPerComment[1]);
-		
-		result.addObject("requestURI",requestURI);
-		
+		result.addObject("findManagerMoreServiceThanAvg", findManagerMoreServiceThanAvg);
+		result.addObject("findBestSellingService", findBestSellingService);
+		result.addObject("requestURI", requestURI);
+
 		return result;
 	}
 

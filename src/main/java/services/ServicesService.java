@@ -155,5 +155,12 @@ public class ServicesService {
 
 		return result;
 	}
+	public Services findBestSellingService() {
+		Services result;
+
+		result = this.serviceRepository.findBestSellingService();
+
+		return result;
+	}
 
 }
