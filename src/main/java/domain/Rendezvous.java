@@ -10,6 +10,7 @@ import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Index;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -188,7 +189,7 @@ public class Rendezvous extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToMany
+	@ManyToMany
 	public Collection<Rendezvous> getSimilarOnes() {
 		return this.similarOnes;
 	}

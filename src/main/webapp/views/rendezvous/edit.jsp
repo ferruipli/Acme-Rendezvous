@@ -37,7 +37,7 @@
 	<acme:textbox code="gps.latitude" path="gpsCoordinates.latitude" />
 	<acme:textbox code="gps.longitude" path="gpsCoordinates.longitude"/>
 	
-	<acme:selectMultiple path="similarOnes" code="rendezvous.similarOnes"
+	<acme:select path="similarOnes" code="rendezvous.similarOnes"
 		items="${similarRendezvouses}" itemLabel="name" />
 	
 	<acme:submit name="save" code="rendezvous.save" />

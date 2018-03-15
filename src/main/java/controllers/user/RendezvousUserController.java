@@ -2,7 +2,6 @@
 package controllers.user;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 
 import javax.validation.Valid;
@@ -106,16 +105,12 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Rendezvous rendezvous, BindingResult binding) {
+	public ModelAndView save(@Valid Rendezvous rendezvous, BindingResult binding) {
 		ModelAndView result;
 		Date currentDate;
 		
 		currentDate = new Date(System.currentTimeMillis()-1);
-		/*
-		if (rendezvous.getSimilarOnes() == null)
-			rendezvous.setSimilarOnes(Collections.<Rendezvous> emptySet());
-		 */
-		rendezvous = this.rendezvousService.reconstruct(rendezvous, binding);
+		
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(rendezvous);
 		else
@@ -195,6 +190,7 @@ public class RendezvousUserController extends AbstractController {
 		Collection<Rendezvous> similarOnes;
 		
 		similarOnes = this.rendezvousService.findAll();
+		similarOnes.remove(rendezvous);
 		
 		result = new ModelAndView("rendezvous/edit");
 		result.addObject("rendezvous", rendezvous);
