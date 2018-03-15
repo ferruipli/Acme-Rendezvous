@@ -106,15 +106,16 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Rendezvous rendezvous, final BindingResult binding) {
+	public ModelAndView save(Rendezvous rendezvous, BindingResult binding) {
 		ModelAndView result;
 		Date currentDate;
 		
 		currentDate = new Date(System.currentTimeMillis()-1);
-
+		/*
 		if (rendezvous.getSimilarOnes() == null)
 			rendezvous.setSimilarOnes(Collections.<Rendezvous> emptySet());
-
+		 */
+		rendezvous = this.rendezvousService.reconstruct(rendezvous, binding);
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(rendezvous);
 		else
@@ -192,12 +193,6 @@ public class RendezvousUserController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Rendezvous rendezvous, final String messageCode) {
 		ModelAndView result;
 		Collection<Rendezvous> similarOnes;
-		User user;
-		/*
-		user = this.userService.findByPrincipal();
-		similarOnes = user.getCreatedRendezvouses();
-		similarOnes.remove(rendezvous);
-		*/
 		
 		similarOnes = this.rendezvousService.findAll();
 		

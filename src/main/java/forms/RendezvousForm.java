@@ -8,11 +8,13 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import domain.GPS;
 import domain.Rendezvous;
 
 public class RendezvousForm {
 
 	private int id;
+	private int version;
 	private String name;
 	private String description;
 	private Date moment;
@@ -20,7 +22,8 @@ public class RendezvousForm {
 	private boolean adultOnly;
 	private String urlPicture;
 	private Collection<Rendezvous> similarOnes;
-	private GPSForm gpsCoordinates;
+	private Double latitude;
+	private Double longitude;
 	
 	public int getId() {
 		return id;
@@ -28,6 +31,14 @@ public class RendezvousForm {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 	
 	public String getName() {
@@ -88,12 +99,20 @@ public class RendezvousForm {
 		this.similarOnes = similarOnes;
 	}
 	
-	public GPSForm getGpsCoordinates() {
-		return gpsCoordinates;
+	public Double getLatitude() {
+		return latitude;
 	}
-	
-	public void setGpsCoordinates(GPSForm gpsCoordinates) {
-		this.gpsCoordinates = gpsCoordinates;
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 	
 }

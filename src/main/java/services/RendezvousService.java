@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.RendezvousRepository;
 import domain.Actor;
@@ -141,6 +143,32 @@ public class RendezvousService {
 
 	// Other business methods -----------------------------------------------
 
+	@Autowired
+	private Validator validator;
+	
+	public Rendezvous reconstruct(Rendezvous rendezvous, BindingResult binding) {
+		Rendezvous result;
+		
+		if (rendezvous.getId() == 0) {
+			result = rendezvous;
+		} else {
+			result = this.rendezvousRepository.findOne(rendezvous.getId());
+			 
+			result.setName(rendezvous.getName());
+			result.setDescription(rendezvous.getDescription());
+			result.setMoment(rendezvous.getMoment());
+			result.setFinalMode(rendezvous.getFinalMode());
+			result.setAdultOnly(rendezvous.getAdultOnly());
+			result.setUrlPicture(rendezvous.getUrlPicture());
+			result.setSimilarOnes(rendezvous.getSimilarOnes());
+			result.setGpsCoordinates(rendezvous.getGpsCoordinates());
+			
+			this.validator.validate(result, binding);
+		}
+		
+		return result;
+	}
+	
 	public Collection<Rendezvous> findAllAvailable() {
 		Collection<Rendezvous> results;
 		User user;
