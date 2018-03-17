@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.RequestRepository;
+import domain.Rendezvous;
 import domain.Request;
 
 @Service
@@ -73,4 +74,11 @@ public class RequestService {
 	
 	// Other business methods ---------------------
 	
+	public Collection<Request> findRequestByRendezvous(Rendezvous rendezvous){
+		Collection<Request> result;
+		
+		result = this.requestRepository.findRequestByRendezvous(rendezvous);
+		
+		return result;
+	}
 }
