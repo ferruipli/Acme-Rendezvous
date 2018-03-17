@@ -23,12 +23,39 @@ public class RequestService {
 
 	// Supporting services ------------------------
 
+
 	// Constructors -------------------------------
 	public RequestService() {
 		super();
 	}
 
 	// CRUD methods -------------------------------
+	
+	public Request create() {
+		Request result;
+		
+		result = new Request();
+
+		return result;
+	}
+	
+	public Request save(final Request request) {
+		Assert.notNull(request);
+		Assert.notNull(request.getRendezvous());
+		Assert.notNull(request.getService());
+		Assert.notNull(request.getCreditCard());
+		Assert.isTrue(!this.requestRepository.exists(request.getId()));
+
+		Request result;
+	
+		result = this.requestRepository.save(request);
+		
+		if(!request.getService().getIsRequested())
+			request.getService().setIsRequested(true);
+
+		return result;
+	}
+	
 	public Collection<Request> findAll() {
 		Collection<Request> requests;
 
@@ -43,7 +70,7 @@ public class RequestService {
 
 		this.requestRepository.delete(request);
 	}
-
+	
 	// Other business methods ---------------------
-
+	
 }
