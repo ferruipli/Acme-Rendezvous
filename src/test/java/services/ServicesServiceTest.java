@@ -91,4 +91,34 @@ public class ServicesServiceTest extends AbstractTest {
 		super.authenticate(null);
 	}
 	
+	/**
+	 * Acme Rendezvous 2.0:
+	 * An actor who is registered as a manager must be able to:
+	 * List the services that are available in the system.
+	 */
+	
+	@Test
+	public void testServicesAvailable(){
+		super.authenticate("manager1");
+		
+		this.servicesService.findAll();
+		
+		super.unauthenticate();
+	}
+	
+	/**
+	 * Acme Rendezvous 2.0:
+	 * An actor who is registered as a manager must be able to:
+	 * List the services that are available in the system.
+	 * REMARK: user unauthenticated
+	 */
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testUnauthenticatedServicesAvailable(){
+		
+		this.servicesService.findAll();
+		
+		super.unauthenticate();
+	}
+	
 }
