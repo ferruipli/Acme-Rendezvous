@@ -63,17 +63,16 @@ public class RequestUserController extends AbstractController{
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Request request, final BindingResult binding) {
 		ModelAndView result;
-		Services service;
+		Rendezvous rendezvous;
 		
-		service = request.getService();
-		this.servicesService.save(service);
+		rendezvous = request.getRendezvous();
 		
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(request);
 		else
 			try {
 				this.requestService.save(request);
-				result = new ModelAndView("redirect:/service/list.do");
+				result = new ModelAndView("redirect:/rendezvous/display.do?rendezvousId="+ String.valueOf(rendezvous.getId()));
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(request, "request.commit.error");
 			}

@@ -12,6 +12,7 @@
 <form:form action="request/user/edit.do" modelAttribute="request">	
 	<form:hidden path="id" />
 	<form:hidden path="version" />
+	<form:hidden path="service" />
 	
 	<acme:textbox code="request.comment" path="comment" />
 	

@@ -112,7 +112,16 @@
 			</security:authorize>
 		</display:table>
 	</jstl:if>
-
+	
+	<jstl:if test="${requests.size() > 0}">
+	<p><strong>Requests</strong></p>
+	<display:table name="requests" id="row" class="displaytag">
+	
+		<spring:message code="request.service" var="serviceHeader" />
+		<display:column property="service.name" title="${serviceHeader}" sortable="true" />
+	
+	</display:table>
+	</jstl:if>
 	<security:authorize access="hasRole('USER')">
 		<jstl:if test="${isCreator==true}">
 			<a href="announcement/user/create.do?rendezvousId=${rendezvous.id}">

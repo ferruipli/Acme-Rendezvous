@@ -16,10 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.RendezvousService;
+import services.RequestService;
 import services.UserService;
 import controllers.AbstractController;
 import domain.Announcement;
 import domain.Rendezvous;
+import domain.Request;
 import domain.User;
 
 @Controller
@@ -36,7 +38,9 @@ public class RendezvousUserController extends AbstractController {
 	@Autowired
 	private UserService			userService;
 
-
+	@Autowired
+	private RequestService		requestService;
+	
 	// Constructors -----------------------------------------------------
 	public RendezvousUserController() {
 		super();
@@ -149,6 +153,7 @@ public class RendezvousUserController extends AbstractController {
 		Rendezvous rendezvous;
 		Collection<Rendezvous> similarOnes, reservedRendezvouses;
 		Collection<Announcement> announcements;
+		Collection<Request> requests;
 		boolean isReserved, isCreator;
 
 		try {
@@ -157,7 +162,7 @@ public class RendezvousUserController extends AbstractController {
 
 			similarOnes = rendezvous.getSimilarOnes();
 			announcements = rendezvous.getAnnouncements();
-
+			requests = this.requestService.findRequestByRendezvous(rendezvous);
 			reservedRendezvouses = this.rendezvousService.findRendezvousesRSVPByUserId(user.getId());
 
 			isReserved = reservedRendezvouses.contains(rendezvous);
@@ -169,6 +174,7 @@ public class RendezvousUserController extends AbstractController {
 			result.addObject("announcements", announcements);
 			result.addObject("isReserved", isReserved);
 			result.addObject("isCreator", isCreator);
+			result.addObject("requests",requests);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:list.do");
 		}

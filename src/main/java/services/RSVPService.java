@@ -27,15 +27,15 @@ public class RSVPService {
 	// Managed repository --------------------------------------------------------------------
 
 	@Autowired
-	private RSVPRepository		rsvpRepository;
+	private RSVPRepository	rsvpRepository;
 
 	// Supporting services ------------------------------------------------------------------
-	
-	@Autowired
-	private ActorService		actorService;
 
 	@Autowired
-	private UserService			userService;
+	private ActorService	actorService;
+
+	@Autowired
+	private UserService		userService;
 
 
 	// Constructors ---------------------------------------------------------
@@ -91,7 +91,7 @@ public class RSVPService {
 	public RSVP save(final RSVP rsvp) {
 		Assert.notNull(rsvp);
 		RSVP result;
-		Date date;
+		final Date date;
 		User user;
 		long edad;
 
@@ -141,14 +141,14 @@ public class RSVPService {
 		return result;
 	}
 
-	public RSVP findRSVPByUserAndRendezvous(final int userId, final int rendezvousId){
+	public RSVP findRSVPByUserAndRendezvous(final int userId, final int rendezvousId) {
 		RSVP result;
-		
+
 		result = this.rsvpRepository.findRSVPByUserAndRendezvous(userId, rendezvousId);
-		
+
 		return result;
 	}
-	
+
 	protected void removeAttendant(final Rendezvous rendezvous, final User attendant) {
 		Collection<User> aux;
 

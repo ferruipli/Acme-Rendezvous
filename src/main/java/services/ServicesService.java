@@ -52,20 +52,24 @@ public class ServicesService {
 		return result;
 	}
 
-	public void save(final Services service) {
-		Services saved;
+	public Services save(final Services service) {
+		Services result;
 		Manager principal;
 		int serviceId;
 
 		serviceId = service.getId();
 		principal = this.managerService.findByPrincipal();
+		Assert.notNull(principal);
+
 		if (serviceId != 0) {
 			Assert.isTrue(principal.getServices().contains(service));
 			Assert.isTrue(!service.getIsRequested());
 		}
 
-		saved = this.serviceRepository.save(service);
-		this.managerService.addService(principal, saved);
+		result = this.serviceRepository.save(service);
+		this.managerService.addService(principal, result);
+
+		return result;
 	}
 
 	public void delete(final Services service) {
@@ -161,6 +165,10 @@ public class ServicesService {
 		result = this.serviceRepository.findBestSellingService();
 
 		return result;
+	}
+
+	public void flush() {
+		this.serviceRepository.flush();
 	}
 
 }
