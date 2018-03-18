@@ -34,6 +34,7 @@ public class CommentServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	/**
+	 * Acme Rendezvous 1.0:
 	 * An actor who is authenticated as a user must be able to:
 	 * Comment on the rendezvouses that he or she's RSVPd.
 	 * REMARK: user comment a rendezvous that he has RSVPd.
@@ -54,6 +55,7 @@ public class CommentServiceTest extends AbstractTest {
 	}
 
 	/**
+	 * Acme Rendezvous 1.0:
 	 * An actor who is authenticated as a user must be able to:
 	 * Comment on the rendezvouses that he or she's RSVPd.
 	 * REMARK: user comment a rendezvous that he has not RSVPd.
@@ -75,6 +77,7 @@ public class CommentServiceTest extends AbstractTest {
 	}
 
 	/**
+	 * Acme Rendezvous 1.0:
 	 * An actor who is authenticated as an administrator must be able to:
 	 * Remove a comment that he or she thinks is inappropriate.
 	 * REMARK: administrator remove an existent comment.
@@ -93,6 +96,7 @@ public class CommentServiceTest extends AbstractTest {
 	}
 
 	/**
+	 * Acme Rendezvous 1.0:
 	 * An actor who is authenticated as an administrator must be able to:
 	 * Remove a comment that he or she thinks is inappropriate.
 	 * REMARK: administrator remove a non existent comment.
@@ -112,6 +116,7 @@ public class CommentServiceTest extends AbstractTest {
 	}
 
 	/**
+	 * Acme Rendezvous 1.0:
 	 * In addition to writing a comment from scratch, a user may reply to a
 	 * comment.
 	 * REMARK: user replies a comment.
@@ -135,6 +140,7 @@ public class CommentServiceTest extends AbstractTest {
 	}
 
 	/**
+	 * Acme Rendezvous 1.0:
 	 * In addition to writing a comment from scratch, a user may reply to a
 	 * comment.
 	 * REMARK: administrator replies a comment.

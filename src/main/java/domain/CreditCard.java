@@ -8,6 +8,7 @@ import javax.validation.constraints.Digits;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
@@ -26,6 +27,7 @@ public class CreditCard {
 		super();
 	}
 	
+	@SafeHtml
 	@NotBlank
 	public String getHolderName() {
 		return holderName;
@@ -35,6 +37,7 @@ public class CreditCard {
 		this.holderName = holderName;
 	}
 
+	@SafeHtml
 	@NotBlank
 	public String getBrandName() {
 		return brandName;
@@ -44,6 +47,7 @@ public class CreditCard {
 		this.brandName = brandName;
 	}
 
+	@SafeHtml
 	@NotBlank
 	@CreditCardNumber
 	public String getNumber() {
@@ -54,6 +58,7 @@ public class CreditCard {
 		this.number = number;
 	}
 
+	@SafeHtml
 	@NotBlank
 	@Range(min = 1, max = 12)
 	public String getExpirationMonth() {
@@ -64,6 +69,7 @@ public class CreditCard {
 		this.expirationMonth = expirationMonth;
 	}
 
+	@SafeHtml
 	@NotBlank
 	@Digits(integer = 2, fraction = 0)
 	public String getExpirationYear() {

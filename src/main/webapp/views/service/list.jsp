@@ -29,7 +29,7 @@
 	<security:authorize access="hasRole('USER')">
 		<display:column>
 			<jstl:if test="${!row.isCancelled}">
-				<a href="request/user/create.do?serviceId=${row.id}"> <spring:message code="service.label.request" /></a>
+				<a href="request/user/edit.do?serviceId=${row.id}"> <spring:message code="service.label.request" /></a>
 			</jstl:if>
 		</display:column>
 	</security:authorize>

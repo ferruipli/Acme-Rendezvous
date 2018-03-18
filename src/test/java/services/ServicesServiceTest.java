@@ -101,48 +101,84 @@ public class ServicesServiceTest extends AbstractTest {
 		super.authenticate(null);
 	}
 
-	// Driver and template -------------------------------------
+	/**
+	 * Acme Rendezvous 2.0:
+	 * An actor who is registered as a manager must be able to:
+	 * List the services that are available in the system.
+	 */
+
+	@Test
+	public void testServicesAvailable() {
+		super.authenticate("manager1");
+
+		this.servicesService.findAll();
+
+		super.unauthenticate();
+	}
+
+	/**
+	 * Acme Rendezvous 2.0:
+	 * An actor who is registered as a manager must be able to:
+	 * List the services that are available in the system.
+	 * REMARK: user unauthenticated
+	 */
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testUnauthenticatedServicesAvailable() {
+
+		this.servicesService.findAll();
+
+		super.unauthenticate();
+	}
+
+	/**
+	 * Acme Rendezvous 2.0:
+	 * An actor who is registered as a manager must be able to:
+	 * Manage his or her services, which includes listing them,
+	 * creating them, updating them, and deleting them as long
+	 * as they are not required by any rendezvouses.
+	 * */
 
 	@Test
 	public void testDriverServiceManagement() {
 		final Object testingData[][] = {
-			// MANAGER crea, guarda, lista y borra servicio
+			// REMARK: manager creates, saves, lists and deletes a service
 			{
 				"manager1", "Testing name1", "Testing description1", "http://testing.url.com", null, false, null
 			},
-			// ADMINISTRATOR crea, guarda, lista y borra servicio
+			// REMARK: administrator creates, saves, lists and deletes a service
 			{
 				"admin", "Testing name2", "Testing description2", "http://testing.url.com", null, false, IllegalArgumentException.class
 			},
-			// crear y guardar servicio con nombre inválido
+			// REMARK: create and save a service with an invalid name
 			{
 				"manager1", "", "Testing description3", "http://testing.url.com", null, false, ConstraintViolationException.class
 			},
-			// crear y guardar servicio con descripción inválida
+			// REMARK: create and save a service with an invalid description
 			{
 				"manager1", "Testing name4", "", "http://testing.url.com", null, false, ConstraintViolationException.class
 			},
-			// crear y guardar servicio con urlPicture inválida
+			// REMARK: create and save a service with and invalid picture url
 			{
 				"manager1", "Testing name5", "Testing description5", "testing.url", null, false, ConstraintViolationException.class
 			},
-			// MANAGER actualiza y borra servicio
+			// REMARK: manager updates and deletes a service
 			{
 				"manager1", "Testing name6", "Testing description6", "http://testing.url.com", "service3", false, null
 			},
-			// MANAGER actualiza servicio que no es suyo
+			// REMARK: manager updates a service that isn't his
 			{
 				"manager1", "Testing name7", "Testing description7", "http://testing.url.com", "service5", false, IllegalArgumentException.class
 			},
-			// MANAGER actualiza servicio suyo que ya ha sido solicitado
+			// REMARK: manager updates his service, who has been requested by some rendezvous
 			{
 				"manager1", "Testing name8", "Testing description8", "http://testing.url.com", "service1", false, IllegalArgumentException.class
 			},
-			// MANAGER borra servicio que no es suyo
+			// REMARK: manager deletes a service that isn't his
 			{
 				"manager1", "Testing name9", "Testing description9", "http://testing.url.com", "service5", true, IllegalArgumentException.class
 			},
-			// MANAGER borra servicio suyo que ya ha sido solicitado
+			// REMARK: manager deletes his service, who has been requested by some rendezvous
 			{
 				"manager1", "Testing name10", "Testing description10", "http://testing.url.com", "service1", true, IllegalArgumentException.class
 			}

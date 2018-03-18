@@ -7,6 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.SafeHtml;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Request extends DomainEntity {
@@ -20,7 +22,7 @@ public class Request extends DomainEntity {
 		super();
 	}
 
-	
+	@SafeHtml
 	public String getComment() {
 		return comment;
 	}

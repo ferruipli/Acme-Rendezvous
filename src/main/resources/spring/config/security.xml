@@ -66,6 +66,8 @@
 		<security:intercept-url pattern="/rendezvous/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/rendezvous/administrator/**" access = "hasRole('ADMINISTRATOR')"/>
 		
+		<security:intercept-url pattern="/request/user/**" access = "hasRole('USER')"/>
+
 		<security:intercept-url pattern="/rsvp/user/**" access="hasRole('USER')"/>
 		
 		<security:intercept-url pattern="/service/manager/**" access="hasRole('MANAGER')"/>
