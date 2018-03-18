@@ -167,4 +167,8 @@ public class ServicesService {
 		return result;
 	}
 
+	public void flush() {
+		this.serviceRepository.flush();
+	}
+
 }
