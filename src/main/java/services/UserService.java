@@ -188,5 +188,9 @@ public class UserService {
 		user.setReserves(aux);
 		
 	}
+	
+	public void flush() {
+		this.userRepository.flush();
+	}
 
 }
