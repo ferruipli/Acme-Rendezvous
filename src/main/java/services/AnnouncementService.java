@@ -77,7 +77,7 @@ public class AnnouncementService {
 		rendezvous = this.rendezvousService.findRendezvousByAnnouncement(announcement.getId());
 		this.rendezvousService.removeAnnouncement(rendezvous, announcement);
 
-		//Assert.isTrue(this.actorService.findByPrincipal() == rendezvous.getCreator());
+		Assert.isTrue(this.actorService.findByPrincipal() == rendezvous.getCreator());
 
 		this.announcementRepository.delete(announcement);
 	}
@@ -131,5 +131,6 @@ public class AnnouncementService {
 	public void flush() {
 		this.announcementRepository.flush();
 	}
+	
 
 }
