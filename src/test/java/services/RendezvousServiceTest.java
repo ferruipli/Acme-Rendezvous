@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 
@@ -10,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Announcement;
+import domain.Answer;
 import domain.Comment;
 import domain.Question;
 import domain.RSVP;
@@ -34,9 +37,47 @@ public class RendezvousServiceTest extends AbstractTest {
 	@Autowired
 	private RSVPService			rsvpService;
 	
+	@Autowired
+	private AnswerService answerService;
+	
 	// Other services ------------------------------------------
 
 	// Test ----------------------------------------------------
+	
+	/*
+	 * Requirement 20.1: Display information about the users who have
+	 * RSVPd a rendezvous, which, in turn, must show their answers
+	 * to the questions that the creator has registered.
+	 */
+	
+	/*
+	 * Se pretende comprobar con este caso de test que un usuario no
+	 * autenticado puede visualizar las cuestiones y respuestas de una cita
+	 * concreta
+	 */
+	
+	@Test
+	public void testShowAnswersOfQuestionsFromRendezvous() {
+		super.authenticate(null);
+		
+		int rendezvousId;
+		Collection<Question> questions;
+		Collection<Answer> answers;
+		
+		rendezvousId = super.getEntityId("rendezvous1");
+		
+		answers = this.answerService.findOrderedAnswersByRendezvousId(rendezvousId);
+		questions = this.rendezvousService.findOrderedQuestionsByRendezvousId(rendezvousId);
+		
+		Assert.notNull(answers);
+		Assert.notNull(questions);
+		
+		Assert.isTrue(answers.size() > 0);
+		Assert.isTrue(questions.size() > 0);
+		
+		super.authenticate(null);
+	}
+	
 	/**
 	 * Req. 1.4.2 : An actor who is not authenticated must be able to 
 	 * list the rendezvouses in the system 

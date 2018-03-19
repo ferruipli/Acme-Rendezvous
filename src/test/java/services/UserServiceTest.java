@@ -41,6 +41,12 @@ public class UserServiceTest extends AbstractTest {
 	 * to the questions that the creator has registered.
 	 */
 	
+	/*
+	 * Con este caso de test, la intención es comprobar que un usuario no
+	 * autenticado puede acceder a los asistentes de una cita. Para mostrar las
+	 * respuestas de las cuestiones de una cita hay que ir al test de Rendezvous.
+	 * Aquí no.
+	 */
 	@Test
 	public void testFindAttendants() {
 		super.authenticate(null);
