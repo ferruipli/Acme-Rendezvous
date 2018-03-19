@@ -12,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.CreditCard;
 import domain.Manager;
+import domain.Rendezvous;
+import domain.Request;
 import domain.Services;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,6 +34,12 @@ public class ServicesServiceTest extends AbstractTest {
 
 	@Autowired
 	private ActorService	actorService;
+	
+	@Autowired
+	private RendezvousService rendezvousService;
+	
+	@Autowired
+	private RequestService requestService;
 
 
 	// Test ----------------------------------------------------
@@ -59,7 +68,7 @@ public class ServicesServiceTest extends AbstractTest {
 		serviceId = 1;
 
 		super.authenticate("admin");
-		/* No existe ningún con servicio con el id igual a 1. Por tanto, se le asignará el valor null al objeto */
+		/* No existe ningÃºn con servicio con el id igual a 1. Por tanto, se le asignarÃ¡ el valor null al objeto */
 		service = this.servicesService.findOne(serviceId);
 
 		this.servicesService.cancel(service);
@@ -103,15 +112,46 @@ public class ServicesServiceTest extends AbstractTest {
 
 	/**
 	 * Acme Rendezvous 2.0:
-	 * An actor who is registered as a manager must be able to:
+	 * An actor who is registered as a user must be able to:
 	 * List the services that are available in the system.
 	 */
 
 	@Test
 	public void testServicesAvailable() {
+		super.authenticate("user1");
+
+		this.servicesService.availableServices();
+
+		super.unauthenticate();
+	}
+
+	/**
+	 * Acme Rendezvous 2.0:
+	 * An actor who is registered as a user must be able to:
+	 * List the services that are available in the system.
+	 * REMARK: user unauthenticated
+	 */
+
+	@Test
+	public void testUnauthenticatedServicesAvailable() {
+		super.authenticate(null);
+		this.servicesService.availableServices();
+		
+		super.unauthenticate();
+		
+	}
+	
+	/**
+	 * Acme Rendezvous 2.0:
+	 * An actor who is registered as a manager must be able to:
+	 * List the services that are available in the system.
+	 */
+
+	@Test
+	public void testServicesAvailableManager() {
 		super.authenticate("manager1");
 
-		this.servicesService.findAll();
+		this.servicesService.availableServices();
 
 		super.unauthenticate();
 	}
@@ -123,12 +163,13 @@ public class ServicesServiceTest extends AbstractTest {
 	 * REMARK: user unauthenticated
 	 */
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testUnauthenticatedServicesAvailable() {
-
-		this.servicesService.findAll();
-
+	@Test
+	public void testUnauthenticatedServicesAvailableManager() {
+		super.authenticate(null);
+		this.servicesService.availableServices();
+		
 		super.unauthenticate();
+		
 	}
 
 	/**
@@ -188,7 +229,7 @@ public class ServicesServiceTest extends AbstractTest {
 			this.templateServiceManagement((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (boolean) testingData[i][5], (Class<?>) testingData[i][6]);
 	}
 
-	/* El método save y delete tienen restricciones similares. Para probar las restricciones de ambos métodos de forma aislada, se ha añadido el atributo onlyDelete, para evitar que se haga en save en el test */
+	/* El mÃ©todo save y delete tienen restricciones similares. Para probar las restricciones de ambos mÃ©todos de forma aislada, se ha aÃ±adido el atributo onlyDelete, para evitar que se haga en save en el test */
 	protected void templateServiceManagement(final String username, final String name, final String description, final String urlPicture, final String serviceBeanName, final boolean onlyDelete, final Class<?> expected) {
 		Class<?> caught;
 		Services service, aux, saved;
@@ -206,7 +247,7 @@ public class ServicesServiceTest extends AbstractTest {
 				/*
 				 * Creamos un objeto Service copia, para que al hacer los setters
 				 * para actualizar no se hagan los cambios directamente en la base
-				 * de datos sin llamar al método save.
+				 * de datos sin llamar al mÃ©todo save.
 				 */
 				serviceId = super.getEntityId(serviceBeanName);
 				aux = this.servicesService.findOne(serviceId);
@@ -245,6 +286,94 @@ public class ServicesServiceTest extends AbstractTest {
 		target.setName(source.getName());
 		target.setUrlPicture(source.getUrlPicture());
 		target.setVersion(source.getVersion());
+	}
+	
+	/**
+	 * Acme Rendezvous 2.0
+	 * An actor who is authenticated as a user must be able to:
+	 * Request a service for one of the rendezvouses that he or sheâ€™s created. He or she must specify a valid credit card in every request for a service. 
+	 * Optionally, he or she can provide some comments in the request.
+	 */
+	
+	
+	@Test
+	public void testRequestServiceForRendezvous(){
+		
+		Rendezvous rendezvous;
+		Services service;
+		Request request;
+		CreditCard creditCard;
+		
+		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous1"));
+		service = this.servicesService.findOne(super.getEntityId("service1"));
+		
+		super.authenticate("user2");
+		
+		creditCard = new CreditCard();
+		
+		creditCard.setBrandName("brand1");
+		creditCard.setCvvCode(123);
+		creditCard.setHolderName("holder1");
+		creditCard.setExpirationMonth("09");
+		creditCard.setExpirationYear("18");
+		creditCard.setNumber("6702386065213009");
+		
+		request = this.requestService.create();
+		
+		request.setComment("comment");
+		request.setRendezvous(rendezvous);
+		request.setService(service);
+		request.setCreditCard(creditCard);
+		
+		this.requestService.save(request);
+		
+		super.unauthenticate();
+		
+	}
+	
+	/**
+	 * Acme Rendezvous 2.0
+	 * An actor who is authenticated as a user must be able to:
+	 * Request a service for one of the rendezvouses that he or sheâ€™s created. He or she must specify a valid credit card in every request for a service. 
+	 * Optionally, he or she can provide some comments in the request.
+	 * remark: user unauthenticated
+	 */
+	
+	
+	@Test
+	public void testUnauthenticatedRequestServiceForRendezvous(){
+		super.authenticate(null);
+		
+		Rendezvous rendezvous;
+		Services service;
+		Request request;
+		CreditCard creditCard;
+		
+		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous1"));
+		
+		service = this.servicesService.findOne(super.getEntityId("service1"));
+				
+		
+		creditCard = new CreditCard();
+		
+		creditCard.setBrandName("brand1");
+		creditCard.setCvvCode(123);
+		creditCard.setHolderName("holder1");
+		creditCard.setExpirationMonth("09");
+		creditCard.setExpirationYear("18");
+		creditCard.setNumber("6702386065213009");
+		
+		request = this.requestService.create();
+		
+		request.setComment("comment");
+		request.setRendezvous(rendezvous);
+		request.setService(service);
+		request.setCreditCard(creditCard);
+		
+		this.requestService.save(request);
+		
+		super.unauthenticate();
+		
 	}
 
 }

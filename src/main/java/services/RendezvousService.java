@@ -181,7 +181,7 @@ public class RendezvousService {
 		// Removing all the comments relates with this rendezvous
 		if (comments != null && !comments.isEmpty())
 			for (final Comment c : comments)
-				this.commentService.remove(c);
+				this.commentService.delete(c);
 
 		//Removing all the RSVP relates with this rendezvous
 		if (RSVPs != null && !RSVPs.isEmpty())
