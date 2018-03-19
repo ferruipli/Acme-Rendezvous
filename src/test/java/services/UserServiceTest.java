@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import domain.Rendezvous;
 import domain.User;
 
 import security.UserAccount;
@@ -28,8 +30,89 @@ public class UserServiceTest extends AbstractTest {
 	private UserService userService;
 	
 	// Supporting test ------------------------------------------
+	@Autowired
+	private RendezvousService rendezvousService;
 	
 	// Test -------------------------------------------------
+	
+	/*
+	 * Requirement 20.1: Display information about the users who have
+	 * RSVPd a rendezvous, which, in turn, must show their answers
+	 * to the questions that the creator has registered.
+	 */
+	
+	@Test
+	public void testFindAttendants() {
+		super.authenticate(null);
+		
+		Collection<User> attendants;
+		int rendezvousId;
+		Rendezvous rendezvous;
+		
+		rendezvousId = super.getEntityId("rendezvous1");
+		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		attendants = rendezvous.getAttendants();
+		
+		Assert.notNull(attendants);
+		Assert.isTrue(attendants.size() > 0);
+		
+		super.authenticate(null);
+	}
+	
+	/*
+	 * Requirements 4.2: List the users of the system and navigate to their profiles,
+	 *  which include personal data and the list of rendezvouses that
+	 *   they have attended or are going to attend.
+	 */
+	// Caso de test positivo
+	@Test
+	public void testFindAll() {
+		super.authenticate(null);
+		
+		Collection<User> all;
+		all = this.userService.findAll();
+		Assert.isTrue(all.size() > 0);
+		
+		super.authenticate(null);
+	}
+	
+	/*
+	 * Caso de test positivo. Se devuelve el usuario con el id seleccionado.
+	 */
+	@Test
+	public void testFindOne() {
+		super.authenticate(null);
+		
+		User user;
+		int userId;
+		
+		userId = super.getEntityId("user1");
+		user = this.userService.findOne(userId);
+		
+		Assert.notNull(user);
+	
+		super.authenticate(null);
+	}
+	
+	/*
+	 * Se trata de un caso de test negativo ya que no existe ningún
+	 * user con este identificador
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testNotFindOne() {
+		super.authenticate(null);
+		
+		User user;
+		int userId;
+		
+		userId = super.getEntityId("user10");
+		user = this.userService.findOne(userId);
+		
+		Assert.notNull(user);
+		Assert.notNull(user.getCreatedRendezvouses());
+	
+		super.authenticate(null);
+	}
 	
 	/*
 	 * Requirement 4.1: Register to the system as a user.
@@ -38,7 +121,7 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void testCreate() {
 		User user;
-		
+	
 		user = this.userService.create();
 		
 		Assert.notNull(user);
@@ -169,6 +252,8 @@ public class UserServiceTest extends AbstractTest {
 		UserAccount userAccount;
 		
 		try {
+			super.authenticate(null);
+			
 			user = this.userService.create();
 			
 			userAccount = user.getUserAccount();
@@ -185,6 +270,8 @@ public class UserServiceTest extends AbstractTest {
 			
 			this.userService.save(user);
 			this.userService.flush();
+			
+			super.authenticate(null);
 		} catch (Throwable oops) {
 			caught = oops.getClass();
 		}
