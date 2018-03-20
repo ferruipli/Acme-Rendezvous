@@ -74,6 +74,7 @@ public class UserService {
 	}
 
 	public void save(final User user) {
+		Assert.notNull(user);
 		String password, hash;
 
 		password = user.getUserAccount().getPassword();
@@ -179,16 +180,16 @@ public class UserService {
 
 		return result;
 	}
-	
-	protected void removeRSVP(User user, RSVP rsvp) {
+
+	protected void removeRSVP(final User user, final RSVP rsvp) {
 		Set<RSVP> aux;
-		
+
 		aux = new HashSet<>(user.getReserves());
 		aux.remove(rsvp);
 		user.setReserves(aux);
-		
+
 	}
-	
+
 	public void flush() {
 		this.userRepository.flush();
 	}

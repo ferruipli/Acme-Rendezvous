@@ -66,6 +66,7 @@ public class AnswerService {
 	}
 
 	public Answer save(final Answer answer) {
+		Assert.notNull(answer);
 		Assert.isTrue(answer.getQuestion().getRendezvous().getFinalMode());
 		Assert.isTrue(!answer.getQuestion().getRendezvous().getIsFlagged());
 
@@ -77,6 +78,7 @@ public class AnswerService {
 	}
 
 	public List<Answer> save(final List<Answer> answers) {
+		Assert.notNull(answers);
 		List<Answer> result;
 
 		result = this.answerRepository.save(answers);

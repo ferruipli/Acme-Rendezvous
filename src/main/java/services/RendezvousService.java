@@ -135,8 +135,8 @@ public class RendezvousService {
 		old = this.rendezvousRepository.findOne(rendezvous.getId());
 		this.checkFinalMode(old);
 
-		rendezvous.setFinalMode(true);
-		rendezvous.setIsFlagged(true);
+		old.setFinalMode(true);
+		old.setIsFlagged(true);
 	}
 
 	// Other business methods -----------------------------------------------
@@ -240,7 +240,7 @@ public class RendezvousService {
 	private void checkFinalMode(final Rendezvous rendezvous) {
 		Assert.isTrue(rendezvous.getFinalMode() == false);
 	}
-	
+
 	public void addComment(final Rendezvous rendezvous, final Comment comment) {
 		User user;
 		user = (User) this.actorService.findByPrincipal();
