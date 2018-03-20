@@ -28,18 +28,18 @@ public class ServicesServiceTest extends AbstractTest {
 	// Service under testing -----------------------------------
 
 	@Autowired
-	private ServicesService	servicesService;
+	private ServicesService		servicesService;
 
 	// Other services ------------------------------------------
 
 	@Autowired
-	private ActorService	actorService;
-	
+	private ActorService		actorService;
+
 	@Autowired
-	private RendezvousService rendezvousService;
-	
+	private RendezvousService	rendezvousService;
+
 	@Autowired
-	private RequestService requestService;
+	private RequestService		requestService;
 
 
 	// Test ----------------------------------------------------
@@ -136,11 +136,11 @@ public class ServicesServiceTest extends AbstractTest {
 	public void testUnauthenticatedServicesAvailable() {
 		super.authenticate(null);
 		this.servicesService.availableServices();
-		
+
 		super.unauthenticate();
-		
+
 	}
-	
+
 	/**
 	 * Acme Rendezvous 2.0:
 	 * An actor who is registered as a manager must be able to:
@@ -167,9 +167,9 @@ public class ServicesServiceTest extends AbstractTest {
 	public void testUnauthenticatedServicesAvailableManager() {
 		super.authenticate(null);
 		this.servicesService.availableServices();
-		
+
 		super.unauthenticate();
-		
+
 	}
 
 	/**
@@ -268,11 +268,10 @@ public class ServicesServiceTest extends AbstractTest {
 			this.servicesService.delete(saved);
 			this.servicesService.flush();
 			Assert.isTrue(!principal.getServices().contains(saved), "Manager principal still has the deleted service");
-
-			super.unauthenticate();
-			super.rollbackTransaction();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
 			super.rollbackTransaction();
 		}
 		this.checkExceptions(expected, caught);
@@ -287,93 +286,90 @@ public class ServicesServiceTest extends AbstractTest {
 		target.setUrlPicture(source.getUrlPicture());
 		target.setVersion(source.getVersion());
 	}
-	
+
 	/**
 	 * Acme Rendezvous 2.0
 	 * An actor who is authenticated as a user must be able to:
-	 * Request a service for one of the rendezvouses that he or she’s created. He or she must specify a valid credit card in every request for a service. 
+	 * Request a service for one of the rendezvouses that he or she’s created. He or she must specify a valid credit card in every request for a service.
 	 * Optionally, he or she can provide some comments in the request.
 	 */
-	
-	
+
 	@Test
-	public void testRequestServiceForRendezvous(){
-		
+	public void testRequestServiceForRendezvous() {
+
 		Rendezvous rendezvous;
 		Services service;
 		Request request;
 		CreditCard creditCard;
-		
+
 		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous1"));
 		service = this.servicesService.findOne(super.getEntityId("service1"));
-		
+
 		super.authenticate("user2");
-		
+
 		creditCard = new CreditCard();
-		
+
 		creditCard.setBrandName("brand1");
 		creditCard.setCvvCode(123);
 		creditCard.setHolderName("holder1");
 		creditCard.setExpirationMonth("09");
 		creditCard.setExpirationYear("18");
 		creditCard.setNumber("6702386065213009");
-		
+
 		request = this.requestService.create();
-		
+
 		request.setComment("comment");
 		request.setRendezvous(rendezvous);
 		request.setService(service);
 		request.setCreditCard(creditCard);
-		
+
 		this.requestService.save(request);
-		
+
 		super.unauthenticate();
-		
+
 	}
-	
+
 	/**
 	 * Acme Rendezvous 2.0
 	 * An actor who is authenticated as a user must be able to:
-	 * Request a service for one of the rendezvouses that he or she’s created. He or she must specify a valid credit card in every request for a service. 
+	 * Request a service for one of the rendezvouses that he or she’s created. He or she must specify a valid credit card in every request for a service.
 	 * Optionally, he or she can provide some comments in the request.
 	 * remark: user unauthenticated
 	 */
-	
-	
+
 	@Test
-	public void testUnauthenticatedRequestServiceForRendezvous(){
+	public void testUnauthenticatedRequestServiceForRendezvous() {
 		super.authenticate(null);
-		
+
 		Rendezvous rendezvous;
 		Services service;
 		Request request;
 		CreditCard creditCard;
-		
+
 		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous1"));
-		
+
 		service = this.servicesService.findOne(super.getEntityId("service1"));
-				
-		
+
 		creditCard = new CreditCard();
-		
+
 		creditCard.setBrandName("brand1");
 		creditCard.setCvvCode(123);
 		creditCard.setHolderName("holder1");
 		creditCard.setExpirationMonth("09");
 		creditCard.setExpirationYear("18");
 		creditCard.setNumber("6702386065213009");
-		
+
 		request = this.requestService.create();
-		
+
 		request.setComment("comment");
 		request.setRendezvous(rendezvous);
 		request.setService(service);
 		request.setCreditCard(creditCard);
-		
+
 		this.requestService.save(request);
-		
+
 		super.unauthenticate();
-		
+
 	}
 
 }
