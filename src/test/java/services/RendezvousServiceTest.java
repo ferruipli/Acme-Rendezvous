@@ -35,9 +35,6 @@ public class RendezvousServiceTest extends AbstractTest {
 	private UserService			userService;
 	
 	@Autowired
-	private RSVPService			rsvpService;
-	
-	@Autowired
 	private AnswerService answerService;
 	
 	// Other services ------------------------------------------
