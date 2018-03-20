@@ -67,11 +67,20 @@ public class QuestionService {
 		return result;
 	}
 
-	public void save(final Question question) {
+	public Collection<Question> findAll() {
+		Collection<Question> results;
+		
+		results = this.questionRepository.findAll();
+		
+		return results;
+	}
+	
+	
+	public Question save(final Question question) {
 		Assert.notNull(question);
 		
 		Rendezvous rendezvous;
-		Question saved;
+		Question result;
 		User user;
 
 		user = this.userService.findByPrincipal();
@@ -81,10 +90,12 @@ public class QuestionService {
 		Assert.isTrue(!rendezvous.getIsFlagged());
 		Assert.isTrue(rendezvous.getCreator().equals(user));
 
-		saved = this.questionRepository.save(question);
+		result = this.questionRepository.save(question);
 
 		if (question.getId() == 0)
-			this.rendezvousService.addQuestion(rendezvous, saved);
+			this.rendezvousService.addQuestion(rendezvous, result);
+	
+		return result;
 	}
 
 	public void delete(final Question question) {
@@ -139,4 +150,8 @@ public class QuestionService {
 		return result;
 	}
 
+	public void flush() {
+		this.questionRepository.flush();
+	}
+	
 }
