@@ -346,7 +346,7 @@
 			</bean>
 		</property>
 		<property value="false" name="finalMode"/>
-		<property value="true" name="isFlagged"/>	
+		<property value="false" name="isFlagged"/>	
 		<property value="false" name="adultOnly"/>		
 		<property ref="user2" name="creator"/>	
 		<property value="http://www.googleDrive.com/picture1" name="urlPicture"/>
