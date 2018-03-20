@@ -68,6 +68,8 @@ public class QuestionService {
 	}
 
 	public void save(final Question question) {
+		Assert.notNull(question);
+		
 		Rendezvous rendezvous;
 		Question saved;
 		User user;
