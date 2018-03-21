@@ -1,8 +1,6 @@
 
 package controllers.user;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +13,6 @@ import services.RSVPService;
 import services.RendezvousService;
 import controllers.AbstractController;
 import controllers.RendezvousController;
-import domain.Answer;
 import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
@@ -91,7 +88,7 @@ public class RSVPUserController extends AbstractController {
 		rsvp = this.rsvpService.findRSVPByUserAndRendezvous(user.getId(), rendezvousId);
 		this.rsvpService.cancel(rsvp);
 		result = new ModelAndView("redirect:../../rendezvous/user/list.do");
-		
+
 		return result;
 	}
 
@@ -117,29 +114,4 @@ public class RSVPUserController extends AbstractController {
 
 		return result;
 	}
-
-	public ModelAndView answers(final List<Answer> answers, final int rendezvousId) {
-		ModelAndView result;
-		Rendezvous rendezvous;
-		RSVP rsvp;
-		User user;
-
-		user = (User) this.actorService.findByPrincipal();
-		rendezvous = this.rendezvousService.findOne(rendezvousId);
-
-		rsvp = this.rsvpService.create(rendezvous);
-		rsvp.setAnswers(answers);
-		rsvp.setUser(user);
-
-		try {
-			this.rsvpService.save(rsvp);
-			result = new ModelAndView("redirect:/rendezvous/display.do?rendezvousId=" + rendezvousId);
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(rsvp, "rendezvous.commit,error");
-		}
-
-		return result;
-
-	}
-
 }
