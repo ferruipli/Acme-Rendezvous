@@ -23,15 +23,15 @@
 			<li><a class="fNiv"><spring:message code="master.page.register" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="user/register.do"><spring:message code="master.page.register.user"/></a></li>
-					<li><a href="manager/register.do"><spring:message code="master.page.register.manager"/></a></li>
+					<li><a href="actor/register.do"><spring:message code="master.page.register.user"/></a></li>
+					<li><a href="actor/register.do"><spring:message code="master.page.register.manager"/></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNiv"><spring:message code="master.page.user" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="user/list.do"><spring:message code="master.page.user.list"/></a></li>
+					<li><a href="actor/list.do"><spring:message code="master.page.user.list"/></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.rendezvous" /></a>
@@ -59,10 +59,10 @@
 				<ul>
 					<li class="arrow"></li>
 					<security:authorize access="hasRole('USER')">
-						<li><a href="user/profile.do"><spring:message code="master.page.profile" /></a></li>
+						<li><a href="actor/profile.do"><spring:message code="master.page.profile" /></a></li>
 					</security:authorize>
 					<security:authorize access="hasRole('MANAGER')">
-						<li><a href="manager/profile.do"><spring:message code="master.page.profile" /></a></li>
+						<li><a href="actor/profile.do"><spring:message code="master.page.profile" /></a></li>
 					</security:authorize>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
@@ -85,7 +85,7 @@
 			<li><a class="fNiv"><spring:message code="master.page.user" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="user/list.do"><spring:message code="master.page.user.list"/></a></li>
+					<li><a href="actor/list.do"><spring:message code="master.page.user.list"/></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv"><spring:message code="master.page.rendezvous" /></a>

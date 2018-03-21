@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.Actor;
-
 import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
 
 @Service
 @Transactional
@@ -30,6 +29,15 @@ public class ActorService {
 	}
 	
 	// CRUD methods ---------------------------------------------------------
+	
+	public Actor findOne(final int actorId) {
+		Actor result;
+
+		result = this.actorRepository.findOne(actorId);
+		Assert.notNull(result);
+
+		return result;
+	}
 		
 	// Other business methods -----------------------------------------------
 	
