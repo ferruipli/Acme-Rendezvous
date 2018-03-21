@@ -258,6 +258,7 @@ public class UserServiceTest extends AbstractTest {
 		UserAccount userAccount;
 		
 		try {
+			super.startTransaction();
 			super.authenticate(null);
 			
 			user = this.userService.create();
@@ -278,8 +279,12 @@ public class UserServiceTest extends AbstractTest {
 			this.userService.flush();
 			
 			super.authenticate(null);
+			super.unauthenticate();
+			super.rollbackTransaction();
 		} catch (Throwable oops) {
 			caught = oops.getClass();
+			
+			super.rollbackTransaction();
 		}
 		
 		checkExceptions(expected, caught);

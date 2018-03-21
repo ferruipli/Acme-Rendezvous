@@ -23,9 +23,6 @@ public class AdministratorServiceTest extends AbstractTest {
 	private RendezvousService	rendezvousService;
 
 	@Autowired
-	private ManagerService		managerService;
-
-	@Autowired
 	private AnnouncementService	announcementService;
 
 	@Autowired

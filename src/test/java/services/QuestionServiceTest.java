@@ -2,8 +2,6 @@ package services;
 
 import java.util.Collection;
 
-import javax.validation.ConstraintViolationException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,87 +26,99 @@ public class QuestionServiceTest extends AbstractTest {
 	private QuestionService questionService;
 	
 	// Other services -------------------------------------
-	@Autowired
-	private RendezvousService rendezvousService;
 	
 	// Test -----------------------------------------------
 	
 	/*
-	 * Requirement 21.1: Manage the questions that are associated with
-	 *  a rendezvous that he or she is created previously.
+	 * Requirement 20.1: Manage the questions that are associated with
+	 * a rendezvous that he or she is created previously.
 	 */
-	/* Caso de test positivo */
+	
 	@Test
-	public void testCreate() {
+	public void driverDelete() {
+		Object testingData[][] = {
+				// Caso de test positivo
+				{"user2", "question2", null},
+				/* Test negativo donde la rendezvous relacionada con la question que se quiere
+					eliminar de la BD tiene Rendezvous::finalMode=true. */
+				{"user2","question1", IllegalArgumentException.class},
+				/* Test negativo donde la rendezvous relacionada con la question que se quiere
+					eliminar de la BD tiene Rendezvous::isFlagged=true.
+				  */
+				{"user2","question1", IllegalArgumentException.class},
+				/* Test negativo donde el creador de la rendezvous relacionada con la question
+				que se quiere borrar no coincide con el principal.
+				 */
+				{"user3","question2", IllegalArgumentException.class}
+		};
+		
+		for (int i=0; i<testingData.length; i++) {
+			templateDelete((String)testingData[i][0],
+					 (String)testingData[i][1],
+					 (Class<?>)testingData[i][2]);
+		}
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void deleteInvalid1() {
+		super.authenticate("user3");
+		
+		int rendezvousId;
 		Question question;
-		int rendezvousId;
 		
-		rendezvousId = super.getEntityId("rendezvous2");
+		rendezvousId = super.getEntityId("rendezvous4");
 		question = this.questionService.create(rendezvousId);
 		
-		Assert.notNull(question);
-		Assert.notNull(question.getAnswers());
-		Assert.notNull(question.getRendezvous());
-		Assert.isNull(question.getStatement());
+		this.questionService.deleteEditableQuestion(question);
+		
+		super.authenticate(null);
 	}
 	
-	/*
-	 * Requirement 21.1: Manage the questions that are associated with
-	 *  a rendezvous that he or she is created previously.
-	 */
+	/*Caso de test negativo: question is null */
+	@Test(expected = IllegalArgumentException.class)
+	public void deleteInvalid2() {
+		super.authenticate("user3");
+		
+		Question question;
+		
+		question = null;
+		
+		this.questionService.deleteEditableQuestion(question);
+		
+		super.authenticate(null);
+	}
 	
-	/* Caso de test positivo */
 	@Test
-	public void testSave() {
-		super.authenticate("user2");
+	public void driverSave() {
+		Object testingData[][] = {
+				// Caso de test positivo
+				{"user3", "Statement Test", "rendezvous4", null},
+				///* Caso de test negativo: Question::statement blank */
+				{"user3", "", "rendezvous4", javax.validation.ConstraintViolationException.class},
+				/* Caso de test negativo: la rendezvous relacionada con la question que se quiere
+					almacenar en la BD tiene Rendezvous::finalMode=true. */
+				{"user2", "Statement 3", "rendezvous1", IllegalArgumentException.class},
+				/* Test negativo donde la rendezvous relacionada con la question que se quiere
+					almacenar en la BD tiene Rendezvous::isFlagged=true. */
+				{"user2", "Statement 4", "rendezvous1", IllegalArgumentException.class},
+				/*Test negativo donde el creador de la rendezvous relacionada con la question
+					que se quiere almacenar no coincide con el principal. */
+				{"user1", "Statement 5", "rendezvous4", IllegalArgumentException.class},
+		};
 		
-		Question question,saved;
-		Collection<Question> all;
-		int rendezvousId;
-		
-		rendezvousId = this.findValidRendezvousID();
-		
-		question = this.questionService.create(rendezvousId);
-		question.setStatement("Statement Test");
-		
-		saved = this.questionService.save(question);
-		
-		all = this.questionService.findAll();
-		
-		Assert.isTrue(all.contains(saved));
-		Assert.isTrue(this.rendezvousService.findOrderedQuestionsByRendezvousId(rendezvousId).contains(saved));
-		
-		super.authenticate(null);
-	}
-	
-	/* Caso de test negativo: Question::statement blank */
-	@Test(expected = ConstraintViolationException.class)
-	public void testInvalidSave1() {
-		super.authenticate("user2");
-		
-		Question question,saved;
-		Collection<Question> all;
-		int rendezvousId;
-		
-		rendezvousId = this.findValidRendezvousID();
-		
-		question = this.questionService.create(rendezvousId);
-		
-		saved = this.questionService.save(question);
-		this.questionService.flush();
-		
-		all = this.questionService.findAll();
-		
-		Assert.isTrue(all.contains(saved));
-		Assert.isTrue(this.rendezvousService.findOrderedQuestionsByRendezvousId(rendezvousId).contains(saved));
-		
-		super.authenticate(null);
+		for (int i = 0; i < testingData.length; i++) {
+			templateSave((String)testingData[i][0],
+					 (String)testingData[i][1],
+					 (String)testingData[i][2],
+					 (Class<?>) testingData[i][3]);
+		}
 	}
 	
 	/* Caso de test negativo: Question is null */
 	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidSave2() {
-		super.authenticate("user2");
+	public void testInvalidSave() {
+		super.authenticate("user3");
 		
 		Question question,saved;
 		Collection<Question> all;
@@ -125,33 +135,58 @@ public class QuestionServiceTest extends AbstractTest {
 		super.authenticate(null);
 	}
 	
-	/* Devuelve una question de una cita que se puede editar. */
-	private Question findQuestion() {
-		Question result;
+	protected void templateDelete(String username, String beanName, Class<?> expected) {
+		Class<?> caught;
+		Question question;
 		int questionId;
 		
-		questionId = super.getEntityId("question2");
-		result = this.questionService.findOne(questionId);
+		caught = null;
 		
-		return result;
+		try {
+			super.startTransaction();
+			super.authenticate(username);
+			
+			questionId = this.getEntityId(beanName);
+			question = this.questionService.findOne(questionId);
+			this.questionService.deleteEditableQuestion(question);
+			
+			super.authenticate(null);
+			super.rollbackTransaction();
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+			
+			super.rollbackTransaction();
+		}
+		
+		checkExceptions(expected,caught);
 	}
 	
-	/* Devuelve una cita que se puede editar */
-	private int findValidRendezvousID() {
-		int id;
+	protected void templateSave(String username, String statement, String beanName, Class<?> expected) {
+		Class<?> caught;
+		Question question;
+		int rendezvousId;
 		
-		id = super.getEntityId("rendezvous4");
+		caught = null;
 		
-		return id;
+		try {
+			super.startTransaction();
+			super.authenticate(username);
+			
+			rendezvousId = super.getEntityId(beanName);
+			question = this.questionService.create(rendezvousId);
+			question.setStatement(statement);
+			this.questionService.save(question);
+			this.questionService.flush();
+			
+			super.unauthenticate();
+			super.rollbackTransaction();
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+			
+			super.rollbackTransaction();
+		}
+		
+		checkExceptions(expected,caught);
 	}
-	
-	/* Devuelve una cita que no se puede editar */
-	private int findInvalidRendezvousID() {
-		int id;
 		
-		id = super.getEntityId("rendezvous1");
-		
-		return id;
-	}
-	
 }
