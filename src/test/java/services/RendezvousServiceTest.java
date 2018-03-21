@@ -257,24 +257,53 @@ public class RendezvousServiceTest extends AbstractTest {
 		
 		Rendezvous rendezvous;
 		
-		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous1"));
-		this.rendezvousService.remove(rendezvous);
+		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous2"));
+		this.rendezvousService.delete(rendezvous);
 		
 		super.unauthenticate();
 	}
 	
-	/* TODO: da correcto cuando no debería.. 
-	@Test
+	/**
+	 * Req 1.5.3 
+	 * An actor who is authenticated by user must be able to:
+	 * Delete the rendezvouses that he or she's created. 
+	 * Deletion is virtual, that is: the information is not removed from the database, 
+	 * but the rendezvous cannot be updated. 
+	 * Deleted rendezvouses are flagged as such when they are displayed.
+	 * REMARK: user with not own rendezvous
+	 */
+	@Test(expected=IllegalArgumentException.class)
 	public void testDeleteNotOwnRendezvous(){
 		super.authenticate("user1");
 		
 		Rendezvous rendezvous;
 		
 		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous4"));
-		this.rendezvousService.remove(rendezvous);
+		this.rendezvousService.delete(rendezvous);
 		
 		super.unauthenticate();
-	}*/
+	}
+	/**
+	 * Req 1.5.3 
+	 * An actor who is authenticated by user must be able to:
+	 * Delete the rendezvouses that he or she's created. 
+	 * Deletion is virtual, that is: the information is not removed from the database, 
+	 * but the rendezvous cannot be updated. 
+	 * Deleted rendezvouses are flagged as such when they are displayed.
+	 * REMARK: user with own rendezvous but its final mode = true
+	 */
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testDeleteOwnRendezvousFinalModeTrue(){
+		super.authenticate("user2");
+		
+		Rendezvous rendezvous;
+		
+		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous1"));
+		this.rendezvousService.delete(rendezvous);
+		
+		super.unauthenticate();
+	}
 	
 	/**
 	 * Req 1.5.5
@@ -288,21 +317,6 @@ public class RendezvousServiceTest extends AbstractTest {
 		
 		super.unauthenticate();
 	}
-	
-	//TODO:
-	/**
-	 * Req 1.5.5
-	 * List the rendezvouses that he or she's RSVPd.
-	 * REMARK: try to list rendezvouses RSVPd by other user
-	 */
-	/*@Test
-	public void testListRendezvousesRSVPByOtherUser(){
-		super.authenticate("user2");
-		
-		this.rendezvousService.findRendezvousesRSVPByUserId(super.getEntityId("user3"));
-		
-		super.unauthenticate();
-	}*/
 	
 	/**
 	 * Req 1.6.2
