@@ -41,11 +41,11 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 
 	@Query("select r from Rendezvous r where r.finalMode=true")
 	Collection<Rendezvous> findAllAvailable();
-	
+
 	@Query("select r from Rendezvous r where r.finalMode=true and r.adultOnly=false")
 	Collection<Rendezvous> findAllAvailable2();
 
-	@Query("select r from Rendezvous r join r.announcements a where a.id=? and a member of r.announcements")
+	@Query("select r from Rendezvous r join r.announcements a where a.id=?1 and a member of r.announcements")
 	Rendezvous findRendezvousByAnnouncement(int announcementId);
 
 	@Query("select q from Rendezvous r join r.questions q where r.id=?1 order by q.id asc")
