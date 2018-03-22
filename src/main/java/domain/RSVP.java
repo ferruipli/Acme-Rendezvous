@@ -51,8 +51,8 @@ public class RSVP extends DomainEntity {
 	}
 
 	@NotNull
-	@ManyToOne(optional = false)
 	@Valid
+	@ManyToOne(optional = false)
 	public User getUser() {
 		return this.user;
 	}

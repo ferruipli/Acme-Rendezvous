@@ -7,7 +7,6 @@ import java.util.HashSet;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.ManyToMany;
@@ -16,13 +15,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
-import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -114,7 +113,7 @@ public class Rendezvous extends DomainEntity {
 	public void setGpsCoordinates(final GPS gpsCoordinates) {
 		this.gpsCoordinates = gpsCoordinates;
 	}
-	
+
 	@URL
 	@SafeHtml
 	public String getUrlPicture() {
@@ -128,7 +127,6 @@ public class Rendezvous extends DomainEntity {
 
 	// Relationships ----------------------------------------------
 	private User						creator;
-	private Collection<User>			attendants;
 	private Collection<RSVP>			reserves;
 	private Collection<Comment>			comments;
 	private Collection<Rendezvous>		similarOnes;
@@ -149,7 +147,6 @@ public class Rendezvous extends DomainEntity {
 
 	// Derived relationship
 	@Transient
-	@ElementCollection
 	public Collection<User> getAttendants() {
 		Collection<User> result;
 
@@ -159,13 +156,10 @@ public class Rendezvous extends DomainEntity {
 				if (r != null)
 					result.add(r.getUser());
 		} else
-			result = this.attendants;
+			result = new HashSet<>();
+		//result = this.attendants;
 
 		return result;
-	}
-
-	public void setAttendants(final Collection<User> attendants) {
-		this.attendants = attendants;
 	}
 
 	@NotNull

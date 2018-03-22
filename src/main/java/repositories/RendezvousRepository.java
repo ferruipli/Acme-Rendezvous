@@ -21,13 +21,13 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	@Query("select (sum(case when u.createdRendezvouses is not empty then 1.0 else 0.0 end)/sum(case when u.createdRendezvouses is empty then 1.0 else 0.0 end)) from User u")
 	Double ratioOfUsersWithRendezvousVsUsersWithoutRendezvous();
 
-	@Query("select avg(r.attendants.size), sqrt(sum(r.attendants.size*r.attendants.size)/count(r.attendants.size)-avg(r.attendants.size)*avg(r.attendants.size)) from Rendezvous r")
+	@Query("select avg(r.reserves.size), sqrt(sum(r.reserves.size*r.reserves.size)/count(r.reserves.size)-avg(r.reserves.size)*avg(r.reserves.size)) from Rendezvous r")
 	Double[] avgSqrtUsersPerRendezvous();
 
 	@Query("select avg(u.reserves.size), sqrt(sum(u.reserves.size*u.reserves.size)/count(u.reserves.size)-avg(u.reserves.size)*avg(u.reserves.size)) from User u")
 	Double[] avgSqrtRendezvousesRSVPdPerUser();
 
-	@Query("select r from Rendezvous r order by r.attendants.size desc")
+	@Query("select r from Rendezvous r order by r.reserves.size desc")
 	Page<Rendezvous> top10RendezvousesRSVPd(Pageable page);
 
 	@Query("select r from Rendezvous r join r.comments c where c.id=?1 and c member of r.comments")

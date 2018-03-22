@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -113,13 +112,8 @@ public class RSVPService {
 
 	public void cancel(final RSVP rsvp) {
 		Assert.isTrue(rsvp.getId() != 0);
-		User user;
 
-		user = (User) this.actorService.findByPrincipal();
-
-		this.removeAttendant(rsvp.getRendezvous(), user);
 		this.rsvpRepository.delete(rsvp);
-
 	}
 
 	public void removeByAdmin(final RSVP rsvp) {
@@ -147,13 +141,5 @@ public class RSVPService {
 		result = this.rsvpRepository.findRSVPByUserAndRendezvous(userId, rendezvousId);
 
 		return result;
-	}
-
-	protected void removeAttendant(final Rendezvous rendezvous, final User attendant) {
-		Collection<User> aux;
-
-		aux = new HashSet<>(rendezvous.getAttendants());
-		aux.remove(attendant);
-		rendezvous.setAttendants(aux);
 	}
 }

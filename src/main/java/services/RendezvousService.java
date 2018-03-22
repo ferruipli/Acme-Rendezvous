@@ -95,7 +95,6 @@ public class RendezvousService {
 
 		result = new Rendezvous();
 		result.setAnnouncements(Collections.<Announcement> emptySet());
-		result.setAttendants(Collections.<User> emptySet());
 		result.setComments(Collections.<Comment> emptySet());
 		result.setCreator(user);
 		result.setGpsCoordinates(gpsCoordinates);
