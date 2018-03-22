@@ -94,24 +94,4 @@ public class RSVPUserController extends AbstractController {
 
 	// Ancillary methods ------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final RSVP rsvp) {
-		ModelAndView result;
-
-		result = this.createEditModelAndView(rsvp, null);
-
-		return result;
-	}
-
-	protected ModelAndView createEditModelAndView(final RSVP rsvp, final String messageCode) {
-		ModelAndView result;
-		Rendezvous rendezvous;
-
-		rendezvous = this.rendezvousService.findRendezvousByRSVPId(rsvp.getId());
-
-		result = new ModelAndView("rendezvous/user/display.do?rendezvousId=" + rendezvous.getId());
-		result.addObject("rsvp", rsvp);
-		result.addObject("message", messageCode);
-
-		return result;
-	}
 }
