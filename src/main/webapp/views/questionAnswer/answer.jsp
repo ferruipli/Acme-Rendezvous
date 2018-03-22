@@ -30,7 +30,12 @@
 	<!-- Buttons -->
 	
 	<br>
-	<acme:cancel code="question.label.cancel" url="rendezvous/display.do?rendezvousId=${questionnaireForm.rendezvous.id}"/>
+	<security:authorize access="isAuthenticated()">
+		<acme:cancel code="question.label.cancel" url="rendezvous/user/display.do?rendezvousId=${questionnaireForm.rendezvous.id}"/>
+	</security:authorize>
+	<security:authorize access="isAnonymous()">
+		<acme:cancel code="question.label.cancel" url="rendezvous/display.do?rendezvousId=${questionnaireForm.rendezvous.id}"/>
+	</security:authorize>
 	&nbsp;	
 	<acme:submit name="finish" code="question.finish"/>
 	

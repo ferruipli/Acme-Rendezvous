@@ -50,4 +50,10 @@
 </jstl:if>
 
 <br><br>
-<acme:cancel url="rendezvous/display.do?rendezvousId=${rendezvousId}" code="question.back.rendezvous"/>
+
+<security:authorize access="isAuthenticated()">
+	<acme:cancel url="rendezvous/user/display.do?rendezvousId=${rendezvousId}" code="question.back.rendezvous"/>
+</security:authorize>
+<security:authorize access="isAnonymous()">
+	<acme:cancel url="rendezvous/display.do?rendezvousId=${rendezvousId}" code="question.back.rendezvous"/>
+</security:authorize>

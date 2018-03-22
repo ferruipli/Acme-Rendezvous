@@ -12,7 +12,6 @@ import services.ActorService;
 import services.RSVPService;
 import services.RendezvousService;
 import controllers.AbstractController;
-import controllers.RendezvousController;
 import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
@@ -24,18 +23,13 @@ public class RSVPUserController extends AbstractController {
 	// Services --------------------------------------------------------
 
 	@Autowired
-	private RSVPService				rsvpService;
+	private RSVPService			rsvpService;
 
 	@Autowired
-	private RendezvousService		rendezvousService;
+	private RendezvousService	rendezvousService;
 
 	@Autowired
-	private ActorService			actorService;
-
-	// Controllers ------------------------------------------------------
-
-	@Autowired
-	private RendezvousController	rendezvousController;
+	private ActorService		actorService;
 
 
 	// Constructors -----------------------------------------------------
@@ -61,8 +55,8 @@ public class RSVPUserController extends AbstractController {
 			try {
 				result = this.save(rsvp);
 			} catch (final Throwable oops) {
-				result = this.rendezvousController.display(rendezvousId);
-				result.addObject("message", "rendezvous.commit.error");
+				result = new ModelAndView("redirect:/welcome/index.do");
+				result.addObject("message", "welcome.rsvp.commit.error");
 			}
 		}
 
@@ -94,24 +88,4 @@ public class RSVPUserController extends AbstractController {
 
 	// Ancillary methods ------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final RSVP rsvp) {
-		ModelAndView result;
-
-		result = this.createEditModelAndView(rsvp, null);
-
-		return result;
-	}
-
-	protected ModelAndView createEditModelAndView(final RSVP rsvp, final String messageCode) {
-		ModelAndView result;
-		Rendezvous rendezvous;
-
-		rendezvous = this.rendezvousService.findRendezvousByRSVPId(rsvp.getId());
-
-		result = new ModelAndView("rendezvous/user/display.do?rendezvousId=" + rendezvous.getId());
-		result.addObject("rsvp", rsvp);
-		result.addObject("message", messageCode);
-
-		return result;
-	}
 }

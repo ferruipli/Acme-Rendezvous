@@ -2,8 +2,8 @@ package services;
 
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
-import domain.Announcement;
 import domain.Answer;
-import domain.Comment;
 import domain.Question;
 import domain.RSVP;
 import domain.Rendezvous;
@@ -36,6 +34,9 @@ public class RendezvousServiceTest extends AbstractTest {
 	
 	@Autowired
 	private AnswerService answerService;
+	
+	@Autowired
+	private RSVPService			rsvpService;
 	
 	// Other services ------------------------------------------
 
@@ -97,25 +98,17 @@ public class RendezvousServiceTest extends AbstractTest {
 		super.authenticate("user1");
 		
 		Rendezvous rendezvous;
-		User creator;
 		Calendar c;
 		Date moment;
 		
 		c = Calendar.getInstance();
 		c.set(2018, 04, 25, 20, 00);
 		moment = c.getTime();
-		creator = this.userService.findOne(super.getEntityId("user1"));
-		rendezvous = this.rendezvousService.create();
 		
+		rendezvous = this.rendezvousService.create();
 		rendezvous.setName("rendezvous");
 		rendezvous.setDescription("description");
-		rendezvous.setMoment(moment);
-		rendezvous.setCreator(creator);
-		rendezvous.setReserves(Collections.<RSVP> emptySet());
-		rendezvous.setComments(Collections.<Comment> emptySet());
-		rendezvous.setSimilarOnes(Collections.<Rendezvous> emptySet());
-		rendezvous.setAnnouncements(Collections.<Announcement> emptySet());
-		rendezvous.setQuestions(Collections.<Question> emptySet());
+		rendezvous.setMoment(moment);		
 		this.rendezvousService.save(rendezvous);
 		
 		super.unauthenticate();
@@ -133,25 +126,18 @@ public class RendezvousServiceTest extends AbstractTest {
 	public void testUnauthenticatedCreateRendezvous(){
 		
 		Rendezvous rendezvous;
-		User creator;
 		Calendar c;
 		Date moment;
 		
 		c = Calendar.getInstance();
 		c.set(2018, 04, 25, 20, 00);
 		moment = c.getTime();
-		creator = this.userService.findOne(super.getEntityId("user1"));
+		
 		rendezvous = this.rendezvousService.create();
 		
 		rendezvous.setName("rendezvous");
 		rendezvous.setDescription("description");
 		rendezvous.setMoment(moment);
-		rendezvous.setCreator(creator);
-		rendezvous.setReserves(Collections.<RSVP> emptySet());
-		rendezvous.setComments(Collections.<Comment> emptySet());
-		rendezvous.setSimilarOnes(Collections.<Rendezvous> emptySet());
-		rendezvous.setAnnouncements(Collections.<Announcement> emptySet());
-		rendezvous.setQuestions(Collections.<Question> emptySet());
 		this.rendezvousService.save(rendezvous);
 		
 	}
@@ -182,11 +168,6 @@ public class RendezvousServiceTest extends AbstractTest {
 		rendezvous.setDescription("description");
 		rendezvous.setMoment(moment);
 		rendezvous.setCreator(creator);
-		rendezvous.setReserves(Collections.<RSVP> emptySet());
-		rendezvous.setComments(Collections.<Comment> emptySet());
-		rendezvous.setSimilarOnes(Collections.<Rendezvous> emptySet());
-		rendezvous.setAnnouncements(Collections.<Announcement> emptySet());
-		rendezvous.setQuestions(Collections.<Question> emptySet());
 		this.rendezvousService.save(rendezvous);
 		
 		super.unauthenticate();
@@ -333,4 +314,131 @@ public class RendezvousServiceTest extends AbstractTest {
 		
 		super.unauthenticate();
 	}
+	
+	/**
+	 * Req 1.14
+	 * Some rendezvouses may be flagged as "adult only", in which case every attempt to RSVP them
+	 * by users who are under 18 must be prohibited. Such rendezvouses must not be displayed
+	 * unless the user who is browsing them is at least 18 year old. Obviously, they must not be
+	 * shown to unauthenticated users.
+	 */
+	@Test
+	public void testRSVPRendezvousAdultOnly(){
+
+		Rendezvous rendezvous;
+		RSVP rsvp;
+		
+		super.authenticate("user2"); // User mayor de edad
+		
+		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous5"));
+		rendezvous.setFinalMode(false);
+		rendezvous.setAdultOnly(true);
+		this.rendezvousService.save(rendezvous);
+				
+		rsvp = this.rsvpService.create(rendezvous);
+		this.rsvpService.save(rsvp);
+		
+		super.unauthenticate();
+		
+	}
+	
+	/**
+	 * Req 1.14
+	 * Some rendezvouses may be flagged as "adult only", in which case every attempt to RSVP them
+	 * by users who are under 18 must be prohibited. Such rendezvouses must not be displayed
+	 * unless the user who is browsing them is at least 18 year old. Obviously, they must not be
+	 * shown to unauthenticated users.
+	 * REMARK: menor de edad intenta reservar un rendezvous con adultOnly = true;
+	 */
+	@Test(expected=IllegalArgumentException.class)
+	public void testRSVPRendezvousAdultOnly2(){
+		
+		Rendezvous rendezvous;
+		RSVP rsvp;
+		
+		super.authenticate("user2"); // User mayor de edad (creador del rendezvous 5)
+		
+		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous5"));
+		rendezvous.setAdultOnly(true);
+		this.rendezvousService.save(rendezvous);
+		
+		super.unauthenticate();
+		
+		super.authenticate("user3"); // User menor de edad
+				
+		rsvp = this.rsvpService.create(rendezvous);
+		this.rsvpService.save(rsvp);
+		
+		super.unauthenticate();
+	}
+	/**
+	 * Req 1.16.4
+	 * Link one of the rendezvouses that he or she's created to other similar rendezvouses.
+	 * Test positivo
+	 */
+	@Test
+	public void testLinkSimilarRendezvous(){
+		
+		Rendezvous rendezvous;
+		int rendezvous2Id;
+		Rendezvous rendezvous2;
+		Collection<Rendezvous> similarOnes;
+		Calendar c;
+		Date moment;
+		
+		c= Calendar.getInstance();
+		c.set(2019, 04, 24, 11, 00);
+		moment = c.getTime();
+		
+		super.authenticate("user2");
+		
+		rendezvous = this.rendezvousService.create();
+		similarOnes = rendezvous.getSimilarOnes();
+		similarOnes = new HashSet<Rendezvous>(similarOnes);
+		rendezvous2Id = super.getEntityId("rendezvous5");
+		rendezvous2 = this.rendezvousService.findOne(rendezvous2Id);
+		rendezvous.setMoment(moment);
+		similarOnes.add(rendezvous2);
+		
+		this.rendezvousService.save(rendezvous);
+		
+		super.unauthenticate();
+	}
+	
+	/**
+	 * Req 1.16.4
+	 * Link one of the rendezvouses that he or she's created to other similar rendezvouses.
+	 * REMARK: un manager intenta añadir un rendezvous a los similarOnes creados por un usuario
+	 */
+	@Test(expected=ClassCastException.class)
+	public void testLinkSimilarRendezvous2(){
+		
+		Rendezvous rendezvous;
+		int rendezvous2Id;
+		Rendezvous rendezvous2;
+		Collection<Rendezvous> similarOnes;
+		Calendar c;
+		Date moment;
+		
+		c= Calendar.getInstance();
+		c.set(2019, 04, 24, 11, 00);
+		moment = c.getTime();
+		
+		super.authenticate("user2");
+		
+		rendezvous = this.rendezvousService.create();
+		similarOnes = rendezvous.getSimilarOnes();
+		similarOnes = new HashSet<Rendezvous>(similarOnes);
+		rendezvous2Id = super.getEntityId("rendezvous4"); // añadir a similarOnes un rendezvous no creado por el
+		rendezvous2 = this.rendezvousService.findOne(rendezvous2Id);
+		rendezvous.setMoment(moment);
+		
+		super.unauthenticate();
+		
+		super.authenticate("manager1");
+		similarOnes.add(rendezvous2);
+		this.rendezvousService.save(rendezvous);
+		super.unauthenticate();
+	}
+	
 }

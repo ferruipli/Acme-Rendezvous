@@ -27,7 +27,7 @@
 <div class="${colorClass}"> 
 	<jstl:if test="${rendezvous.urlPicture != null || rendezvous.urlPicture != '' }">
 		<div id="picture">
-			<img src="images/${rendezvous.urlPicture}" alt="Picture" />
+			<img src="${rendezvous.urlPicture}" alt="Picture" />
 		</div>
 	</jstl:if>
 
@@ -132,13 +132,12 @@
 	
 		<jstl:choose>
 			<jstl:when test="${isReserved==false}">
-				<acme:cancel url="rsvp/user/create.do?rendezvousId=${rendezvous.id}" code="rendezvous.reserve"/>
+				<jstl:if test="${rendezvous.moment >= currentMoment && rendezvous.finalMode && !isCreator}">
+					<acme:cancel url="rsvp/user/create.do?rendezvousId=${rendezvous.id}" code="rendezvous.reserve"/>
+				</jstl:if>
 			</jstl:when>
 			<jstl:when test="${isReserved==true}">
-				<acme:cancel url="rendezvous/user/display.do?rendezvousId=${rendezvous.id}" code="rendezvous.cancelReserve"/>
-				<a href="rsvp/user/cancelRSVP.do?rendezvousId=${rendezvous.id}">
-					<spring:message code="rendezvous.cancelReserve" />
-				</a>
+				<acme:cancel url="rsvp/user/cancelRSVP.do?rendezvousId=${rendezvous.id}" code="rendezvous.cancelReserve"/>
 			</jstl:when>
 		</jstl:choose>
 	</security:authorize>

@@ -89,6 +89,7 @@ public class RSVPService {
 
 	public RSVP save(final RSVP rsvp) {
 		Assert.notNull(rsvp);
+
 		RSVP result;
 		final Date date;
 		User user;
@@ -102,6 +103,8 @@ public class RSVPService {
 		date = new Date(System.currentTimeMillis());
 
 		Assert.isTrue(rsvp.getRendezvous().getMoment().after(date));
+		Assert.isTrue(!rsvp.getRendezvous().getCreator().equals(user));
+		Assert.isTrue(rsvp.getRendezvous().getFinalMode());
 
 		result = this.rsvpRepository.save(rsvp);
 
