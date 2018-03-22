@@ -132,7 +132,9 @@
 	
 		<jstl:choose>
 			<jstl:when test="${isReserved==false}">
-				<acme:cancel url="rsvp/user/create.do?rendezvousId=${rendezvous.id}" code="rendezvous.reserve"/>
+				<jstl:if test="${rendezvous.moment >= currentMoment && rendezvous.finalMode && !isCreator}">
+					<acme:cancel url="rsvp/user/create.do?rendezvousId=${rendezvous.id}" code="rendezvous.reserve"/>
+				</jstl:if>
 			</jstl:when>
 			<jstl:when test="${isReserved==true}">
 				<acme:cancel url="rendezvous/user/display.do?rendezvousId=${rendezvous.id}" code="rendezvous.cancelReserve"/>
