@@ -145,5 +145,9 @@ public class AnswerService {
 
 		return result;
 	}
+	
+	public void flush() {
+		this.answerRepository.flush();
+	}
 
 }

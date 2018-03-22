@@ -329,7 +329,6 @@
 		</property>
 		<property name="reserves">
 			<list>
-				<ref bean="rsvp3"/>
 				<ref bean="rsvp1"/>
 			</list>
 		</property>
@@ -421,7 +420,7 @@
 		</property>
 		<property name="reserves">
 			<list>
-				<null></null>
+				<ref bean="rsvp3"/>
 			</list>
 		</property>
 	</bean>
@@ -582,7 +581,7 @@
 	</bean>
 	
 	<bean class="domain.RSVP" id="rsvp3">
-		<property ref="rendezvous1" name="rendezvous"/>
+		<property ref="rendezvous3" name="rendezvous"/>
 		<property name="answers">
 			<list>
 				<ref bean = "answer6"/>

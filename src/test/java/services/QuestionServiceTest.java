@@ -104,7 +104,7 @@ public class QuestionServiceTest extends AbstractTest {
 				{"user2", "Statement 4", "rendezvous1", IllegalArgumentException.class},
 				/*Test negativo donde el creador de la rendezvous relacionada con la question
 					que se quiere almacenar no coincide con el principal. */
-				{"user1", "Statement 5", "rendezvous4", IllegalArgumentException.class},
+				{"user1", "Statement 5", "rendezvous4", IllegalArgumentException.class}
 		};
 		
 		for (int i = 0; i < testingData.length; i++) {
