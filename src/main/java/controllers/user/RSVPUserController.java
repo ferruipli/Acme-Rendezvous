@@ -56,7 +56,7 @@ public class RSVPUserController extends AbstractController {
 				result = this.save(rsvp);
 			} catch (final Throwable oops) {
 				result = new ModelAndView("redirect:/welcome/index.do");
-				result.addObject("message", "rendezvous.commit.error");
+				result.addObject("message", "welcome.rsvp.commit.error");
 			}
 		}
 
