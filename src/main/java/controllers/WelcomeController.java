@@ -14,6 +14,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -29,7 +30,7 @@ public class WelcomeController extends AbstractController {
 	// Index ------------------------------------------------------------------		
 
 	@RequestMapping(value = "/index")
-	public ModelAndView index() {
+	public ModelAndView index(@RequestParam(required = false) final String message) {
 		ModelAndView result;
 		Date moment;
 
@@ -37,6 +38,9 @@ public class WelcomeController extends AbstractController {
 
 		result = new ModelAndView("welcome/index");
 		result.addObject("moment", moment);
+
+		if (message != null)
+			result.addObject("message", message);
 
 		return result;
 	}
