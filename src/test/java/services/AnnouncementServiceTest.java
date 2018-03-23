@@ -1,7 +1,6 @@
 package services;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 
 import org.junit.Test;
@@ -12,11 +11,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import utilities.AbstractTest;
 import domain.Announcement;
 import domain.Rendezvous;
 import domain.User;
-
-import utilities.AbstractTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/junit.xml" })
@@ -170,16 +168,17 @@ public class AnnouncementServiceTest extends AbstractTest {
 	public void testStreamAnnouncements(){
 		super.authenticate("user1");
 		
-		Collection<Announcement> announcements;
+		Announcement announcement;
 		Rendezvous rendezvous;
 		User user;
 		
 		user = (User) this.actorService.findByPrincipal();
+		announcement = this.announcementService.findOne(super.getEntityId("announcement1"));
 		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous1"));
 		
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
 		
-		announcements = rendezvous.getAnnouncements();
+		Assert.isTrue(rendezvous.getAnnouncements().contains(announcement));
 		
 		
 		super.unauthenticate();
@@ -197,16 +196,17 @@ public class AnnouncementServiceTest extends AbstractTest {
 	public void testStreamAnnouncementsRendezvousNotRSVP(){
 		super.authenticate("user2");
 		
-		Collection<Announcement> announcements;
+		Announcement announcement;
 		Rendezvous rendezvous;
 		User user;
 		
 		user = (User) this.actorService.findByPrincipal();
+		announcement = this.announcementService.findOne(super.getEntityId("announcement1"));
 		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous1"));
 		
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
 		
-		announcements = rendezvous.getAnnouncements();
+		Assert.isTrue(rendezvous.getAnnouncements().contains(announcement));
 		
 		
 		super.unauthenticate();
@@ -223,16 +223,17 @@ public class AnnouncementServiceTest extends AbstractTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testUnauthenticatedStreamAnnouncements(){
 		
-		Collection<Announcement> announcements;
+		Announcement announcement;
 		Rendezvous rendezvous;
 		User user;
 		
 		user = (User) this.actorService.findByPrincipal();
+		announcement = this.announcementService.findOne(super.getEntityId("announcement1"));
 		rendezvous = this.rendezvousService.findOne(super.getEntityId("rendezvous1"));
 		
 		Assert.isTrue(rendezvous.getAttendants().contains(user));
 		
-		announcements = rendezvous.getAnnouncements();
+		Assert.isTrue(rendezvous.getAnnouncements().contains(announcement));
 		
 		
 		super.unauthenticate();
