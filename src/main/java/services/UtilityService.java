@@ -43,9 +43,9 @@ public class UtilityService {
 		do {
 			result =  this.createRandomLetters();
 			counter++;
-		} while (managerVAT.contains(result) || counter < 650000);
+		} while (managerVAT.contains(result) || counter < 6500);
 
-		Assert.isTrue(counter == 650000);
+		Assert.isTrue(counter == 6500);
 
 		return result;
 	}
