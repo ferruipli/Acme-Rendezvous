@@ -189,51 +189,52 @@ public class UserServiceTest extends AbstractTest {
 				// User::name safeHtml
 				{"<script> Hacking Test </script>", "Surname Test 10", "PostalAddress Test 10",
 						"+34 955060405", "alvarorex@gmail.com", this.getDate(1997, 10, 30),
-						"usernameTest10", "passwordTest10", org.springframework.dao.DataIntegrityViolationException.class},
+						"usernameTest10", "passwordTest10", javax.validation.ConstraintViolationException.class},
 				// User::surname blank
 				{"Name Test 11", "", "PostalAddress Test 11",
 						"+34 955060405", "alvarorex@gmail.com", this.getDate(1997, 10, 30),
-						"usernameTest11", "passwordTest11", org.springframework.dao.DataIntegrityViolationException.class},
+						"usernameTest11", "passwordTest11", javax.validation.ConstraintViolationException.class},
 				// User::surname safeHtml
 				{"Name Test 12", "<script> Hacking Test </script>", "PostalAddress Test 12",
 						"+34 955060405", "alvarorex@gmail.com", this.getDate(1997, 10, 30),
-						"usernameTest12", "passwordTest12", org.springframework.dao.DataIntegrityViolationException.class},
+						"usernameTest12", "passwordTest12", javax.validation.ConstraintViolationException.class},
 				// User::email blank
 				{"Name Test 13", "Surname Test 13", "PostalAddress Test 13",
 						"+34 955060405", "", this.getDate(1997, 10, 30),
-						"usernameTest13", "passwordTest13", org.springframework.dao.DataIntegrityViolationException.class},
+						"usernameTest13", "passwordTest13", javax.validation.ConstraintViolationException.class},
 				// User::email safeHtml
 				{"Name Test 14", "Surname Test 14", "PostalAddress Test 14",
 						"+34 955060405", "<script> Hacking Test </script>", this.getDate(1997, 10, 30),
-						"usernameTest14", "passwordTest14", org.springframework.dao.DataIntegrityViolationException.class},
+						"usernameTest14", "passwordTest14", javax.validation.ConstraintViolationException.class},
 				// User::phoneNumber pattern
 				{"Name Test 15", "Surname Test 15", "PostalAddress Test 15",
 						"numero de telefono", "alvarogoles@gmail.com", this.getDate(1997, 10, 30),
-						"usernameTest15", "passwordTest15", org.springframework.dao.DataIntegrityViolationException.class},
+						"usernameTest15", "passwordTest15", javax.validation.ConstraintViolationException.class},
 				// User::email email
 				{"Name Test 16", "Surname Test 16", "PostalAddress Test 16",
-							"+34 955060405", "correo electronico", this.getDate(1997, 10, 30),
-							"usernameTest16", "passwordTest16", org.springframework.dao.DataIntegrityViolationException.class},
+						"+34 955060405", "correo electronico", this.getDate(1997, 10, 30),
+						"usernameTest16", "passwordTest16", javax.validation.ConstraintViolationException.class},
 				// User::birthdate notNull
 				{"Name Test 17", "Surname Test 17", "PostalAddress Test 17",
-							"+34 955060405", "alvarogoles@gmail.com", null,
-							"usernameTest17", "passwordTest17", org.springframework.dao.DataIntegrityViolationException.class},
+						"+34 955060405", "alvarogoles@gmail.com", null,
+						"usernameTest17", "passwordTest17", javax.validation.ConstraintViolationException.class},
 				// User::birthdate past
 				{"Name Test 18", "Surname Test 18", "PostalAddress Test 18",
-							"+34 955060405", "alvarogoles@gmail.com", this.getDate(2019, 10, 30),
-							"usernameTest18", "passwordTest18", org.springframework.dao.DataIntegrityViolationException.class},
+						"+34 955060405", "alvarogoles@gmail.com", this.getDate(2019, 10, 30),
+						"usernameTest18", "passwordTest18", javax.validation.ConstraintViolationException.class},
 				// User::userAccount::password size=4
 				{"Name Test 19", "Surname Test 19", "PostalAddress Test 19",
-							"+34 955060405", "alvarorex@gmail.com", this.getDate(1997, 10, 30),
-							"usernameTest19", "pass", org.springframework.dao.DataIntegrityViolationException.class},
+						"+34 955060405", "alvarorex@gmail.com", this.getDate(1997, 10, 30),
+						"usernameTest19", "pass", null},
 				// User::userAccount::password size=33
 				{"Name Test 20", "Surname Test 20", "PostalAddress Test 20",
-							"+34 955060405", "alvarorex@gmail.com", this.getDate(1997, 10, 30), 
-							"usernameTest20", "passwordTest17161415090807YYtT321", org.springframework.dao.DataIntegrityViolationException.class},
-				// User::userAccount::username unique username
+						"+34 955060405", "alvarorex@gmail.com", this.getDate(1997, 10, 30), 
+						"usernameTest20", "passwordTest17161415090807YYtT321", null},
+				// User::userAccount::username unique
 				{"Name Test 21", "Surname Test 21", "PostalAddress Test 21",
-							"+34 955060405", "alvarorex@gmail.com", this.getDate(1997, 10, 30), "user1", "passwordTest21",
-							org.springframework.dao.DataIntegrityViolationException.class}
+						"+34 955060405", "alvarorex@gmail.com", this.getDate(1997, 10, 30), "user1", "passwordTest21",
+						org.springframework.dao.DataIntegrityViolationException.class}
+					
 		};
 		
 		for(int i=0;i<testingData.length;i++)  {
