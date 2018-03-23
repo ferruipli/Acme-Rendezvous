@@ -23,8 +23,8 @@
 			<li><a class="fNiv"><spring:message code="master.page.register" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="actor/register.do"><spring:message code="master.page.register.user"/></a></li>
-					<li><a href="actor/register.do"><spring:message code="master.page.register.manager"/></a></li>
+					<li><a href="actor/registerUser.do"><spring:message code="master.page.register.user"/></a></li>
+					<li><a href="actor/registerManager.do"><spring:message code="master.page.register.manager"/></a></li>
 				</ul>
 			</li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>

@@ -9,7 +9,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="actor/register.do" modelAttribute="registrationForm">
+<form:form action="actor/register${rol}.do" modelAttribute="registrationForm">
 
 	<fieldset>
 		<legend><spring:message code="actor.fieldset.personalData"/></legend>
@@ -38,15 +38,9 @@
 	<br><br>
 	
 	<!-- Buttons -->
-	<jstl:choose>
-		<jstl:when test="${user==true}">
-			<input type="submit" name="registerUser" value="<spring:message code="actor.register"/>"/>&nbsp;
-		</jstl:when>
-		<jstl:when test="${manager==true}">
-			<input type="submit" name="registerManager" value="<spring:message code="actor.register"/>"/>&nbsp;
-		</jstl:when>
-	</jstl:choose>
-
+	
+	<input type="submit" name="register" value="<spring:message code="actor.register"/>"/>&nbsp;
+	
 	
 	<acme:cancel url="welcome/index.do" code="actor.cancel"/>
 

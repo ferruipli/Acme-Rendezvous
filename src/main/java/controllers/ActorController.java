@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
+import services.ManagerService;
+import services.UserService;
 import domain.Actor;
 import domain.Manager;
 import domain.User;
 import forms.RegistrationForm;
-
-import services.ActorService;
-import services.ManagerService;
-import services.UserService;
 
 @Controller
 @RequestMapping("/actor")
@@ -82,12 +81,12 @@ public class ActorController extends AbstractController{
 	public ModelAndView createUser() {
 		ModelAndView result;
 		RegistrationForm registrationForm;
-		boolean user;
+		String rol;
 		
-		user = true;
+		rol = "User";
 		registrationForm = new RegistrationForm();
 		result = this.createModelAndView(registrationForm);
-		result.addObject("user", user);
+		result.addObject("rol", rol);
 
 		return result;
 	}
@@ -96,12 +95,12 @@ public class ActorController extends AbstractController{
 	public ModelAndView createManager() {
 		ModelAndView result;
 		RegistrationForm registrationForm;
-		boolean manager;
+		String rol;
 
-		manager = true;
+		rol = "Manager";
 		registrationForm = new RegistrationForm();
 		result = this.createModelAndView(registrationForm);
-		result.addObject("manager", manager);
+		result.addObject("rol", rol);
 
 		return result;
 	}
@@ -120,10 +119,10 @@ public class ActorController extends AbstractController{
 				result = new ModelAndView("redirect:/security/login.do");
 			} catch (final DataIntegrityViolationException oops) {
 				result = this.createModelAndView(registrationForm,
-						"user.duplicated.username");
+						"actor.duplicated.username");
 			} catch (final Throwable oops) {
 				result = this.createModelAndView(registrationForm,
-						"user.registration.error");
+						"actor.registration.error");
 			}
 
 		return result;
@@ -142,9 +141,9 @@ public class ActorController extends AbstractController{
 				this.managerService.save(manager);
 				result = new ModelAndView("redirect:/security/login.do");
 			} catch (final DataIntegrityViolationException oops) {
-				result = this.createModelAndView(registrationForm, "manager.duplicated.username");
+				result = this.createModelAndView(registrationForm, "actor.duplicated.username");
 			} catch (final Throwable oops) {
-				result = this.createModelAndView(registrationForm, "manager.registration.error");
+				result = this.createModelAndView(registrationForm, "actor.registration.error");
 			}
 
 		return result;
@@ -162,14 +161,8 @@ public class ActorController extends AbstractController{
 
 	protected ModelAndView createModelAndView(final RegistrationForm registrationForm, final String messageCode) {
 		ModelAndView result;
-		boolean user, manager;
 		
-		user = false;
-		manager = false;
-
 		result = new ModelAndView("actor/register");
-		result.addObject("manager", manager);
-		result.addObject("user", user);
 		result.addObject("registrationForm", registrationForm);
 		result.addObject("message", messageCode);
 
