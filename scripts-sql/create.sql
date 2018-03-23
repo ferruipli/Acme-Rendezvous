@@ -136,8 +136,8 @@ CREATE TABLE `comment` (
   KEY `FK_t4l8ri4kvik847hh7ei7y1l4u` (`parentComment_id`),
   KEY `FK_cub35s8xr5ip2yamdkqky5dxf` (`rendezvous_id`),
   KEY `FK_jhvt6d9ap8gxv67ftrmshdfhj` (`user_id`),
-  CONSTRAINT `FK_cub35s8xr5ip2yamdkqky5dxf` FOREIGN KEY (`rendezvous_id`) REFERENCES `rendezvous` (`id`),
   CONSTRAINT `FK_jhvt6d9ap8gxv67ftrmshdfhj` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_cub35s8xr5ip2yamdkqky5dxf` FOREIGN KEY (`rendezvous_id`) REFERENCES `rendezvous` (`id`),
   CONSTRAINT `FK_t4l8ri4kvik847hh7ei7y1l4u` FOREIGN KEY (`parentComment_id`) REFERENCES `comment` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -219,8 +219,8 @@ CREATE TABLE `manager_services` (
   `services_id` int(11) NOT NULL,
   UNIQUE KEY `UK_srbv4yjsntvpwpgv5djbg2y21` (`services_id`),
   KEY `FK_st8gcd8ivmj9xn0qnwhdn1s5` (`Manager_id`),
-  CONSTRAINT `FK_srbv4yjsntvpwpgv5djbg2y21` FOREIGN KEY (`services_id`) REFERENCES `services` (`id`),
-  CONSTRAINT `FK_st8gcd8ivmj9xn0qnwhdn1s5` FOREIGN KEY (`Manager_id`) REFERENCES `manager` (`id`)
+  CONSTRAINT `FK_st8gcd8ivmj9xn0qnwhdn1s5` FOREIGN KEY (`Manager_id`) REFERENCES `manager` (`id`),
+  CONSTRAINT `FK_srbv4yjsntvpwpgv5djbg2y21` FOREIGN KEY (`services_id`) REFERENCES `services` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -323,32 +323,6 @@ LOCK TABLES `rendezvous_rendezvous` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `rendezvous_user`
---
-
-DROP TABLE IF EXISTS `rendezvous_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rendezvous_user` (
-  `Rendezvous_id` int(11) NOT NULL,
-  `attendants_id` int(11) NOT NULL,
-  UNIQUE KEY `UK_38sxgvfuoa8bkkqfyahtfgj7l` (`attendants_id`),
-  KEY `FK_1k199dgjg4pkghk41gbcjxhow` (`Rendezvous_id`),
-  CONSTRAINT `FK_1k199dgjg4pkghk41gbcjxhow` FOREIGN KEY (`Rendezvous_id`) REFERENCES `rendezvous` (`id`),
-  CONSTRAINT `FK_38sxgvfuoa8bkkqfyahtfgj7l` FOREIGN KEY (`attendants_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `rendezvous_user`
---
-
-LOCK TABLES `rendezvous_user` WRITE;
-/*!40000 ALTER TABLE `rendezvous_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `rendezvous_user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `request`
 --
 
@@ -370,8 +344,8 @@ CREATE TABLE `request` (
   PRIMARY KEY (`id`),
   KEY `FK_fqncf826cbbt5fber93wnxxwd` (`rendezvous_id`),
   KEY `FK_l1v2qq3n315obw8m24obhalup` (`service_id`),
-  CONSTRAINT `FK_fqncf826cbbt5fber93wnxxwd` FOREIGN KEY (`rendezvous_id`) REFERENCES `rendezvous` (`id`),
-  CONSTRAINT `FK_l1v2qq3n315obw8m24obhalup` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`)
+  CONSTRAINT `FK_l1v2qq3n315obw8m24obhalup` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`),
+  CONSTRAINT `FK_fqncf826cbbt5fber93wnxxwd` FOREIGN KEY (`rendezvous_id`) REFERENCES `rendezvous` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -560,6 +534,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-21  8:49:59
+-- Dump completed on 2018-03-23 17:36:55
 
 commit;
