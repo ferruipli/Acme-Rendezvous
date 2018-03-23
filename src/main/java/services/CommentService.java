@@ -82,8 +82,18 @@ public class CommentService {
 		Assert.isTrue(comment.getId() != 0);
 
 		Rendezvous rendezvous;
+		Comment parentComment;
 
 		rendezvous = this.rendezvousService.findRendezvousFromAComment(comment.getId());
+		parentComment = comment.getParentComment();
+		
+		if(comment.getParentComment()!=null){
+			this.removeDescendantComment(parentComment, comment);
+		} else if(!comment.getDescendantComments().isEmpty()){
+			for(Comment c: comment.getDescendantComments()){
+				this.commentRepository.delete(c);
+			}
+		}
 
 		// Updating the comments about a rendezvous
 		this.rendezvousService.removeComment(rendezvous, comment);
@@ -145,7 +155,7 @@ public class CommentService {
 		comment.setDescendantComments(aux);
 	}
 
-	protected void removeDescendantComment(final Comment comment, final Comment descendant) {
+	public void removeDescendantComment(final Comment comment, final Comment descendant) {
 		Collection<Comment> aux;
 
 		aux = new HashSet<>(comment.getDescendantComments());
